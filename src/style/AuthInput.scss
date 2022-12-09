@@ -1,12 +1,14 @@
 .authInputContainer {
+  position: relative;
+
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   background-color: #F5F8FA;
   width: 365px;
   height: 54px;
-  border-bottom: 2px solid #657786;
   margin-bottom: 32px;
+  // border: 5px solid orange;
 
   label{
     font-size: 14px;
@@ -18,5 +20,34 @@
     border: none;
     background-color: #f5f8fa;
     border-radius: 0px;
+    border-bottom: 2px solid #657786;
+
+    &:focus{
+      border-bottom: 2px solid #50B5FF;
+    }
+  }
+
+  .inputName{
+    &.wrong{
+      border-bottom: 2px solid #FC5A5A;
+    }
+  }
+
+  .inputFooter{
+    span{
+      font-size: 12px;
+    }
+
+    .wrongTitle{
+      position: absolute;
+      bottom: -15px;
+      color: #FC5A5A;
+    }
+
+    .count{
+      position: absolute;
+      bottom: -15px;
+      right: 0px;
+    }
   }
 }
