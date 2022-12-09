@@ -8,6 +8,11 @@ const LoginPage = () => {
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
+  function handleClick() {
+    console.log('amount: ', username)
+    console.log('password: ', password)
+  }
+
   return (
     <div
       className="loginPage"
@@ -20,6 +25,7 @@ const LoginPage = () => {
         label="帳號"
         placeholder="請輸入帳號"
         type="text"
+        wordCount={50}
         value={username}
         onChange={(nameInputValue) => setUserName(nameInputValue)}
       />
@@ -28,12 +34,14 @@ const LoginPage = () => {
         label="密碼"
         placeholder="請輸入密碼"
         type="password"
+        wordCount={50}
         value={password}
         onChange={(passwordInputValue) => setPassword(passwordInputValue)}
       />
 
       <button
         className="authButton"
+        onClick={handleClick}
       >
         登入
       </button>
@@ -44,7 +52,7 @@ const LoginPage = () => {
         <Link to='/signup'>
           <span>註冊</span>
         </Link>
-        <span> ● </span>
+        <span>・</span>
         <Link to='/admin/login'>
           <span>後台登入</span>
         </Link>
