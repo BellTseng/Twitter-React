@@ -1,7 +1,7 @@
 import './../style/AuthInput.scss'
 import clsx from 'clsx'
 
-const AuthInput = ({ type, label, value, placeholder, onChange, wordCount }) => {
+const AuthInput = ({ type, label, value, placeholder, onChange, wordCount, active }) => {
   return(
     <div className="authInputContainer">
       <label>{label}</label>
@@ -12,21 +12,24 @@ const AuthInput = ({ type, label, value, placeholder, onChange, wordCount }) => 
         value={value}
         onChange={(event) => onChange?.(event.target.value)} 
       />
-      <div
-        className='inputFooter'
-      >
-        {(value.trim().length > wordCount) &&
-        <span
-          className='wrongTitle'
+
+      { active && 
+        <div
+          className='inputFooter'
         >
-          字數超出上限！
-        </span>}
-        <span
-          className='count'
-        >
-          {value.trim().length}/{wordCount}
-        </span>
-      </div>
+          {(value.trim().length > wordCount) &&
+            <span
+              className='wrongTitle'
+            >
+              字數超出上限！
+            </span>}
+          <span
+            className='count'
+          >
+            {value.trim().length}/{wordCount}
+          </span>
+        </div>
+      }
     </div>
   )
 }

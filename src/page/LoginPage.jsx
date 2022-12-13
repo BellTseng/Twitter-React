@@ -58,6 +58,7 @@ const LoginPage = () => {
         placeholder="請輸入帳號"
         type="text"
         wordCount={wordCount}
+        active={false}
         value={account}
         onChange={(accountInputValue) => setAccount(accountInputValue)}
       />
@@ -67,6 +68,7 @@ const LoginPage = () => {
         placeholder="請輸入密碼"
         type="password"
         wordCount={wordCount}
+        active={false}
         value={password}
         onChange={(passwordInputValue) => setPassword(passwordInputValue)}
       />

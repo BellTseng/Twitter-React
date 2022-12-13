@@ -70,6 +70,7 @@ const SignUpPage = () => {
         placeholder="請輸入帳號"
         type="text"
         wordCount={wordCount}
+        active={true}
         value={account}
         onChange={(accountInputValue) => setAccount(accountInputValue)}
       />
@@ -79,6 +80,7 @@ const SignUpPage = () => {
         placeholder="請輸入名稱"
         type="text"
         wordCount={wordCount}
+        active={true}
         value={username}
         onChange={(nameInputValue) => setUserName(nameInputValue)}
       />
@@ -88,6 +90,7 @@ const SignUpPage = () => {
         placeholder="請輸入 Email"
         type="text"
         wordCount={wordCount}
+        active={true}
         value={email}
         onChange={(emailInputValue) => setEmail(emailInputValue)}
       />
@@ -97,6 +100,7 @@ const SignUpPage = () => {
         placeholder="請輸入密碼"
         type="password"
         wordCount={wordCount}
+        active={true}
         value={password}
         onChange={(passwordInputValue) => setPassword(passwordInputValue)}
       />
@@ -106,6 +110,7 @@ const SignUpPage = () => {
         placeholder="請輸入帳號"
         type="password"
         wordCount={wordCount}
+        active={true}
         value={passwordCheck}
         onChange={(passwordCheckInputValue) => setPasswordCheck(passwordCheckInputValue)}
       />
