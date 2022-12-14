@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AuthInput from "../components/AuthInput"
 import './../style/Login.scss'
 import logo from './../image/Icon@2x.jpg'
-import Swal from 'sweetalert2';
+import { Toast } from "../utils/utils";
 
 const LoginPage = () => {
   const [account, setAccount] = useState('');
@@ -15,12 +15,9 @@ const LoginPage = () => {
       account.trim().length === 0 ||
       password.trim().length === 0 
     ) {
-      Swal.fire({
-        position: 'top',
+      Toast.fire({
         title: '請輸入帳號或密碼！',
-        timer: 1000,
         icon: 'warning',
-        showConfirmButton: false,
       });
 
       return
@@ -30,12 +27,9 @@ const LoginPage = () => {
       account.trim().length > wordCount ||
       password.trim().length > wordCount 
     ) {
-      Swal.fire({
-        position: 'top',
+      Toast.fire({
         title: '字數超出上限！',
-        timer: 1000,
         icon: 'warning',
-        showConfirmButton: false,
       });
 
       return

@@ -1,0 +1,15 @@
+.toastContainer {
+  position: relative;
+  height: 70px;
+  border-radius: 8px;
+
+  .toastIcon {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+  }
+  .toastTitle {
+    position: absolute;
+    top: 15px;
+  }
+}
