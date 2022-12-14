@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthInput from "../components/AuthInput"
-import './../style/AdminLogin.scss'
+import styles from './../style/AdminLogin.module.scss'
 import logo from './../image/Icon@2x.jpg'
 import { Toast } from "../utils/utils";
 
@@ -41,9 +41,9 @@ const AdminLoginPage = () => {
 
   return(
     <div
-      className="adminLoginPage"
+      className={styles.adminLoginPage}
     >
-      <img src={logo} alt="title" className="logo" />
+      <img src={logo} alt="title" className={styles.logo} />
 
       <h3>後台登入</h3>
 
@@ -68,14 +68,14 @@ const AdminLoginPage = () => {
       />
 
       <button
-        className="authButton"
+        className={styles.authButton}
         onClick={handleClick}
       >
         登入
       </button>
 
       <div
-        className="linkroute"
+        className={styles.linkroute}
       >
         <Link to='/login'>
           <span>前台登入</span>

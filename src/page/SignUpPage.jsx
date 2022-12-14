@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthInput from "../components/AuthInput"
-import './../style/SignUp.scss'
+import styles from './../style/SignUp.module.scss'
 import logo from './../image/Icon@2x.jpg'
 import { Toast } from "../utils/utils";
 
@@ -53,9 +53,9 @@ const SignUpPage = () => {
 
   return (
     <div
-      className="signUpPage"
+      className={styles.signUpPage}
     >
-      <img src={logo} alt="title" className="logo" />
+      <img src={logo} alt="title" className={styles.logo} />
 
       <h3>建立你的帳號</h3>
 
@@ -110,14 +110,14 @@ const SignUpPage = () => {
       />
 
       <button
-        className="authButton"
+        className={styles.authButton}
         onClick={handleClick}
       >
         註冊
       </button>
 
       <div
-        className="linkroute"
+        className={styles.linkroute}
       >
         <Link to='/login'>
           <span>取消</span>
