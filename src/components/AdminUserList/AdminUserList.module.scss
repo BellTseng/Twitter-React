@@ -1,7 +1,6 @@
-.adminMain {
+.adminUsers {
   position: relative;
   margin: 50px;
-  border-right: 1px solid #E6ECF0;
   border-left: 1px solid #E6ECF0;
   height: 100vh;
 
@@ -14,7 +13,7 @@
     }
   }
 
-  .tweetList {
+  .usersList {
     position: absolute;
     top: 60px;
     left: 0px;
