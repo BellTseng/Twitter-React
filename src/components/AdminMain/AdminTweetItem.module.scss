@@ -1,6 +1,7 @@
 .tweetItem {
   position: relative;
-  border: 2px solid orange;
+  height: 85px;
+  border-bottom: 1px solid #E6ECF0;
 
   button {
     background-color: transparent;
@@ -14,7 +15,6 @@
     left: 16px;
     width: 50px;
     height: 50px;
-    border: 2px solid red;
   }
 
   .userTag {
@@ -36,9 +36,11 @@
   }
 
   p {
+    position: absolute;
+    top: 30px;
+    left: 74px;
+
     word-wrap:break-word;
-    margin-top: 50px;
-    margin-left: 74px;
   }
 
   .deleteTweet {
