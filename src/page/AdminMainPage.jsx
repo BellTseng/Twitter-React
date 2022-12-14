@@ -1,8 +1,10 @@
-
+import AdminMainTweetList from './../components/AdminMain/AdminMainTweetList'
 
 const AdminMainPage = () => {
   return(
-    <h1>AdminMainPage</h1>
+    <>
+      <AdminMainTweetList />
+    </>
   )
 }
 
