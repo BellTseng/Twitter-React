@@ -22,7 +22,7 @@
   width: 200px;
   padding: 0 55px 110px;
   position: relative;
-  height: 100%;
+  height: 100vh;
 }
 
 .navbar ul {
@@ -31,12 +31,54 @@
 }
 
 .navbar ul li {
+  transition: .5s;
   list-style: none;
   font-weight: 700;
   font-size: 18px;
   line-height: 26px;
   color: #1C1C1C;
+
+
+  $icons: 'home',
+  'user',
+  'setting',
+  'logout';
+
+  @for $i from 1 through length($icons) {
+    $icon: nth($icons , $i);
+
+    &:nth-child(#{$i}) .navLink::before {
+      background-image: url('../../image/icons/' +#{nth($icons , $i)}+'.svg');
+    }
+  }
+
 }
+
+.navLink {
+
+  &:hover,
+  &.active {
+    opacity: 0.8;
+    color: #FF6600;
+
+    &::before {
+      filter: contrast(100%) brightness(100%);
+    }
+  }
+
+  &::before {
+    filter: contrast(200%) brightness(-150%);
+    content: '';
+    display: inline-block;
+    width: 22px;
+    height: 21px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin-right: 15px;
+  }
+}
+
+
 
 .navLink,
 .btnLogout {
@@ -47,6 +89,8 @@
   font-size: 18px;
   line-height: 26px;
   padding: 15px;
+  display: flex;
+  align-items: center;
 }
 
 .btn {
@@ -64,8 +108,8 @@
   margin: 15px 0;
 }
 
-.btnLogout {
+.logout {
   position: absolute;
-  bottom: 0;
-  left: 0;
+  bottom: 110px;
+  // left: 0;
 }

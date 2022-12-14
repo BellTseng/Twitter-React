@@ -1,6 +1,8 @@
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import style from './SideBar.module.scss';
 import Modal from '../modal/Modal';
-import { useState } from 'react';
+
 
 
 
@@ -21,19 +23,16 @@ const SideBar = () => {
         <nav className={style.navbar}>
           <ul>
             <li>
-              <a href="/" className={style.navLink}>
-                首頁
-              </a>
+              <NavLink className={style.navLink} to="/home" activeClassName={style.active}> 首頁</NavLink>
             </li>
             <li>
-              <a href="/" className={style.navLink}>
-                個人資料
-              </a>
+              <NavLink className={style.navLink} to="/userSelf/user" activeClassName={style.active}>個人資料</NavLink>
             </li>
             <li>
-              <a href="/" className={style.navLink}>
-                設定
-              </a>
+              <NavLink className={style.navLink} to="/setting" activeClassName={style.active}>設定</NavLink>
+            </li>
+            <li>
+              <NavLink className={style.navLink + ' ' + style.logout} to="/login">登出</NavLink>
             </li>
           </ul>
           <button
@@ -42,12 +41,8 @@ const SideBar = () => {
             推文
           </button>
         </nav>
-        <button
-          className={style.btnLogout} >
-          登出
-        </button>
       </div>
-      <Modal />
+      <Modal isOpen={modalOpen} closeModal={handleCloseModal} />
     </div>
   )
 }
