@@ -1,23 +1,22 @@
 import SideBar from "../components/sidebar/SideBar";
 import PopularUser from "../components/popular/PopularUser";
-import TweetEdit from '../components/tweet/TweetEdit';
+import TweetEdit from '../components/tweet/TweetEdit/TweetEdit';
 import TweetList from '../components/tweet/TweetList/TweetList';
-import layout from '../style/Layout.module.scss';
-
+import Main from "../components/laylout/Main";
+import Header from "../components/laylout/Header";
 
 
 const HomePage = () => {
-
   return (
-    <div className="webLayout">
+    <>
       <SideBar />
-      <main>
-        <div className={layout.header}>首頁</div>
-        <TweetEdit />
+      <Main>
+        <Header title="首頁" type="main" />
+        <TweetEdit placeholder="有什麼新鮮事？" />
         <TweetList />
-      </main>
-      <PopularUser />
-    </div>
+        <PopularUser />
+      </Main>
+    </>
   )
 }
 

@@ -1,0 +1,23 @@
+.container {
+  min-height: 100vh;
+  border-left: 1px #E6ECF0 solid;
+  border-right: 1px #E6ECF0 solid;
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.header {
+  border-bottom: 1px #E6ECF0 solid;
+  padding: 15px;
+
+  &.main {
+    h2 {
+      font-size: 18px;
+      line-height: 26px;
+      font-weight: 700;
+      margin: 0;
+    }
+  }
+}
