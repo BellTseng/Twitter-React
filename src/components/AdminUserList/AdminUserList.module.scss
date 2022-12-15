@@ -19,6 +19,14 @@
     left: 0px;
     right: 0px;
     bottom: 0px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 249px);
+    grid-gap: 16px;
+
+    padding: 16px;;
+
+
     overflow-y: scroll
   }
 

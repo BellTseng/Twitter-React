@@ -1,25 +1,86 @@
 .userItem {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 314px;
+  width: 249px;
+  border-radius: 10px;
+
+  background: #f6f7f8;
 
   .background {
     width: 249px;
     height: 140px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
   }
 
   .avatar {
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+
     width: 100px;
     height: 100px;
-    border: 4px solid red;
+    border: 4px solid #FFFFFF;
     border-radius: 50%;
   }
 
   .userTag {
     .userName {
       font-weight: 700;
+      text-align: center;
+      margin-top: 24px;
     }
 
     .userAccount {
       font-size: 14px;
       font-weight: 400;
+      text-align: center;
+      margin-top: -14px;
+    }
+  }
+
+  .userTweetLike {
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+    margin: 0 auto;
+
+    .tweetCount,
+    .tweetLike {
+      display: flex;
+      align-items: center;
+    }
+
+    img {
+      width: 23px;
+      height: 23px;
+    }
+
+    span {
+      font-weight: 500;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+  }
+
+  .userPopular {
+    display: flex;
+    justify-content: space-between;
+    width: 180px;
+    margin: 0 auto;
+    
+    p,
+    span {
+      font-size: 14px;
+    }
+
+    span{
+      font-weight: 100;
     }
   }
 }
