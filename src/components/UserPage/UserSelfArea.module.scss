@@ -1,0 +1,32 @@
+.userSelfArea {
+  margin: 50px;
+  width: 640px;
+  border-right: 1px solid #e6ecf0;
+  border-left: 1px solid #e6ecf0;
+
+  .title {
+    display: flex;
+    align-items: center;
+
+    border-bottom: 1px solid #e6ecf0;
+
+    img {
+      width: 17px;
+      height: 14px;
+    }
+
+    .userTag {
+      margin-left: 20px;
+      .userName {
+        margin: 0px;
+        font-weight: 700;
+      }
+
+      .tweetCount {
+        margin: 0px;
+        font-size: 13px;
+        font-weight: 200;
+      }
+    }
+  }
+}
