@@ -3,21 +3,38 @@ import PopularUser from "../popular/PopularUser";
 import SideBar from './../sidebar/SideBar';
 import AdminSideBar from './../sidebar/AdminSideBar';
 import Main from './../layoutItems/Main';
+import { useLocation } from 'react-router-dom';
+
 
 const AppLayout = ({ type }) => {
+  const pathname = useLocation().pathname;
+  // return location.pathname;
+
   return (
     <>
-      {type === 'web' && <SideBar />}
-      {type === 'admin' && <AdminSideBar />}
-
-      {type === 'web' &&
-        (<Main>
-          <Outlet />
-          <PopularUser />
-        </Main>)
+      {(type === 'web' && pathname !== '/setting') &&
+        <>
+          <SideBar />
+          (<Main>
+            <Outlet />
+            <PopularUser />
+          </Main>)
+        </>
       }
 
-      {type === 'admin' && <Outlet />}
+      {(type === 'web' && pathname === '/setting') &&
+        <>
+          <SideBar />
+          <Outlet />
+        </>
+      }
+
+      {type === 'admin' &&
+        <>
+          <AdminSideBar />
+          <Outlet />
+        </>
+      }
 
     </>
   )
