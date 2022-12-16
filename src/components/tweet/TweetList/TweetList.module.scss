@@ -1,0 +1,88 @@
+.avatar {
+  padding: 0px 10px;
+}
+
+.avatar>img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+.name,
+.account {
+  font-size: 15px;
+  line-height: 15px;
+}
+
+.name {
+  font-weight: 700;
+  color: #1C1C1C;
+  margin-right: 5px;
+}
+
+.account {
+  font-weight: 500;
+  color: #657786;
+}
+
+
+.tweet {
+  display: flex;
+  border-top: 1px #E6ECF0 solid;
+  padding: 15px;
+
+  .top {
+    display: flex;
+  }
+}
+
+.description {
+  padding: 6px 0 14px;
+  color: #1C1C1C;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.toolbar {
+  display: flex;
+}
+
+.toolButton {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 80px;
+
+  &::before {
+    content: '';
+    width: 23px;
+    height: 40px;
+    display: inline-block;
+    margin-right: 0px;
+    background-position: left center;
+    background-repeat: no-repeat;
+  }
+
+  &.replyCount {
+    &::before {
+      background-image: url(../../../image/icons/reply.svg);
+    }
+
+  }
+
+  &.likeCount {
+    &::before {
+      background-image: url(../../../image/icons/heart.svg);
+    }
+
+
+    &.active {
+      &::before {
+        background-image: url(../../../image/icons/heart_active.svg);
+      }
+    }
+  }
+
+}
