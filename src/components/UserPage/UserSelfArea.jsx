@@ -3,7 +3,7 @@ import Arrow from './../../image/VectorArrow@2x.jpg'
 import UserInfo from './UserInfo'
 import { Link } from 'react-router-dom'
 
-const UserSelfArea = ({ user }) => {
+const UserSelfArea = ({ user, userId, paramsId }) => {
   return(
     <div className={styles.userSelfArea}>
       <div className={styles.title}>
@@ -18,6 +18,8 @@ const UserSelfArea = ({ user }) => {
       
       <UserInfo 
         user={user}
+        userId={userId}
+        paramsId={paramsId}
       />
     </div>
   )

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useParams } from "react-router-dom"
 import UserSelfArea from "../components/UserPage/UserSelfArea"
 
 const userPro = {
@@ -12,14 +13,20 @@ const userPro = {
   likeCount: '50k',
   folloingCount: 1000,
   followerCount: 80,
+  isFollow: false,
 }
 
 const UserSelfPage = () => {
   const [userInfo, setUserInfo] = useState(userPro)
+  const userId = 1
+  const { id } = useParams()
 
+  console.log(typeof id)
   return (
     <UserSelfArea 
       user={userInfo}
+      userId={userId}
+      paramsId={Number(id)}
     />
   )
 }

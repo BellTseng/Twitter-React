@@ -2,7 +2,7 @@
   margin: 0;
   width: 50px;
   height: 50px;
-  background-image: url(../../image/icons/logo.svg);
+  background-image: url(./../../image/icons/logo.svg);
   text-indent: 101%;
   white-space: nowrap;
   overflow: hidden;
@@ -39,18 +39,18 @@
   color: #1C1C1C;
 
 
-  $icons: 'home',
-  'user',
-  'setting',
-  'logout';
+  // $icons: 'home',
+  // 'user',
+  // 'setting',
+  // 'logout';
 
-  @for $i from 1 through length($icons) {
-    $icon: nth($icons , $i);
+  // @for $i from 1 through length($icons) {
+  //   $icon: nth($icons , $i);
 
-    &:nth-child(#{$i}) .navLink::before {
-      background-image: url('../../image/icons/' +#{nth($icons , $i)}+'.svg');
-    }
-  }
+  //   &:nth-child(#{$i}) .navLink::before {
+  //     background-image: url('../../image/icons/'+#{nth($icons , $i)}+'.svg');
+  //   }
+  // }
 
 }
 
