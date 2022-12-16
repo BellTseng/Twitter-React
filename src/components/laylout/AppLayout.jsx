@@ -1,40 +1,27 @@
 import { Outlet } from "react-router-dom";
 import PopularUser from "../popular/PopularUser";
 import SideBar from './../sidebar/SideBar';
-import AdminSideBar from './../sidebar/AdminSideBar';
 import Main from './../layoutItems/Main';
 import { useLocation } from 'react-router-dom';
 
 
-const AppLayout = ({ type }) => {
+const AppLayout = () => {
   const pathname = useLocation().pathname;
   // return location.pathname;
 
   return (
     <>
-      {(type === 'web' && pathname !== '/setting') &&
-        <>
-          <SideBar />
-          (<Main>
-            <Outlet />
-            <PopularUser />
-          </Main>)
-        </>
-      }
+      <SideBar />
 
-      {(type === 'web' && pathname === '/setting') &&
-        <>
-          <SideBar />
+      {pathname !== '/setting'
+        && (<Main>
           <Outlet />
-        </>
-      }
+          <PopularUser />
+        </Main>)}
 
-      {type === 'admin' &&
-        <>
-          <AdminSideBar />
-          <Outlet />
-        </>
-      }
+      {pathname === '/setting' && (
+        <Outlet />
+      )}
 
     </>
   )
