@@ -1,8 +1,12 @@
-
+import ReplyList from '../components/tweet/ReplyList/ReplyList';
+import Header from "../components/layoutItems/Header";
 
 const ReplyListPage = () => {
-  return(
-    <h1>ReplyListPage</h1>
+  return (
+    <>
+      <Header title="推文" type="main" />
+      <ReplyList />
+    </>
   )
 }
 
