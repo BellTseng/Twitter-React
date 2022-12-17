@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import style from './SideBar.module.scss';
 import Modal from '../modal/Modal';
+import TweetEdit from './../tweet/TweetEdit/TweetEdit';
 import './navActive.scss';
 
 
@@ -9,12 +11,24 @@ import './navActive.scss';
 
 const SideBar = ({ type }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const handleClick = () => {
-    setModalOpen(!modalOpen);
-  }
+
+
 
   const handleCloseModal = () => {
     setModalOpen(false);
+  }
+
+  // 新增推文
+  const handleCreateTweet = (value) => {
+    setModalOpen(false);
+    console.log('tweet:', value);
+    Swal.fire({
+      position: 'top',
+      title: '新增推文成功！',
+      timer: 1000,
+      icon: 'success',
+      showConfirmButton: false,
+    });
   }
 
   return (
@@ -38,12 +52,18 @@ const SideBar = ({ type }) => {
           </ul>
           <button
             className={style.btn}
-            onClick={handleClick}>
+            onClick={() => setModalOpen(!modalOpen)}>
             推文
           </button>
         </nav>
       </div>
-      <Modal isOpen={modalOpen} closeModal={handleCloseModal} />
+      <Modal isOpen={modalOpen} closeModal={handleCloseModal}>
+        {modalOpen &&
+          <TweetEdit
+            placeholder='有什麼新鮮事?'
+            onClick={handleCreateTweet}
+          />}
+      </Modal>
     </div>
   )
 }
