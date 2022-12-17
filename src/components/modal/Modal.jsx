@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 
 
-const Modal = ({ isOpen, closeModal, reply }) => {
+const Modal = ({ isOpen, closeModal, reply, children }) => {
   console.log(!!isOpen ? 'hiii' : '');
   console.log('isOpen', isOpen);
   const [txt, setTxt] = useState('');
@@ -32,13 +32,7 @@ const Modal = ({ isOpen, closeModal, reply }) => {
       <div className={style.modalContent}>
         <button className={style.close} onClick={closeModal}></button>
         <div className={style.modalContentInner}>
-          
-
-          {/* <p>Some text in the Modal..</p>
-          <input onChange={(e) => { handleChange?.(e.target.value) }} /> */}
-        </div>
-        <div className={style.btnBox}>
-          <button className={style.btn} onClick={handleClickSave}> {!!reply ? '回覆' : '推文'} </button>
+          {children}
         </div>
       </div>
     </div >

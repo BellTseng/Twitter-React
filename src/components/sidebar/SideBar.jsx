@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import style from './SideBar.module.scss';
 import Modal from '../modal/Modal';
+import TweetEdit from './../tweet/TweetEdit/TweetEdit';
 import './navActive.scss';
 
 
@@ -43,7 +44,9 @@ const SideBar = ({ type }) => {
           </button>
         </nav>
       </div>
-      <Modal isOpen={modalOpen} closeModal={handleCloseModal} />
+      <Modal isOpen={modalOpen} closeModal={handleCloseModal}>
+        <TweetEdit />
+      </Modal>
     </div>
   )
 }
