@@ -3,14 +3,13 @@ import { useState } from 'react';
 
 
 
-const Modal = ({ isOpen, closeModal }) => {
+const Modal = ({ isOpen, closeModal, reply }) => {
   console.log(!!isOpen ? 'hiii' : '');
   console.log('isOpen', isOpen);
   const [txt, setTxt] = useState('');
 
   const handleClickSave = () => {
     alert('已儲存資料:', txt);
-
     closeModal();
   }
 
@@ -33,11 +32,13 @@ const Modal = ({ isOpen, closeModal }) => {
       <div className={style.modalContent}>
         <button className={style.close} onClick={closeModal}></button>
         <div className={style.modalContentInner}>
-          <p>Some text in the Modal..</p>
-          <input onChange={(e) => { handleChange?.(e.target.value) }} />
+          
+
+          {/* <p>Some text in the Modal..</p>
+          <input onChange={(e) => { handleChange?.(e.target.value) }} /> */}
         </div>
         <div className={style.btnBox}>
-          <button className={style.btn} onClick={handleClickSave}> Save </button>
+          <button className={style.btn} onClick={handleClickSave}> {!!reply ? '回覆' : '推文'} </button>
         </div>
       </div>
     </div >

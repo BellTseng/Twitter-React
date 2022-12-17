@@ -39,17 +39,20 @@
   color: #1C1C1C;
 
 
-  $icons: 'home',
-  'user',
-  'setting',
-  'logout';
+  &:nth-child(1) .navLink::before {
+    background-image: url('../../image/icons/home.svg');
+  }
 
-  @for $i from 1 through length($icons) {
-    $icon: nth($icons , $i);
+  &:nth-child(2) .navLink::before {
+    background-image: url('../../image/icons/user.svg');
+  }
 
-    &:nth-child(#{$i}) .navLink::before {
-      background-image: url('../../image/icons/' +#{nth($icons , $i)}+'.svg');
-    }
+  &:nth-child(3) .navLink::before {
+    background-image: url('../../image/icons/setting.svg');
+  }
+
+  &:nth-child(4) .navLink::before {
+    background-image: url('../../image/icons/logout.svg');
   }
 
 }

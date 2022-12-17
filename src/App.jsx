@@ -1,6 +1,7 @@
 import './style/App.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AppLayout from './components/laylout/AppLayout'
+import AdminLayout from './components/laylout/AdminLayout'
 import LoginPage from './page/LoginPage'
 import SignUpPage from './page/SignUpPage'
 import SettingPage from './page/SettingPage'
@@ -20,18 +21,22 @@ function App() {
         <Routes>
           <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignUpPage />} />
-          <Route element={<AppLayout type='web' />}>
+
+          <Route element={<AppLayout />}>
             <Route path="/setting" element={<SettingPage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/replylist" element={<ReplyListPage />} />
             <Route path="/userSelf/:id" element={<UserSelfPage />} />
             <Route path="/follow" element={<FollowPage />} />
           </Route>
+
           <Route path="admin/login" element={<AdminLoginPage />} />
-          <Route element={<AppLayout type='admin' />}>
+
+          <Route element={<AdminLayout />}>
             <Route path="admin/main" element={<AdminMainPage />} />
             <Route path="admin/users" element={<AdminUsersPage />} />
           </Route>
+
           <Route path="*" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
