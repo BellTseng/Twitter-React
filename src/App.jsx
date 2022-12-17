@@ -14,9 +14,64 @@ import AdminMainPage from './page/AdminMainPage'
 import AdminUsersPage from './page/AdminUsersPage'
 import NotFoundPage from './page/NotFoundPage'
 
+import axios from 'axios';
+
 function App() {
+
+  const authURL = 'https://rocky-citadel-44413.herokuapp.com/api/users';
+
+
+  const login = async ({ username, password }) => {
+    alert('登入摟！')
+    // try {
+    //   const { data } = await axios.post(`${authURL}/signin`, {
+    //     username,
+    //     password,
+    //   });
+
+    //   const { authToken } = data;
+
+    //   if (authToken) {
+    //     console.log(authToken)
+    //     return { success: true, ...data };
+    //   }
+    //   return data;
+    // } catch (error) {
+    //   console.error('[Login Failed]:', error);
+    // }
+  };
+
+  const register = async ({ txt }) => {
+    alert('txt', txt);
+    try {
+      const { data } = await axios.post(`${authURL}`, {
+        account: "userN2",
+        name: "userN2",
+        email: "userN2@example.com",
+        password: "12345678",
+        checkPassword: "12345678"
+      });
+      const { authToken } = data;
+
+      if (authToken) {
+        console.log('authToken', authToken)
+        return { success: true, ...data };
+      }
+
+      return data;
+    } catch (error) {
+      console.error('[Register Failed]: ', error);
+    }
+  };
+
+
   return (
     <div className="app">
+      <button onClick={() => register('註冊摟')}> 註冊摟瞜瞜 </button>
+
+      <button onClick={() => login('user1', '12345678')}>登入</button>
+
+
       <BrowserRouter>
         <Routes>
           <Route path="login" element={<LoginPage />} />

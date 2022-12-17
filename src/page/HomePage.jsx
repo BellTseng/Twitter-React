@@ -1,5 +1,3 @@
-import SideBar from "../components/sidebar/SideBar";
-import PopularUser from "../components/popular/PopularUser";
 import TweetEdit from '../components/tweet/TweetEdit/TweetEdit';
 import TweetList from '../components/tweet/TweetList/TweetList';
 import Header from "../components/layoutItems/Header";
