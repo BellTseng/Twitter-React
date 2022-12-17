@@ -18,15 +18,32 @@ const userPro = {
 
 const UserSelfPage = () => {
   const [userInfo, setUserInfo] = useState(userPro)
+  const [userTabId, setUserTabId] = useState(1)
   const userId = 1
   const { id } = useParams()
 
-  console.log(typeof id)
+
+  function handleToggleFollow(id) {
+    setUserInfo((prevUser) => {
+      return{
+        ...prevUser,
+        isFollow: !prevUser.isFollow
+      }
+    })
+  }
+
+  function handleChangeTab(value) {
+    setUserTabId(value)
+  }
+
   return (
     <UserSelfArea 
       user={userInfo}
       userId={userId}
+      tabId={userTabId}
       paramsId={Number(id)}
+      onToggleFollow={handleToggleFollow}
+      onChangeTab={handleChangeTab}
     />
   )
 }

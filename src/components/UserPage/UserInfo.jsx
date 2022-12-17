@@ -2,7 +2,7 @@ import styles from './UserInfo.module.scss'
 import email from './../../image/VectorEmail@2x.jpg'
 import subscription from './../../image/VectorSubscription@2x.jpg'
 
-const UserInfo = ({ user, userId, paramsId }) => {
+const UserInfo = ({ user, userId, paramsId, onToggleFollow }) => {
   return(
     <div className={styles.userInfo}>
       <img
@@ -32,8 +32,22 @@ const UserInfo = ({ user, userId, paramsId }) => {
               <img src={subscription} alt="subscription" />
             </button>
             <div className={styles.followed}>
-              {(user.isFollow) && <button className={styles.active}>正在跟隨</button>}
-              {(!user.isFollow) && <button>跟隨</button>}
+              {(user.isFollow) && 
+                <button 
+                  className={styles.active} 
+                  onClick={() => onToggleFollow?.(user.id)}
+                >
+                  正在跟隨
+                </button>
+              }
+
+              {(!user.isFollow) && 
+                <button
+                  onClick={() => onToggleFollow?.(user.id)}
+                >
+                  跟隨
+                </button>
+              }
             </div>
           </div>
         }
