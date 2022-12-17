@@ -1,17 +1,12 @@
 import { useState } from "react";
 import style from "./TweetList.module.scss";
 import { Link } from "react-router-dom";
-import { defaultTweetList } from './../../../data/tweets.js'
 
-const TweetList = () => {
+const TweetList = ({ tweets }) => {
 
   // [v] 點推文
   // [ ] 回覆
   // [ ] 按讚
-
-  const [tweets, setTweets] = useState(defaultTweetList);
-
-  
 
   return (
     <div className="tweetList">
