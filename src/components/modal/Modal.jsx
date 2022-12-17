@@ -3,9 +3,8 @@ import { useState } from 'react';
 
 
 
-const Modal = ({ isOpen, closeModal, reply, children }) => {
-  console.log(!!isOpen ? 'hiii' : '');
-  console.log('isOpen', isOpen);
+const Modal = ({ isOpen, closeModal, children }) => {
+
   const [txt, setTxt] = useState('');
 
   const handleClickSave = () => {
