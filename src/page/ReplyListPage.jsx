@@ -1,11 +1,11 @@
-import TweetList from '../components/tweet/TweetList/TweetList';
+import ReplyList from '../components/tweet/ReplyList/ReplyList';
 import Header from "../components/layoutItems/Header";
 
 const ReplyListPage = () => {
-  return(
+  return (
     <>
       <Header title="推文" type="main" />
-      <TweetList />
+      <ReplyList />
     </>
   )
 }
