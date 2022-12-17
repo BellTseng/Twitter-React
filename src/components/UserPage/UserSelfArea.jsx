@@ -5,12 +5,14 @@ import UserTab from './UserTab'
 import { Link } from 'react-router-dom'
 
 const UserSelfArea = ({ 
+  isOpen,
   user, 
   userId, 
   paramsId,
   tabId, 
   onToggleFollow,
   onChangeTab,
+  onShowModal,
 }) => {
   return(
     <div className={styles.userSelfArea}>
@@ -24,11 +26,13 @@ const UserSelfArea = ({
         </div>
       </div>
       
-      <UserInfo 
+      <UserInfo
+        isOpen={isOpen} 
         user={user}
         userId={userId}
         paramsId={paramsId}
         onToggleFollow={(id) => onToggleFollow?.(id)}
+        onShowModal={(value) => onShowModal?.(value)}
       />
 
       <UserTab 

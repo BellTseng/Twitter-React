@@ -1,8 +1,16 @@
 import styles from './UserInfo.module.scss'
 import email from './../../image/VectorEmail@2x.jpg'
 import subscription from './../../image/VectorSubscription@2x.jpg'
+import Modal from '../modal/Modal'
 
-const UserInfo = ({ user, userId, paramsId, onToggleFollow }) => {
+const UserInfo = ({ 
+  isOpen,
+  user, 
+  userId, 
+  paramsId, 
+  onToggleFollow,
+  onShowModal 
+}) => {
   return(
     <div className={styles.userInfo}>
       <img
@@ -20,7 +28,11 @@ const UserInfo = ({ user, userId, paramsId, onToggleFollow }) => {
       <div className={styles.buttonGroup}>
         {(userId === paramsId) &&
           <div className={styles.editButton}>
-            <button>編輯個人資料</button>
+            <button
+              onClick={() => onShowModal?.(true)}
+            >
+              編輯個人資料
+            </button>
           </div>
         }
         {(userId !== paramsId) &&
@@ -68,6 +80,9 @@ const UserInfo = ({ user, userId, paramsId, onToggleFollow }) => {
         <p className={styles.follower}>{user.followerCount ? user.followerCount : '230'}位<span>跟隨者</span></p>
       </div>
 
+      <Modal isOpen={isOpen} closeModal={() => onShowModal?.(false)}>
+        <h1>TEST</h1>
+      </Modal>
     </div>
   )
 }

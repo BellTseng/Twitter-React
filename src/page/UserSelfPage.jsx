@@ -19,6 +19,7 @@ const userPro = {
 const UserSelfPage = () => {
   const [userInfo, setUserInfo] = useState(userPro)
   const [userTabId, setUserTabId] = useState(1)
+  const [isOpen, setIsOpen] = useState(false) //Modal show useState
   const userId = 1
   const { id } = useParams()
 
@@ -36,14 +37,20 @@ const UserSelfPage = () => {
     setUserTabId(value)
   }
 
+  function changeModalStatus(value) {
+    setIsOpen(value)
+  }
+
   return (
-    <UserSelfArea 
+    <UserSelfArea
+      isOpen={isOpen} 
       user={userInfo}
       userId={userId}
       tabId={userTabId}
       paramsId={Number(id)}
       onToggleFollow={handleToggleFollow}
       onChangeTab={handleChangeTab}
+      onShowModal={changeModalStatus}
     />
   )
 }
