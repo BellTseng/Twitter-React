@@ -3,19 +3,28 @@ import { Link } from 'react-router-dom';
 
 /* type: 
   main => 首頁
-  tweet => 推文，有箭頭
+  tweet => 推文與回文串頁面，有箭頭
+  user => 使用者
+
 
 
 */
 
-const Header = ({ type, title, subTitle }) => {
+const Header = ({ type, title, subTitle, url }) => {
   return (
     <div className={layout.header + ' ' + layout[type]}>
       {type === 'main' && <h2>{title} </h2>}
-      {type === 'back' && <Link to="/home"> <h2 className='back'> {title} </h2> </Link>}
-      
+      {type === 'tweet' &&
+        <Link to="/home">
+          <h2 className='tweet'> {title} </h2>
+        </Link>}
 
-      {!!subTitle && <p>{subTitle}</p>}
+      {type === 'user' &&
+        <Link to={url}>
+          <h2 className='tweet'> 
+            <span>{title}</span>
+           </h2>
+        </Link>}
     </div>
   )
 }

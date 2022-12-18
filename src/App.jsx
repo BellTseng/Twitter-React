@@ -27,7 +27,7 @@ function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/replylist/:id" element={<ReplyListPage />} />
             <Route path="/userSelf/:id" element={<UserSelfPage />} />
-            <Route path="/follow" element={<FollowPage />} />
+            <Route path="/follow/:id" element={<FollowPage />} />
           </Route>
 
           <Route path="admin/login" element={<AdminLoginPage />} />

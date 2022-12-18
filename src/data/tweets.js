@@ -32,7 +32,7 @@ export const defaultTweetList = [{
 ];
 
 
-export const tweet = {
+export const defaultTweet = {
   "id": 3,
   "description": " numquam praesentium autem maxime. Aspernatur at",
   "UserId": 2,
@@ -46,5 +46,30 @@ export const tweet = {
     "name": "user1",
     "avatar": "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
   },
-  "isLiked": false
+  "isLiked": true
 }
+
+
+export const defaultReplys = [
+  {
+    "id": 1,
+    "comment": "Sit odit aliquid vel.",
+    "UserId": 12,//留言者
+    "TweetId": 1,
+    "createdAt": "2022-12-14T13:14:22.000Z",
+    "updatedAt": "2022-12-14T13:14:22.000Z",
+    "User": {//留言者資料
+      "id": 12,
+      "account": "user11",
+      "name": "user11",
+      "avatar": "https://loremflickr.com/320/240/logo/?lock=2"
+    },
+    "Tweet": {
+      "UserId": 2,//推主
+      "User": {//推主資料
+        "id": 2,
+        "account": "user1"
+      }
+    }
+  },
+];

@@ -37,7 +37,7 @@ const PopularUser = () => {
   }
   return (
     <section className={style.popular}>
-      <h2 className={style.h2}>Popular</h2>
+      <h2 className={style.h2}>推薦跟隨</h2>
       <ul className={style.popularList}>
         {popularList.map(user =>
           <li key={user.id}>
