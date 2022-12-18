@@ -58,6 +58,12 @@ const SignUpPage = () => {
     console.log('email: ', email)
     console.log('password: ', password)
     console.log('passwordCheck: ', passwordCheck)
+
+    Toast.fire({
+      title: '修改成功',
+      icon: 'success',
+    })
+    
   }
 
   return (
