@@ -2,6 +2,7 @@ import styles from './UserInfo.module.scss'
 import email from './../../image/VectorEmail@2x.jpg'
 import subscription from './../../image/VectorSubscription@2x.jpg'
 import Modal from '../modal/Modal'
+import UserModal from '../modal/UserModal'
 
 const UserInfo = ({ 
   isOpen,
@@ -81,7 +82,9 @@ const UserInfo = ({
       </div>
 
       <Modal isOpen={isOpen} closeModal={() => onShowModal?.(false)}>
-        <h1>TEST</h1>
+        <UserModal 
+          user={user}
+        />
       </Modal>
     </div>
   )

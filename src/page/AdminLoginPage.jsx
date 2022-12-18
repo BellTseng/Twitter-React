@@ -47,25 +47,30 @@ const AdminLoginPage = () => {
 
       <h3>後台登入</h3>
 
-      <AuthInput
-        label="帳號"
-        placeholder="請輸入帳號"
-        type="text"
-        wordCount={wordCount}
-        active={false}
-        value={account}
-        onChange={(accountInputValue) => setAccount(accountInputValue)}
-      />
+      <div className={styles.account}>
+        <AuthInput
+          label="帳號"
+          placeholder="請輸入帳號"
+          type="text"
+          wordCount={wordCount}
+          active={false}
+          value={account}
+          onChange={(accountInputValue) => setAccount(accountInputValue)}
+        />
+      </div>
 
-      <AuthInput
-        label="密碼"
-        placeholder="請輸入密碼"
-        type="password"
-        wordCount={wordCount}
-        active={false}
-        value={password}
-        onChange={(passwordInputValue) => setPassword(passwordInputValue)}
-      />
+      <div className={styles.password}>
+        <AuthInput
+          label="密碼"
+          placeholder="請輸入密碼"
+          type="password"
+          wordCount={wordCount}
+          active={false}
+          value={password}
+          onChange={(passwordInputValue) => setPassword(passwordInputValue)}
+        />
+      </div>
+      
 
       <button
         className={styles.authButton}

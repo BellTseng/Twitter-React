@@ -44,6 +44,15 @@ const SignUpPage = () => {
       return
     }
 
+    if(password !== passwordCheck){
+      Toast.fire({
+        title: '密碼與密碼確認不相符！',
+        icon: 'warning',
+      });
+
+      return
+    }
+
     console.log('account: ', account)
     console.log('username: ', username)
     console.log('email: ', email)
@@ -59,55 +68,67 @@ const SignUpPage = () => {
 
       <h3>建立你的帳號</h3>
 
-      <AuthInput
-        label="帳號"
-        placeholder="請輸入帳號"
-        type="text"
-        wordCount={wordCount}
-        active={true}
-        value={account}
-        onChange={(accountInputValue) => setAccount(accountInputValue)}
-      />
+      <div className={styles.account}>
+        <AuthInput
+          label="帳號"
+          placeholder="請輸入帳號"
+          type="text"
+          wordCount={wordCount}
+          active={true}
+          value={account}
+          onChange={(accountInputValue) => setAccount(accountInputValue)}
+        />
+      </div>
 
-      <AuthInput
-        label="名稱"
-        placeholder="請輸入名稱"
-        type="text"
-        wordCount={wordCount}
-        active={true}
-        value={username}
-        onChange={(nameInputValue) => setUserName(nameInputValue)}
-      />
 
-      <AuthInput
-        label="Email"
-        placeholder="請輸入 Email"
-        type="text"
-        wordCount={wordCount}
-        active={true}
-        value={email}
-        onChange={(emailInputValue) => setEmail(emailInputValue)}
-      />
-
-      <AuthInput
-        label="密碼"
-        placeholder="請輸入密碼"
-        type="password"
-        wordCount={wordCount}
-        active={true}
-        value={password}
-        onChange={(passwordInputValue) => setPassword(passwordInputValue)}
-      />
-
-      <AuthInput
-        label="密碼確認"
-        placeholder="請輸入帳號"
-        type="password"
-        wordCount={wordCount}
-        active={true}
-        value={passwordCheck}
-        onChange={(passwordCheckInputValue) => setPasswordCheck(passwordCheckInputValue)}
-      />
+      <div className={styles.userName}>
+        <AuthInput
+          label="名稱"
+          placeholder="請輸入名稱"
+          type="text"
+          wordCount={wordCount}
+          active={true}
+          value={username}
+          onChange={(nameInputValue) => setUserName(nameInputValue)}
+        />
+      </div>
+      
+      <div className={styles.email}>
+        <AuthInput
+          label="Email"
+          placeholder="請輸入 Email"
+          type="text"
+          wordCount={wordCount}
+          active={true}
+          value={email}
+          onChange={(emailInputValue) => setEmail(emailInputValue)}
+        />
+      </div>
+      
+      <div className={styles.password}>
+        <AuthInput
+          label="密碼"
+          placeholder="請輸入密碼"
+          type="password"
+          wordCount={wordCount}
+          active={true}
+          value={password}
+          onChange={(passwordInputValue) => setPassword(passwordInputValue)}
+        />
+      </div>
+      
+      <div className={styles.passwordCheck}>
+        <AuthInput
+          label="密碼確認"
+          placeholder="請輸入密碼"
+          type="password"
+          wordCount={wordCount}
+          active={true}
+          value={passwordCheck}
+          onChange={(passwordCheckInputValue) => setPasswordCheck(passwordCheckInputValue)}
+        />
+      </div>
+      
 
       <button
         className={styles.authButton}

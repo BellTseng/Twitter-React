@@ -1,6 +1,7 @@
 import './style/App.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AppLayout from './components/laylout/AppLayout'
+import AdminLayout from './components/laylout/AdminLayout'
 import LoginPage from './page/LoginPage'
 import SignUpPage from './page/SignUpPage'
 import SettingPage from './page/SettingPage'
@@ -28,7 +29,7 @@ function App() {
             <Route path="/follow" element={<FollowPage />} />
           </Route>
           <Route path="admin/login" element={<AdminLoginPage />} />
-          <Route element={<AppLayout type='admin' />}>
+          <Route element={<AdminLayout type='admin' />}>
             <Route path="admin/main" element={<AdminMainPage />} />
             <Route path="admin/users" element={<AdminUsersPage />} />
           </Route>

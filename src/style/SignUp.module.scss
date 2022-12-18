@@ -15,6 +15,14 @@
     font-weight: 700;
   }
 
+  .account,
+  .userName,
+  .email,
+  .password,
+  .passwordCheck {
+    width: 356px;
+  }
+
   .authButton {
     border-radius: 50px;
     background-color: #ff6600;
