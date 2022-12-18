@@ -1,4 +1,4 @@
-import style from '../../style/Modal.module.scss';
+import style from './Modal.module.scss';
 import { useState } from 'react';
 
 

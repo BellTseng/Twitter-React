@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import style from './TweetEdit.module.scss';
-const TweetEdit = ({ placeholder, onClange, onClick }) => {
+const TweetEdit = ({ placeholder, onClange, onClick, name }) => {
   const textArea = useRef(null);
 
   return (
@@ -20,7 +20,7 @@ const TweetEdit = ({ placeholder, onClange, onClick }) => {
         <button
           className={style.btn}
           onClick={() => onClick?.(textArea.current.value)}>
-          推文
+          {name}
         </button>
       </div>
     </div>

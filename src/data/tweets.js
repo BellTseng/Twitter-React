@@ -1,6 +1,6 @@
 export const defaultTweetList = [{
   "id": 1,
-  "description": "deserunt qui. Error optio sapient",
+  "description": "deserunt qui. Error optio sapient AAA",
   "UserId": 2,
   "createdAt": "2022-12-11T01:19:30.000Z",
   "updatedAt": "2022-12-11T01:19:30.000Z",
@@ -15,7 +15,7 @@ export const defaultTweetList = [{
   "isLiked": false
 }, {
   "id": 11,
-  "description": "deserunt qui. Error optio sapient",
+  "description": "deserunt qui. Error optio sapient BBB",
   "UserId": 21,
   "createdAt": "2022-12-11T01:19:30.000Z",
   "updatedAt": "2022-12-11T01:19:30.000Z",
@@ -73,3 +73,31 @@ export const defaultReplys = [
     }
   },
 ];
+
+
+export const follows = [
+  {
+    "id": 4,
+    "name": "User3",
+    "account": "user3",
+    "avatar": "https://loremflickr.com/320/240/logo/?lock=3",
+    "followerCount": 1,
+    "isFollowed": 1
+  },
+  {
+    "id": 5,
+    "name": "User4",
+    "account": "user4",
+    "avatar": "https://loremflickr.com/320/240/logo/?lock=4",
+    "followerCount": 1,
+    "isFollowed": 1
+  },
+  {
+    "id": 2,
+    "name": "User1",
+    "account": "user1",
+    "avatar": "https://loremflickr.com/320/240/logo/?lock=1",
+    "followerCount": 0,
+    "isFollowed": 0
+  } //rest users
+]

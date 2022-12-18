@@ -60,6 +60,7 @@ const SideBar = ({ type }) => {
       <Modal isOpen={modalOpen} closeModal={handleCloseModal}>
         {modalOpen &&
           <TweetEdit
+            name='推文'
             placeholder='有什麼新鮮事?'
             onClick={handleCreateTweet}
           />}

@@ -1,8 +1,12 @@
-
+import FollowList from "../components/tweet/FollowList/FollowList"
+import Header from "../components/layoutItems/Header";
 
 const FollowPage = () => {
-  return(
-    <h1>FollowPage</h1>
+  return (
+    <>
+      <Header title="跟隨者" type="main" />
+      {/* <FollowList /> */}
+    </>
   )
 }
 

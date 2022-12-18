@@ -2,7 +2,7 @@ import { useState } from "react";
 import style from "./TweetList.module.scss";
 import { Link } from "react-router-dom";
 
-const TweetList = ({ tweets }) => {
+const TweetList = ({ tweets, onClickReply, onClickLike }) => {
 
   // [v] 點推文
   // [ ] 回覆
@@ -26,8 +26,18 @@ const TweetList = ({ tweets }) => {
                 {tweet.description}
               </Link>
               <div className={style.toolbar}>
-                <div className={style.toolButton + ' ' + style.replyCount}>{tweet.replyCount}</div>
-                <div className={style.toolButton + ' ' + style.likeCount}>{tweet.likeCount}</div>
+                <button
+                  onClick={() => onClickReply?.({ ...tweet })}
+                  className={style.toolButton + ' ' + style.replyCount}
+                >
+                  {tweet.replyCount}
+                </button>
+                <button
+                  onClick={() => onClickLike?.({ ...tweet })}
+                  className={style.toolButton + ' ' + style.likeCount + ' ' + (!!tweet.isLiked ? style.active : '')}
+                >
+                  {tweet.likeCount}
+                </button>
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 .avatar {
-  padding: 0px 10px;
+  padding: 10px 10px 10px 0;
 }
 
 .avatar>img {
@@ -15,16 +15,6 @@
   line-height: 15px;
 }
 
-.replyAccount {
-  font-weight: 500;
-  margin-bottom: 5px;
-
-  span {
-    color: #FF6600;
-    margin-left: 5px;
-  }
-}
-
 .name {
   font-weight: 700;
   color: #1C1C1C;
@@ -36,36 +26,47 @@
   color: #657786;
 }
 
-
 .tweet {
-  display: flex;
-  border-top: 1px #E6ECF0 solid;
   padding: 15px;
+}
 
-  .top {
-    display: flex;
-    margin-bottom: 4px;
-  }
+.top {
+  display: flex;
+  align-items: center;
 }
 
 .description {
   padding: 6px 0 14px;
   color: #1C1C1C;
   font-weight: 500;
-  font-size: 15px;
-  line-height: 22px;
+  font-size: 23px;
+  line-height: 34px;
   text-decoration: none;
+  border-bottom: 1px solid #E6ECF0;
 }
 
-.commend {
-  color: #1C1C1C;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 22px;
+.count {
+  display: flex;
+  font-size: 19px;
+  line-height: 28px;
+  border-bottom: 1px solid #E6ECF0;
+
+  >p {
+    margin-right: 20px;
+    color: #657786;
+    font-weight: 500;
+
+    >span {
+      font-weight: 700;
+      color: #1C1C1C;
+    }
+  }
 }
+
 
 .toolbar {
   display: flex;
+  margin-top: 15px;
 }
 
 .toolButton {
@@ -73,22 +74,16 @@
   display: flex;
   align-items: center;
   width: 80px;
-  font-size: 14px;
-  line-height: 14px;
-  font-weight: 600;
-  color: #6C757D;
 
   &::before {
     content: '';
-    width: 23px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     display: inline-block;
     margin-right: 0px;
-    background-position: center;
+    background-position: left center;
     background-repeat: no-repeat;
-    background-size: 14px;
-    cursor: pointer;
-    margin-right: 5px;
+    background-size: 25px auto;
   }
 
   &.replyCount {
