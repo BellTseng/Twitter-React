@@ -75,29 +75,25 @@ export const defaultReplys = [
 ];
 
 
-export const follows = [
+export const defaultFollows = [
   {
-    "id": 4,
-    "name": "User3",
-    "account": "user3",
-    "avatar": "https://loremflickr.com/320/240/logo/?lock=3",
-    "followerCount": 1,
-    "isFollowed": 1
-  },
-  {
-    "id": 5,
+    "followerId": 2,
+    "followingId": 5,
+    "createdAt": "2022-12-12T08:11:42.000Z",
+    "updatedAt": "2022-12-12T08:11:42.000Z",
     "name": "User4",
-    "account": "user4",
+    "introduction": "quaerat consequatur doloremque",
     "avatar": "https://loremflickr.com/320/240/logo/?lock=4",
-    "followerCount": 1,
     "isFollowed": 1
   },
   {
-    "id": 2,
-    "name": "User1",
-    "account": "user1",
-    "avatar": "https://loremflickr.com/320/240/logo/?lock=1",
-    "followerCount": 0,
-    "isFollowed": 0
-  } //rest users
+    "followerId": 2,
+    "followingId": 4,
+    "createdAt": "2022-12-12T08:11:39.000Z",
+    "updatedAt": "2022-12-12T08:11:39.000Z",
+    "name": "User3",
+    "introduction": "At enim sint sed nam.\nEst sed atque alias similique.\nEst et id iusto repellendus est id vel non rerum.\nLibero aspernatur voluptas possimus dolore voluptatem eos",
+    "avatar": "https://loremflickr.com/320/240/logo/?lock=3",
+    "isFollowed": 1
+  }, //all followings
 ]
