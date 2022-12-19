@@ -18,17 +18,18 @@ axiosInstance.interceptors.request.use((config) => {
 
 
 // 取得_所有推文
-const getTweets = async () => {
+export const getTweets = async () => {
   try {
     const res = await axiosInstance.get(`${baseUrl}/tweets`);
-    return res.data.data;
+    console.log('res', res)
+    return res.data;
   } catch (err) {
     console.error('[Get Tweets failed]:', err);
   }
 }
 
 // 取得_一筆推文
-const getTweet = async (tweetId) => {
+export const getTweet = async (tweetId) => {
   try {
     const res = await axiosInstance.get(`${baseUrl}/tweets/${tweetId}`);
     return res.data.data;
@@ -38,7 +39,7 @@ const getTweet = async (tweetId) => {
 }
 
 // 新增_推文
-const createTweet = async (payload) => {
+export const createTweet = async (payload) => {
   try {
     const { title, isDone } = payload;
     const res = await axiosInstance.post(`${baseUrl}/todos`, {

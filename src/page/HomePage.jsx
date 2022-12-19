@@ -3,48 +3,44 @@ import TweetList from '../components/tweet/TweetList/TweetList';
 import SingleTweetForReply from '../components/tweet/SingleTweetForReply/SingleTweetForReply';
 import Header from "../components/layoutItems/Header";
 import { defaultTweetList, tweet } from './../data/tweets.js'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import Modal from '../components/modal/Modal';
+import { getTweets, createTweet } from '../api/tweet';
 
 
 const HomePage = () => {
   const [tweet, setTweet] = useState(null)
-  const [tweets, setTweets] = useState(defaultTweetList);
+  const [tweets, setTweets] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleCloseModal = () => {
     setModalOpen(false);
   }
 
-  const handleCreateTweet = (value) => {
+  const handleCreateTweet = async (value) => {
     // 頁面資料處理
-    console.log('tweet:', value);
-    Swal.fire({
-      position: 'top',
-      title: '新增推文成功！',
-      timer: 1000,
-      icon: 'success',
-      showConfirmButton: false,
-    });
+    console.log('descript:', value);
 
-    // 新增Tweet這邊會在使用API
-    setTweets([{
-      "id": tweets.length++,
-      "description": value,
-      "UserId": 2,
-      "createdAt": "2022-12-13T13:14:22.000Z",
-      "updatedAt": "2022-12-13T13:14:22.000Z",
-      "replyCount": 3,
-      "likeCount": 0,
-      "User": {
-        "id": 2,
-        "account": "user1",
-        "name": "user1",
-        "avatar": "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
-      },
-      "isLiked": false
-    }].concat([...tweets]).filter(tweet => !!tweet));
+
+
+    try {
+      const data = await createTweet({
+        title: value,
+        isDone: false,
+      });
+
+      setTweets((prevTweets) => {
+        return [...prevTweets, {
+          id: data.id,
+          title: data.title,
+          isDone: data.isDone,
+          isEdit: false
+        }]
+      })
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   const handleCreateReply = (value) => {
@@ -100,6 +96,18 @@ const HomePage = () => {
       return t;
     }));
   }
+
+  useEffect(() => {
+    const getTweetsAsync = async () => {
+      try {
+        const tweets = await getTweets();
+        setTweets(tweets.map(todo => ({ ...todo, isEdit: false })));
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getTweetsAsync();
+  });
 
 
   return (
