@@ -34,7 +34,7 @@ function App() {
             <Route path="admin/users" element={<AdminUsersPage />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
-          <Route path="/test" element={<SettingPage />} />
+          <Route path="/test" element={<AdminMainPage />} />
         </Routes>
       </BrowserRouter>
 

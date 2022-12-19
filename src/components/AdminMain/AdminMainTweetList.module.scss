@@ -1,6 +1,6 @@
 .adminMain {
-  position: relative;
-  margin: 50px;
+  // position: relative;
+  // margin-left: 100px;
   border-right: 1px solid #E6ECF0;
   border-left: 1px solid #E6ECF0;
   height: 100vh;
@@ -15,11 +15,12 @@
   }
 
   .tweetList {
-    position: absolute;
-    top: 60px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+    // position: absolute;
+    // top: 60px;
+    // left: 0px;
+    // right: 0px;
+    // bottom: 0px;
+    // margin-top: 60px;
     overflow-y: scroll
   }
 
