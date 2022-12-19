@@ -32,7 +32,7 @@ export const getTweets = async () => {
 export const getTweet = async (tweetId) => {
   try {
     const res = await axiosInstance.get(`${baseUrl}/tweets/${tweetId}`);
-    return res.data.data;
+    return res.data;
   } catch (err) {
     console.error('[Get Tweets failed]:', err);
   }
@@ -42,14 +42,14 @@ export const getTweet = async (tweetId) => {
 export const createTweet = async (payload) => {
   try {
     const { title, isDone } = payload;
-    const res = await axiosInstance.post(`${baseUrl}/todos`, {
+    const res = await axiosInstance.post(`${baseUrl}/tweet`, {
       title,
       isDone,
     });
 
     return res.data.data;
   } catch (err) {
-    console.error('[Greate Todos failed]:', err);
+    console.error('[Create Tweet failed]:', err);
   }
 }
 

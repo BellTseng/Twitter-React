@@ -1,19 +1,23 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthInput from "../components/AuthInput"
 import './../style/Login.scss'
 import logo from './../image/Icon@2x.jpg'
 import Swal from 'sweetalert2';
+import { useAuth } from './../contexts/AuthContext';
 
 const LoginPage = () => {
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
   let wordCount = 50
+  const navigate = useNavigate();
+  const { login, isAuthenticated } = useAuth();
 
-  function handleClick() {
+
+  const handleClick = async () => {
     if (
       account.trim().length === 0 ||
-      password.trim().length === 0 
+      password.trim().length === 0
     ) {
       Swal.fire({
         position: 'top',
@@ -28,7 +32,7 @@ const LoginPage = () => {
 
     if (
       account.trim().length > wordCount ||
-      password.trim().length > wordCount 
+      password.trim().length > wordCount
     ) {
       Swal.fire({
         position: 'top',
@@ -40,6 +44,28 @@ const LoginPage = () => {
 
       return
     }
+
+    // 登入
+    const success = await login({ account, password });
+    if (success) {
+      Swal.fire({
+        title: '登入成功',
+        icon: 'success',
+        showCancelButton: false,
+        timer: 1000,
+        position: 'top'
+      });
+      navigate('/home');
+      return;
+    }
+    Swal.fire({
+      title: '登入失敗',
+      icon: 'error',
+      showCancelButton: false,
+      timer: 1000,
+      position: 'top'
+    });
+
 
     console.log('account: ', account)
     console.log('password: ', password)

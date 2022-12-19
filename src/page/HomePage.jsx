@@ -2,7 +2,6 @@ import TweetEdit from '../components/tweet/TweetEdit/TweetEdit';
 import TweetList from '../components/tweet/TweetList/TweetList';
 import SingleTweetForReply from '../components/tweet/SingleTweetForReply/SingleTweetForReply';
 import Header from "../components/layoutItems/Header";
-import { defaultTweetList, tweet } from './../data/tweets.js'
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import Modal from '../components/modal/Modal';
