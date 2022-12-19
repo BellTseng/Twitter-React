@@ -64,6 +64,7 @@ export const AuthProvider = ({ children }) => {
         if (!!result) {
           setCurrentUser({ ...result.data.user }); // 設定使用者資料
           setIsAuthenticated(true);
+          console.log('authToken', result.data.token)
           localStorage.setItem('authToken', result.data.token) // 設定新的token到localStorage
         } else {
           setCurrentUser(null); // 設定使用者資料
