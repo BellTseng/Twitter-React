@@ -18,6 +18,7 @@ const HomePage = () => {
   }
 
   const handleCreateTweet = (value) => {
+    // 頁面資料處理
     console.log('tweet:', value);
     Swal.fire({
       position: 'top',

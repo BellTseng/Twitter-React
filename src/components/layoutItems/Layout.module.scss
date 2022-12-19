@@ -9,7 +9,7 @@
    position: relative;
    width: 100%;
    max-width: 640px;
-   margin-left: 332px;
+   margin-left: 333px;
  }
 
  .header {
@@ -25,13 +25,14 @@
        line-height: 26px;
        font-weight: 700;
        margin: 0;
-
        color: #1C1C1C;
+       display: flex;
+       align-items: center;
      }
    }
 
    &.tweet {
-     &::before {
+     h2::before {
        content: '';
        width: 23px;
        height: 40px;
