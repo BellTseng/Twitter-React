@@ -5,9 +5,6 @@ import { Link } from 'react-router-dom';
   main => 首頁
   tweet => 推文與回文串頁面，有箭頭
   user => 使用者
-
-
-
 */
 
 const Header = ({ type, title, subTitle, url }) => {
@@ -21,9 +18,10 @@ const Header = ({ type, title, subTitle, url }) => {
 
       {type === 'user' &&
         <Link to={url}>
-          <h2 className='tweet'> 
+          <h2 className='tweet'>
             <span>{title}</span>
-           </h2>
+            <span>{subTitle}</span>
+          </h2>
         </Link>}
     </div>
   )

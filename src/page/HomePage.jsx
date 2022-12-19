@@ -58,11 +58,11 @@ const HomePage = () => {
     });
   }
 
-  const handleOpenReply = (replyTweet) => {
-    setTweet({ ...replyTweet });
+  const handleOpenReply = (chosedTweet) => {
+    setTweet({ ...chosedTweet });
     setModalOpen(true);
     // 打開Modale
-    console.log('reply:', replyTweet);
+    console.log('reply:', chosedTweet);
     // Swal.fire({
     //   position: 'top',
     //   title: '新增回覆成功！',
@@ -71,23 +71,16 @@ const HomePage = () => {
     //   showConfirmButton: false,
     // });
 
-    // // 新增Tweet這邊會在使用ReplyAPI
-    // setTweets([{
-    //   "id": tweets.length++,
-    //   "description": value,
-    //   "UserId": 2,
-    //   "createdAt": "2022-12-13T13:14:22.000Z",
-    //   "updatedAt": "2022-12-13T13:14:22.000Z",
-    //   "replyCount": 3 + 1,
-    //   "likeCount": 0,
-    //   "User": {
-    //     "id": 2,
-    //     "account": "user1",
-    //     "name": "user1",
-    //     "avatar": "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
-    //   },
-    //   "isLiked": false
-    // }].concat([...tweets]).filter(tweet => !!tweet));
+    // 新增Tweet這邊會在使用ReplyAPI
+    setTweets(tweets.map(t => {
+      if (t.id === chosedTweet.id) {
+        return {
+          ...chosedTweet,
+          replyCount: chosedTweet.replyCount + 1
+        }
+      }
+      return t;
+    }));
   }
 
   const handleClickLike = (chosedTweet) => {
