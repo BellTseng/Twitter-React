@@ -28,7 +28,7 @@ const Modal = ({ isOpen, closeModal, children }) => {
       className={style.modal + ' ' + (!!isOpen ? style.show : '')}
       onClick={handleClickClose}
     >
-      <div className={style.modalContent}>
+      <div className={style.modalContent}>  
         <button className={style.close} onClick={closeModal}></button>
         <div className={style.modalContentInner}>
           {children}

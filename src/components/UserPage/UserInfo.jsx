@@ -1,7 +1,6 @@
 import styles from './UserInfo.module.scss'
 import email from './../../image/VectorEmail@2x.jpg'
 import subscription from './../../image/VectorSubscription@2x.jpg'
-import Modal from '../modal/Modal'
 import UserModal from '../modal/UserModal'
 
 const UserInfo = ({ 
@@ -81,11 +80,13 @@ const UserInfo = ({
         <p className={styles.follower}>{user.followerCount ? user.followerCount : '230'}位<span>跟隨者</span></p>
       </div>
 
-      <Modal isOpen={isOpen} closeModal={() => onShowModal?.(false)}>
-        <UserModal 
-          user={user}
-        />
-      </Modal>
+      
+      <UserModal 
+        user={user}
+        isOpen={isOpen}
+        onShowModal={(value) => onShowModal?.(value)}
+      />
+      
     </div>
   )
 }

@@ -4,7 +4,7 @@ import UserSelfArea from "../components/UserPage/UserSelfArea"
 
 const userPro = {
   id: 1,
-  bachground: 'https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989__480.jpg',
+  background: 'https://image.cache.storm.mg/styles/smg-800x533-fp/s3/media/image/2020/11/07/20201107-092915_U13380_M651499_4ac4.jpg?itok=6KFZde7p',
   avatar: 'https://storystudio.tw/storage/upload/article/2020/03/people-x-sobooks-baxuan-2.jpg',
   introduction: 'My name is Allen.',
   userName: 'Allen',
