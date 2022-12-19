@@ -6,12 +6,16 @@ import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import Modal from '../components/modal/Modal';
 import { getTweets, createTweet } from '../api/tweet';
+import { useAuth } from "./../contexts/AuthContext";
 
 
 const HomePage = () => {
+  console.log('HomePage')
+  const { isAuthenticated, currentUser } = useAuth();
   const [tweet, setTweet] = useState(null)
   const [tweets, setTweets] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -20,8 +24,6 @@ const HomePage = () => {
   const handleCreateTweet = async (value) => {
     // 頁面資料處理
     console.log('descript:', value);
-
-
 
     try {
       const data = await createTweet({
@@ -96,17 +98,23 @@ const HomePage = () => {
     }));
   }
 
+  console.log('isAuthenticated1', isAuthenticated)
   useEffect(() => {
-    const getTweetsAsync = async () => {
-      try {
-        const tweets = await getTweets();
-        setTweets(tweets.map(todo => ({ ...todo, isEdit: false })));
-      } catch (err) {
-        console.log(err)
+    console.log('HomePage', 'useEffect')
+    if (isAuthenticated) {
+      const getTweetsAsync = async () => {
+        try {
+          const tweets = await getTweets();
+          setTweets(tweets.map(todo => ({ ...todo, isEdit: false })));
+        } catch (err) {
+          console.log(err)
+        }
       }
+      getTweetsAsync();
     }
-    getTweetsAsync();
-  });
+    console.log('isAuthenticated2', isAuthenticated)
+    console.log('currentUser', currentUser)
+  }, [isAuthenticated]);
 
 
   return (

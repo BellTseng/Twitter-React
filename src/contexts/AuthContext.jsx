@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       const user = await getUser(tempUser.id)
       console.log('user', user)
 
-      if (!!user) {
+      if (!user) {
         console.log('沒有User')
         setIsAuthenticated(false)
         setCurrentUser(null)
@@ -45,15 +45,18 @@ export const AuthProvider = ({ children }) => {
       }
 
       // 設定使用者
+      console.log('有User')
       setIsAuthenticated(true)
       setCurrentUser(user)
 
     }
     checkTockenIsValid()
-  })
+  }, [pathname])
 
   return (<AuthContext.Provider
     value={{
+      isAuthenticated: isAuthenticated,
+      currentUser: currentUser,
       // 登入
       login: async (data) => {
         const result = await login({

@@ -21,6 +21,7 @@ axiosInstance.interceptors.request.use((config) => {
 export const getTweets = async () => {
   try {
     const res = await axiosInstance.get(`${baseUrl}/tweets`);
+    // 這裡一直被反覆執行?
     console.log('res', res)
     return res.data;
   } catch (err) {
