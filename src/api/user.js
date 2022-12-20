@@ -39,3 +39,25 @@ export const getUserLikes = async (userId) => {
     console.error('[Get Tweets failed]:', err);
   }
 }
+
+// 修改個人資料
+export const putUser = async (payload) => {
+  const { id, name, email, password, checkPassword, account, avatar, cover, introduction } = payload
+  try {
+    const { data } = await axiosInstance.put(`${baseUrl}/users/${id}`, {
+      name, 
+      email, 
+      password, 
+      checkPassword, 
+      account, 
+      avatar, 
+      cover, 
+      introduction
+    })
+
+    return data
+  } 
+  catch (error) {
+    console.error('[Put User failed]:', error);
+  }
+}
