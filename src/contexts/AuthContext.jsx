@@ -11,6 +11,7 @@ const defaultAuthContext = {
   register: null,
   login: null,
   logout: null,
+  updatedAt: null
 }
 
 const AuthContext = createContext(defaultAuthContext)
@@ -20,6 +21,7 @@ export const useAuth = () => useContext(AuthContext)
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
+  const [updatedAt, setUpdatedAt] = useState(null)
   const { pathname } = useLocation()
 
   useEffect(() => {
@@ -45,10 +47,21 @@ export const AuthProvider = ({ children }) => {
         return
       }
 
-      // 設定使用者
-      console.log('有User')
-      setIsAuthenticated(true)
-      setCurrentUser(result.data)
+      if (pathname.includes('admin')) {
+        // 設定使用者後台
+        if (result.data.role === 'admin') {
+          setIsAuthenticated(true)
+          setCurrentUser(result.data)
+        } else {
+          setIsAuthenticated(false)
+          setCurrentUser(null)
+        }
+      } else {
+        // 設定使用者前台
+        console.log('有User')
+        setIsAuthenticated(true)
+        setCurrentUser(result.data)
+      }
 
 
     }
@@ -60,6 +73,10 @@ export const AuthProvider = ({ children }) => {
     value={{
       isAuthenticated: isAuthenticated,
       currentUser: currentUser,
+      updatedAt: updatedAt,
+      update: () => {
+        setUpdatedAt(new Date())
+      },
       // 登入
       login: async (data) => {
         const result = await login({

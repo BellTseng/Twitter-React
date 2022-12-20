@@ -1,13 +1,8 @@
-import { useState } from "react";
-import style from "./TweetList.module.scss";
 import { Link } from "react-router-dom";
+import style from "./TweetList.module.scss";
+
 
 const TweetList = ({ tweets, onClickReply, onClickLike }) => {
-  console.log('tweets:', tweets)
-  // [v] 點推文
-  // [ ] 回覆
-  // [ ] 按讚
-
   return (
     <div className="tweetList">
       {
@@ -20,7 +15,7 @@ const TweetList = ({ tweets, onClickReply, onClickLike }) => {
               <div className={style.top}>
                 <Link className={style.name} to={'/userSelf/' + tweet.User.id} > {tweet.User.name}</Link>
                 <Link className={style.account} to={'/userSelf/' + tweet.User.id}>@{tweet.User.account}</Link>
-                {/* <div className={style.time}>{tweet.creatAt}</div> */}
+                <div className={style.time}>{tweet.createdAt}</div>
               </div>
               <Link to={'/replylist/' + tweet.id} className={style.description}>
                 {tweet.description}

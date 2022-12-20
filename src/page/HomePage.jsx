@@ -1,20 +1,20 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./../contexts/AuthContext";
 import TweetEdit from '../components/tweet/TweetEdit/TweetEdit';
 import TweetList from '../components/tweet/TweetList/TweetList';
 import SingleTweetForReply from '../components/tweet/SingleTweetForReply/SingleTweetForReply';
 import Header from "../components/layoutItems/Header";
-import { useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
 import Modal from '../components/modal/Modal';
-import { getTweets, createTweet } from '../api/tweet';
-import { useAuth } from "./../contexts/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { getTweets, createTweet, createReply, addLike, removeLike } from '../api/tweet';
+import { getUserLikes } from './../api/user';
+import Swal from 'sweetalert2';
 
 
 
 const HomePage = () => {
-  console.log('HomePage')
   const navigate = useNavigate();
-  const { isAuthenticated, currentUser } = useAuth();
+  const { isAuthenticated, currentUser, update } = useAuth();
   const [tweet, setTweet] = useState(null)
   const [tweets, setTweets] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -26,103 +26,101 @@ const HomePage = () => {
 
   const handleCreateTweet = async (value) => {
     // 頁面資料處理
-    console.log('descript:', value);
-
     try {
       const result = await createTweet({
         UserId: currentUser.id,
         description: value,
       });
-
-      console.log('result', result);
-
       setTweets((prevTweets) => {
         return [{
           ...result,
           createdAt: "幾秒前",
+          likeCount: 0,
+          replyCount: 0,
+          isLiked: false,
           User: { ...currentUser }
         }, ...prevTweets]
       })
-
-
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
-  const handleCreateReply = (value) => {
+  const handleCreateReply = async (value) => {
     setModalOpen(false);
-    console.log('reply:', value);
-    Swal.fire({
-      position: 'top',
-      title: '新增回覆成功！',
-      timer: 1000,
-      icon: 'success',
-      showConfirmButton: false,
-    });
+    try {
+      const result = await createReply({
+        tweetId: tweet.id,
+        UserId: currentUser.id,
+        comment: value,
+      });
+      setTweets(tweets.map(t => {
+        if (t.id === tweet.id) {
+          return {
+            ...tweet,
+            replyCount: tweet.replyCount + 1
+          }
+        }
+        return t;
+      }));
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   const handleOpenReply = (chosedTweet) => {
     setTweet({ ...chosedTweet });
     setModalOpen(true);
-    // 打開Modale
-    console.log('reply:', chosedTweet);
-    // Swal.fire({
-    //   position: 'top',
-    //   title: '新增回覆成功！',
-    //   timer: 1000,
-    //   icon: 'success',
-    //   showConfirmButton: false,
-    // });
-
-    // 新增Tweet這邊會在使用ReplyAPI
-    setTweets(tweets.map(t => {
-      if (t.id === chosedTweet.id) {
-        return {
-          ...chosedTweet,
-          replyCount: chosedTweet.replyCount + 1
-        }
-      }
-      return t;
-    }));
   }
 
-  const handleClickLike = (chosedTweet) => {
+  const handleClickLike = async (chosedTweet) => {
     console.log('tweet:', chosedTweet);
     const tweet = { ...chosedTweet }
-
     // 新增Tweet這邊會在使用ChangeLikePOSTAPI
-    setTweets(tweets.map(t => {
-      if (t.id === tweet.id) {
-        return {
-          ...tweet,
-          isLiked: !tweet.isLiked,
-          likeCount: tweet.likeCount + (!!tweet.isLiked ? -1 : 1)
+    try {
+      setTweets(tweets.map(t => {
+        if (t.id === tweet.id) {
+          return {
+            ...tweet,
+            isLiked: !tweet.isLiked,
+            likeCount: tweet.likeCount + (!!tweet.isLiked ? -1 : 1)
+          }
         }
+        return t;
+      }));
+      // 按讚
+      if (!tweet.isLiked) {
+        await addLike(tweet.id);
       }
-      return t;
-    }));
+      // 取消讚
+      if (!!tweet.isLiked) {
+        await removeLike(tweet.id);
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  console.log('isAuthenticated1', isAuthenticated)
   useEffect(() => {
-    console.log('HomePage', 'useEffect')
-    if (isAuthenticated) {
-      const getTweetsAsync = async () => {
-        try {
-          const tweets = await getTweets();
-          setTweets(tweets.map(todo => ({ ...todo, isEdit: false })));
-        } catch (err) {
-          console.log(err)
-        }
-      }
-      getTweetsAsync();
-    } else {
+    if (!isAuthenticated || currentUser.role !== 'user') {
       navigate('/login')
+      return
     }
-    console.log('isAuthenticated2', isAuthenticated)
-    console.log('currentUser', currentUser)
-  }, [isAuthenticated, currentUser, navigate]);
+    const getTweetsAsync = async () => {
+      try {
+        const tweets = await getTweets()
+        const dbLikeList = await getUserLikes(currentUser.id)
+        setTweets(tweets.map(tweet => ({
+          ...tweet,
+          isEdit: false,
+          isLiked: dbLikeList.map(o => o.TweetId).includes(tweet.id)
+        })));
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getTweetsAsync();
+  }, [currentUser, isAuthenticated, navigate, update]);
 
 
   return (

@@ -33,6 +33,7 @@ export const getTweets = async () => {
 export const getTweet = async (tweetId) => {
   try {
     const res = await axiosInstance.get(`${baseUrl}/tweets/${tweetId}`);
+    console.log('getTweet', 'res', res)
     return res.data;
   } catch (err) {
     console.error('[Get Tweets failed]:', err);
@@ -50,23 +51,62 @@ export const createTweet = async (payload) => {
 
     console.log('res', res)
 
-    return res.data.postedTweet;
+    return res.data.data
   } catch (err) {
     console.error('[Create Tweet failed]:', err);
   }
 }
 
 
-/* 個人頁面 */
+// 取得_所有回覆
+export const getReplies = async (tweetId) => {
+  try {
+    const res = await axiosInstance.get(`${baseUrl}/tweets/${tweetId}/replies`);
+    // 這裡一直被反覆執行?
+    console.log('getReplies', 'res', res)
+    return res.data;
+  } catch (err) {
+    console.error('[Get Replies failed]:', err);
+  }
+}
 
 
+// 新增_回覆
+export const createReply = async (payload) => {
+  try {
+    const { tweetId, UserId, comment } = payload
+    const res = await axiosInstance.post(`${baseUrl}/tweets/${tweetId}/replies`, {
+      UserId,
+      comment
+    });
+    console.log('res', res)
+    return res.data.data // reply
+  } catch (err) {
+    console.error('[Create Reply failed]:', err);
+  }
+}
 
 // 按讚
-const addLike = () => {
-
+export const addLike = async (tweetId) => {
+  try {
+    const res = await axiosInstance.post(`${baseUrl}/tweets/${tweetId}/like`);
+    console.log('res', res)
+    return res.data.data // Like
+  } catch (err) {
+    console.error('[Add Like failed]:', err);
+  }
 }
 
 // 移除讚
-const removeLike = () => {
-
+export const removeLike = async (tweetId) => {
+  try {
+    const res = await axiosInstance.post(`${baseUrl}/tweets/${tweetId}/unlike`);
+    console.log('res', res)
+    return res.data.data // unLike
+  } catch (err) {
+    console.error('[Remove Like failed]:', err);
+  }
 }
+
+/* 個人頁面 */
+
