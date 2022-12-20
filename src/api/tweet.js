@@ -80,7 +80,7 @@ export const createReply = async (payload) => {
       comment
     });
     console.log('res', res)
-    return res.data.data // reply
+    return res.data // reply
   } catch (err) {
     console.error('[Create Reply failed]:', err);
   }

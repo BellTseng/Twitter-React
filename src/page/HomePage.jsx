@@ -110,17 +110,18 @@ const HomePage = () => {
       try {
         const tweets = await getTweets()
         const dbLikeList = await getUserLikes(currentUser.id)
-        setTweets(tweets.map(tweet => ({
+        const tweetsWidthLiked = tweets.map(tweet => ({
           ...tweet,
           isEdit: false,
           isLiked: dbLikeList.map(o => o.TweetId).includes(tweet.id)
-        })));
+        }))
+        setTweets(tweetsWidthLiked);
       } catch (err) {
         console.log(err)
       }
     }
     getTweetsAsync();
-  }, [currentUser, isAuthenticated, navigate, update]);
+  }, [update]);
 
 
   return (
