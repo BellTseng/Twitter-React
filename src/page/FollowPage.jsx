@@ -16,7 +16,7 @@ const FollowPage = () => {
 
   return (
     <>
-      <Header title="UserName" subTitle="25推文" type="main" />
+      <Header title="UserName" subTitle="25推文" type="user" url="" />
       <FollowList follows={follows} onClick={handleClick} />
     </>
   )

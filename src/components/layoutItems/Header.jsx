@@ -13,14 +13,16 @@ const Header = ({ type, title, subTitle, url }) => {
       {type === 'main' && <h2>{title} </h2>}
       {type === 'tweet' &&
         <Link to="/home">
-          <h2 className='tweet'> {title} </h2>
+          <h2> {title} </h2>
         </Link>}
 
       {type === 'user' &&
         <Link to={url}>
-          <h2 className='tweet'>
-            <span>{title}</span>
-            <span>{subTitle}</span>
+          <h2>
+            <div className={layout.inner}>
+              <span className={layout.title}>{title}</span>
+              <span className={layout.subTitle}>{subTitle}</span>
+            </div>
           </h2>
         </Link>}
     </div>

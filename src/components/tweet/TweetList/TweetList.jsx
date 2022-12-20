@@ -3,7 +3,7 @@ import style from "./TweetList.module.scss";
 import { Link } from "react-router-dom";
 
 const TweetList = ({ tweets, onClickReply, onClickLike }) => {
-
+  console.log('tweets:', tweets)
   // [v] 點推文
   // [ ] 回覆
   // [ ] 按讚
@@ -18,9 +18,9 @@ const TweetList = ({ tweets, onClickReply, onClickLike }) => {
             </div>
             <div className={style.info}>
               <div className={style.top}>
-                <div className={style.name}>{tweet.User.name}</div>
-                <div className={style.account}>@{tweet.User.account}</div>
-                <div className={style.time}>{tweet.time}</div>
+                <Link className={style.name} to={'/userSelf/' + tweet.User.id} > {tweet.User.name}</Link>
+                <Link className={style.account} to={'/userSelf/' + tweet.User.id}>@{tweet.User.account}</Link>
+                {/* <div className={style.time}>{tweet.creatAt}</div> */}
               </div>
               <Link to={'/replylist/' + tweet.id} className={style.description}>
                 {tweet.description}

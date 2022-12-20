@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthInput from "../components/AuthInput"
 import './../style/Login.scss'
@@ -7,12 +7,17 @@ import Swal from 'sweetalert2';
 import { useAuth } from './../contexts/AuthContext';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
   let wordCount = 50
-  const navigate = useNavigate();
   const { login, isAuthenticated } = useAuth();
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/home')
+    }
+  }, [isAuthenticated]);
 
   const handleClick = async () => {
     if (
@@ -47,6 +52,7 @@ const LoginPage = () => {
 
     // 登入
     const success = await login({ account, password });
+    
     if (success) {
       Swal.fire({
         title: '登入成功',
@@ -55,7 +61,7 @@ const LoginPage = () => {
         timer: 1000,
         position: 'top'
       });
-      navigate('/home');
+      // navigate('/home');
       return;
     }
     Swal.fire({

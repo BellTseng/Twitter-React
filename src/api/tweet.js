@@ -42,13 +42,15 @@ export const getTweet = async (tweetId) => {
 // 新增_推文
 export const createTweet = async (payload) => {
   try {
-    const { title, isDone } = payload;
-    const res = await axiosInstance.post(`${baseUrl}/tweet`, {
-      title,
-      isDone,
+    const { UserId, description } = payload;
+    const res = await axiosInstance.post(`${baseUrl}/tweets`, {
+      UserId,
+      description
     });
 
-    return res.data.data;
+    console.log('res', res)
+
+    return res.data.postedTweet;
   } catch (err) {
     console.error('[Create Tweet failed]:', err);
   }

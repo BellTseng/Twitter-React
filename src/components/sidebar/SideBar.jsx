@@ -1,18 +1,19 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import style from './SideBar.module.scss';
 import Modal from '../modal/Modal';
 import TweetEdit from './../tweet/TweetEdit/TweetEdit';
 import './navActive.scss';
+import { useAuth } from './../../contexts/AuthContext';
 
 
 
 
 const SideBar = ({ type }) => {
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
-
-
+  const { logout } = useAuth();
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -31,6 +32,13 @@ const SideBar = ({ type }) => {
     });
   }
 
+  // 登出
+  const handleLogout = () => {
+    console.log('logout');
+    logout();
+    navigate('/login')
+  }
+
   return (
     <div className={style.sidebar}>
       <div className={style.sidebarWrap}>
@@ -47,7 +55,7 @@ const SideBar = ({ type }) => {
               <NavLink className={style.navLink} to="/setting">設定</NavLink>
             </li>
             <li>
-              <NavLink className={style.navLink + ' ' + style.logout} to="/login">登出</NavLink>
+              <button onClick={handleLogout} className={style.navLink + ' ' + style.logout}>登出</button>
             </li>
           </ul>
           <button

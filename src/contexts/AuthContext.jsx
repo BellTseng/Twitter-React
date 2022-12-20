@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import * as jwt from 'jsonwebtoken'
 import { getUser } from './../api/user'
 import { login } from './../api/auth'
@@ -31,13 +31,14 @@ export const AuthProvider = ({ children }) => {
         setCurrentUser(null)
         return
       }
+
       // "message": "Unauthorized"
       const tempUser = jwt.decode(authToken)
       console.log('tempUser', tempUser)
-      const user = await getUser(tempUser.id)
-      console.log('user', user)
+      const result = await getUser(tempUser.id)
+      console.log('user', result)
 
-      if (!user) {
+      if (!result) {
         console.log('沒有User')
         setIsAuthenticated(false)
         setCurrentUser(null)
@@ -47,11 +48,11 @@ export const AuthProvider = ({ children }) => {
       // 設定使用者
       console.log('有User')
       setIsAuthenticated(true)
-      setCurrentUser(user)
-
+      setCurrentUser(result.data)
     }
     checkTockenIsValid()
   }, [pathname])
+
 
   return (<AuthContext.Provider
     value={{
@@ -68,12 +69,21 @@ export const AuthProvider = ({ children }) => {
           setCurrentUser({ ...result.data.user }); // 設定使用者資料
           setIsAuthenticated(true);
           console.log('authToken', result.data.token)
-          localStorage.setItem('authToken', result.data.token) // 設定新的token到localStorage
+          localStorage.setItem('authToken', result.data.token) // 設定新的token到return 
         } else {
           setCurrentUser(null); // 設定使用者資料
           setIsAuthenticated(false);
+          return false;
         }
         return true;
+
+      },
+      // 登出
+      logout: () => {
+        console.log('goto logout')
+        localStorage.removeItem('authToken');
+        setCurrentUser(null);
+        setIsAuthenticated(false);
       }
     }}
   >

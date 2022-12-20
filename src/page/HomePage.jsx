@@ -7,10 +7,13 @@ import Swal from 'sweetalert2';
 import Modal from '../components/modal/Modal';
 import { getTweets, createTweet } from '../api/tweet';
 import { useAuth } from "./../contexts/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+
 
 
 const HomePage = () => {
   console.log('HomePage')
+  const navigate = useNavigate();
   const { isAuthenticated, currentUser } = useAuth();
   const [tweet, setTweet] = useState(null)
   const [tweets, setTweets] = useState([]);
@@ -26,19 +29,22 @@ const HomePage = () => {
     console.log('descript:', value);
 
     try {
-      const data = await createTweet({
-        title: value,
-        isDone: false,
+      const result = await createTweet({
+        UserId: currentUser.id,
+        description: value,
       });
 
+      console.log('result', result);
+
       setTweets((prevTweets) => {
-        return [...prevTweets, {
-          id: data.id,
-          title: data.title,
-          isDone: data.isDone,
-          isEdit: false
-        }]
+        return [{
+          ...result,
+          createdAt: "幾秒前",
+          User: { ...currentUser }
+        }, ...prevTweets]
       })
+
+
     } catch (err) {
       console.log(err);
     }
@@ -111,6 +117,8 @@ const HomePage = () => {
         }
       }
       getTweetsAsync();
+    } else {
+      navigate('/login')
     }
     console.log('isAuthenticated2', isAuthenticated)
     console.log('currentUser', currentUser)

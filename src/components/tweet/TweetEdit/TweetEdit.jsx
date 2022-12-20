@@ -4,8 +4,11 @@ import style from './TweetEdit.module.scss';
 
 const TweetEdit = ({ placeholder, onClick, name }) => {
   const textArea = useRef(null);
+
   const handleClick = () => {
+    console.log('click');
     const value = textArea.current.value.trim();
+    console.log('value', value);
     if (value.length > 140) {
       alert('內容不得大於140字');
       return;
@@ -34,7 +37,7 @@ const TweetEdit = ({ placeholder, onClick, name }) => {
       <div className={style.btnBar}>
         <button
           className={style.btn}
-          onClick={() => handleClick}>
+          onClick={handleClick}>
           {name}
         </button>
       </div>

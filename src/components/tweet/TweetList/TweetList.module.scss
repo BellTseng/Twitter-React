@@ -36,6 +36,13 @@
   color: #657786;
 }
 
+.time {
+  
+  &::before {
+    content: "•";
+  }
+}
+
 
 .tweet,
 .follow {
