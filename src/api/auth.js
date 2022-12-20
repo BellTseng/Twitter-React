@@ -80,3 +80,18 @@ export const adminLogin = async ({ account, password }) => {
     console.error('[Register Failed]: ', error.message);
   }
 }
+
+export const adminCheckPermission = async (authToken) => {
+  try {
+    const { data } = await axios.get(`${authUrl}/api/admin/user`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      }
+    })
+
+    return data
+  } 
+  catch (error) {
+    console.error('[Failed]: ', error.message)
+  }
+}

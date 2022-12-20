@@ -1,6 +1,7 @@
 .adminMain {
-  // position: relative;
-  // margin-left: 100px;
+  position: relative;
+  margin-left: 330px;
+  margin-right: 130px;
   border-right: 1px solid #E6ECF0;
   border-left: 1px solid #E6ECF0;
   height: 100vh;
@@ -10,17 +11,16 @@
 
     h4 {
       font-weight: 700;
-      margin: 24px 0px 24px 30px;
+      margin: 0px 0px 24px 30px;
     }
   }
 
   .tweetList {
-    // position: absolute;
-    // top: 60px;
-    // left: 0px;
-    // right: 0px;
-    // bottom: 0px;
-    // margin-top: 60px;
+    position: absolute;
+    top: 61px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
     overflow-y: scroll
   }
 

@@ -5,7 +5,7 @@ const AdminUserList = ({ userList }) => {
   return (
     <div className={styles.adminUsers}>
       <div className={styles.title}>
-        <h4>推文清單</h4>
+        <h4>使用者列表</h4>
       </div>
       <div className={`${styles.usersList} ${styles.scrollbar}`}>
         {

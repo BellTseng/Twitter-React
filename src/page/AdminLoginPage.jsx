@@ -39,8 +39,8 @@ const AdminLoginPage = () => {
     }
 
     const success = await adminLogin({
-      account,
-      password
+      account: account.trim(),
+      password: password.trim(),
     })
 
     if(success){
@@ -59,10 +59,10 @@ const AdminLoginPage = () => {
   }
 
   useEffect(() => {
-    if(isAuthenticated && currentUser.role === 'admin'){
+    if(isAuthenticated){
       navigate('/admin/main')
     }
-  }, [isAuthenticated, currentUser, navigate])
+  }, [isAuthenticated, navigate])
 
   return(
     <div

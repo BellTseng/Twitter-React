@@ -66,10 +66,6 @@ const LoginPage = () => {
       timer: 1000,
       position: 'top'
     });
-
-
-    console.log('account: ', account)
-    console.log('password: ', password)
   }
 
   return (

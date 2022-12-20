@@ -2,7 +2,7 @@ import { createContext, useState, useEffect, useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import * as jwt from 'jsonwebtoken'
 import { getUser } from './../api/user'
-import { login, adminLogin, register } from './../api/auth'
+import { login, adminLogin, register, adminCheckPermission } from './../api/auth'
 
 
 const defaultAuthContext = {
@@ -34,6 +34,21 @@ export const AuthProvider = ({ children }) => {
         return
       }
 
+      if (pathname.includes('admin')) {
+        // 設定使用者後台
+        const response = await adminCheckPermission(authToken)
+
+        if (response) {
+          setIsAuthenticated(true)
+          setCurrentUser(response)
+        } else {
+          setIsAuthenticated(false)
+          setCurrentUser(null)
+        }
+        
+        return
+      }
+
       console.log('test')
       const tempUser = jwt.decode(authToken)
       console.log('tempUser', tempUser)
@@ -47,26 +62,17 @@ export const AuthProvider = ({ children }) => {
         return
       }
 
-      if (pathname.includes('admin')) {
-        // 設定使用者後台
-        if (result.data.role === 'admin') {
-          setIsAuthenticated(true)
-          setCurrentUser(result.data)
-        } else {
-          setIsAuthenticated(false)
-          setCurrentUser(null)
-        }
-      } else {
-        // 設定使用者前台
-        console.log('有User')
-        setIsAuthenticated(true)
-        setCurrentUser(result.data)
-      }
+
+      // 設定使用者前台
+      console.log('有User')
+      setIsAuthenticated(true)
+      setCurrentUser(result.data)
+
 
 
     }
     checkTockenIsValid()
-  }, [pathname, currentUser])
+  }, [pathname])
 
 
   return (<AuthContext.Provider
