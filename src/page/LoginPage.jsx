@@ -1,19 +1,29 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AuthInput from "../components/AuthInput"
 import styles from './../style/Login.module.scss'
 import logo from './../image/Icon@2x.jpg'
+import Swal from 'sweetalert2';
+import { useAuth } from './../contexts/AuthContext';
 import { Toast } from "../utils/utils";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
   let wordCount = 50
+  const { login, isAuthenticated } = useAuth();
 
-  function handleClick() {
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/home')
+    }
+  }, [isAuthenticated]);
+
+  const handleClick = async () => {
     if (
       account.trim().length === 0 ||
-      password.trim().length === 0 
+      password.trim().length === 0
     ) {
       Toast.fire({
         title: '請輸入帳號或密碼！',
@@ -25,7 +35,7 @@ const LoginPage = () => {
 
     if (
       account.trim().length > wordCount ||
-      password.trim().length > wordCount 
+      password.trim().length > wordCount
     ) {
       Toast.fire({
         title: '字數超出上限！',
@@ -34,6 +44,29 @@ const LoginPage = () => {
 
       return
     }
+
+    // 登入
+    const success = await login({ account, password });
+
+    if (success) {
+      Swal.fire({
+        title: '登入成功',
+        icon: 'success',
+        showCancelButton: false,
+        timer: 1000,
+        position: 'top'
+      });
+      // navigate('/home');
+      return;
+    }
+    Swal.fire({
+      title: '登入失敗',
+      icon: 'error',
+      showCancelButton: false,
+      timer: 1000,
+      position: 'top'
+    });
+
 
     console.log('account: ', account)
     console.log('password: ', password)
@@ -58,7 +91,7 @@ const LoginPage = () => {
           onChange={(accountInputValue) => setAccount(accountInputValue)}
         />
       </div>
-      
+
       <div className={styles.password}>
         <AuthInput
           label="密碼"
@@ -70,7 +103,7 @@ const LoginPage = () => {
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
         />
       </div>
-      
+
 
       <button
         className={styles.authButton}
