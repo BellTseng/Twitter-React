@@ -1,0 +1,37 @@
+.adminMain {
+  position: relative;
+  margin: 50px;
+  border-right: 1px solid #E6ECF0;
+  border-left: 1px solid #E6ECF0;
+  height: 100vh;
+
+  .title {
+    border-bottom: 1px solid #E6ECF0;
+
+    h4 {
+      font-weight: 700;
+      margin: 24px 0px 24px 30px;
+    }
+  }
+
+  .tweetList {
+    position: absolute;
+    top: 60px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow-y: scroll
+  }
+
+  .scrollbar {
+    // 整體的樣式
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    // bar的樣式
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+}

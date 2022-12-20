@@ -1,0 +1,57 @@
+.tweetItem {
+  position: relative;
+  height: 85px;
+  border-bottom: 1px solid #E6ECF0;
+
+  button {
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .avatar {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .userTag {
+    position: absolute;
+    top: 16px;
+    left: 74px;
+
+    .userName {
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .userAccount {
+      font-weight: 400;
+      font-size: 14px;
+
+      margin-left: 8px;
+    }
+  }
+
+  p {
+    position: absolute;
+    top: 30px;
+    left: 74px;
+
+    word-wrap:break-word;
+  }
+
+  .deleteTweet {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+
+    img {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+}
