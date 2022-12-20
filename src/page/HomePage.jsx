@@ -122,7 +122,7 @@ const HomePage = () => {
     }
     console.log('isAuthenticated2', isAuthenticated)
     console.log('currentUser', currentUser)
-  }, [isAuthenticated]);
+  }, [isAuthenticated, currentUser, navigate]);
 
 
   return (

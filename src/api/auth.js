@@ -1,11 +1,11 @@
 import axios from 'axios';
-import * as jwt from 'jsonwebtoken';
+import { Toast } from '../utils/utils';
 
-const authUrl = 'https://rocky-citadel-44413.herokuapp.com/api/users';
+const authUrl = 'https://rocky-citadel-44413.herokuapp.com';
 
 export const login = async ({ account, password }) => {
   try {
-    const res = await axios.post(`${authUrl}/signin`, {
+    const res = await axios.post(`${authUrl}/api/users/signin`, {
       account,
       password
     });
@@ -21,20 +21,62 @@ export const login = async ({ account, password }) => {
   }
 }
 
-export const register = async ({ username, email, password }) => {
-  const { data } = await axios.post(`${authUrl}`, {
-    username,
-    email,
-    password,
-  });
+export const register = async ({ account, name, email, password, checkPassword }) => {
+  try{
+    const { data } = await axios.post(`${authUrl}/api/users`, {
+      account,
+      name,
+      email,
+      password,
+      checkPassword
+    });
 
-  try {
-    const { authToken } = data;
-    if (authToken) {
-      return { success: true, ...data };
+    console.log(data)
+    if (data.status === 'success'){
+      return {...data}
     }
-    return data;
-  } catch (err) {
-    console.error('[Register Failed]:', err);
+
+    return data
+  }
+  catch(error){
+    console.error('[Register Failed]: ', error);
+    const message = error.response.data.message
+
+    if (message.account && message.email){
+      Toast.fire({
+        title: '帳號和信箱重複註冊',
+        icon: 'error'
+      })
+    }
+    else if (message.account){
+      Toast.fire({
+        title: `${message.account}`,
+        icon: 'error'
+      })
+    }
+    else if (message.email) {
+      Toast.fire({
+        title: `${message.email}`,
+        icon: 'error'
+      })
+    }
+  }
+}
+
+export const adminLogin = async ({ account, password }) => {
+  try {
+    const { data } = await axios.post(`${authUrl}/api/admin/signin`, {
+      account,
+      password,
+    });
+
+    if (data.status === 'success') {
+      return { success: true, ...data }
+    }
+
+    return data
+  }
+  catch (error) {
+    console.error('[Register Failed]: ', error.message);
   }
 }

@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/'
+const baseUrl = 'https://rocky-citadel-44413.herokuapp.com'
 
 const authToken = ''
 
 
-export const getTodos = async () => {
+export const adminLogin = async () => {
   try {
     const res = await axios.get(`${baseUrl}/todos`,{
       headers: {

@@ -1,16 +1,19 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AuthInput from "../components/AuthInput"
 import styles from './../style/AdminLogin.module.scss'
 import logo from './../image/Icon@2x.jpg'
 import { Toast } from "../utils/utils";
+import { useAuth } from "../contexts/AuthContext";
 
 const AdminLoginPage = () => {
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { adminLogin, isAuthenticated } = useAuth();
   let wordCount = 50
 
-  function handleClick() {
+  async function handleClick() {
     if (
       account.trim().length === 0 ||
       password.trim().length === 0
@@ -35,9 +38,31 @@ const AdminLoginPage = () => {
       return
     }
 
-    console.log('account: ', account)
-    console.log('password: ', password)
+    const success = await adminLogin({
+      account,
+      password
+    })
+
+    if(success){
+      Toast.fire({
+        title: '登入成功',
+        icon: 'success',
+      })
+    }
+    else{
+      Toast.fire({
+        title: '登入失敗',
+        icon: 'error',
+      })
+    }
+
   }
+
+  useEffect(() => {
+    if(isAuthenticated){
+      navigate('/admin/main')
+    }
+  }, [isAuthenticated, navigate])
 
   return(
     <div

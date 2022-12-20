@@ -2,7 +2,7 @@ import { createContext, useState, useEffect, useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import * as jwt from 'jsonwebtoken'
 import { getUser } from './../api/user'
-import { login } from './../api/auth'
+import { login, adminLogin } from './../api/auth'
 
 
 const defaultAuthContext = {
@@ -84,6 +84,26 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('authToken');
         setCurrentUser(null);
         setIsAuthenticated(false);
+      },
+      
+      // 後台登入
+      adminLogin: async(data) => {
+        const response = await adminLogin({
+          account: data.account,
+          password: data.password,
+        })
+
+        if(response){
+          setCurrentUser({...response.data.user})
+          setIsAuthenticated(true)
+          localStorage.setItem('authToken', response.data.token)
+          return true
+        }
+        else{
+          setCurrentUser(null)
+          setIsAuthenticated(false)
+          return false
+        }
       }
     }}
   >

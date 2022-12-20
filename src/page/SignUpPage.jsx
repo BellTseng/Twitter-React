@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthInput from "../components/AuthInput"
 import styles from './../style/SignUp.module.scss'
 import logo from './../image/Icon@2x.jpg'
 import { Toast } from "../utils/utils";
+import { register } from "../api/auth";
 
 const SignUpPage = () => {
   const [account, setAccount] = useState('');
@@ -11,9 +12,10 @@ const SignUpPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('')
+  const navigate = useNavigate();
   let wordCount = 50
 
-  function handleClick() {
+  async function handleClick() {
     if(
       account.trim().length === 0 ||
       username.trim().length === 0 ||
@@ -53,17 +55,23 @@ const SignUpPage = () => {
       return
     }
 
-    console.log('account: ', account)
-    console.log('username: ', username)
-    console.log('email: ', email)
-    console.log('password: ', password)
-    console.log('passwordCheck: ', passwordCheck)
-
-    Toast.fire({
-      title: '修改成功',
-      icon: 'success',
+    const response = await register({
+      account,
+      name: username,
+      email,
+      password,
+      checkPassword: passwordCheck,
     })
-    
+
+    // console.log('response', response)
+
+    if(response){
+      Toast.fire({
+        title: '註冊成功',
+        icon: 'success',
+      })
+      navigate('/login')
+    }
   }
 
   return (
