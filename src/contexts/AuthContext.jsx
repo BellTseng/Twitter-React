@@ -52,6 +52,9 @@ export const AuthProvider = ({ children }) => {
         if (result.data.role === 'admin') {
           setIsAuthenticated(true)
           setCurrentUser(result.data)
+        } else {
+          setIsAuthenticated(false)
+          setCurrentUser(null)
         }
       } else {
         // 設定使用者前台
