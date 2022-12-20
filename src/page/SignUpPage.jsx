@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthInput from "../components/AuthInput"
 import styles from './../style/SignUp.module.scss'
 import logo from './../image/Icon@2x.jpg'
 import { Toast } from "../utils/utils";
-import { register } from "../api/auth";
+import { useAuth } from "../contexts/AuthContext";
 
 const SignUpPage = () => {
   const [account, setAccount] = useState('');
@@ -13,6 +13,8 @@ const SignUpPage = () => {
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('')
   const navigate = useNavigate();
+  const { register, isAuthenticated } = useAuth()
+
   let wordCount = 50
 
   async function handleClick() {
@@ -63,16 +65,19 @@ const SignUpPage = () => {
       checkPassword: passwordCheck,
     })
 
-    // console.log('response', response)
-
     if(response){
       Toast.fire({
         title: '註冊成功',
         icon: 'success',
       })
-      navigate('/login')
     }
   }
+
+  useEffect(() => {
+    if(isAuthenticated){
+      navigate('/home')
+    }
+  }, [isAuthenticated, navigate])
 
   return (
     <div

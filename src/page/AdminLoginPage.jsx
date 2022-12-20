@@ -10,7 +10,7 @@ const AdminLoginPage = () => {
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { adminLogin, isAuthenticated } = useAuth();
+  const { adminLogin, isAuthenticated, currentUser } = useAuth();
   let wordCount = 50
 
   async function handleClick() {
@@ -59,10 +59,10 @@ const AdminLoginPage = () => {
   }
 
   useEffect(() => {
-    if(isAuthenticated){
+    if(isAuthenticated && currentUser.role === 'admin'){
       navigate('/admin/main')
     }
-  }, [isAuthenticated, navigate])
+  }, [isAuthenticated, currentUser, navigate])
 
   return(
     <div

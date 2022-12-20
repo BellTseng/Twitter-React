@@ -71,7 +71,7 @@ export const adminLogin = async ({ account, password }) => {
     });
 
     if (data.status === 'success') {
-      return { success: true, ...data }
+      return { ...data }
     }
 
     return data

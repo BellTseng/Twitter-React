@@ -1,5 +1,7 @@
 import AdminMainTweetList from './../components/AdminMain/AdminMainTweetList'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useAuth } from '../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const tweetList = [
   {
@@ -26,6 +28,8 @@ const tweetList = [
 
 const AdminMainPage = () => {
   const [tweets, setTweets] = useState(tweetList)
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate()
 
 
   function handleDelete(id) {
@@ -33,6 +37,13 @@ const AdminMainPage = () => {
 
     setTweets((prevTweets) => prevTweets.filter(tweet => tweet.id !== id))
   }
+
+  useEffect(() => {
+    if (!isAuthenticated){
+      navigate('/admin/login')
+    }
+
+  }, [isAuthenticated, navigate])
 
   return(
     <>
