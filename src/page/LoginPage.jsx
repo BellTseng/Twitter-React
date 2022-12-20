@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthInput from "../components/AuthInput"
-import './../style/Login.scss'
+import styles from './../style/Login.module.scss'
 import logo from './../image/Icon@2x.jpg'
 import Swal from 'sweetalert2';
 import { useAuth } from './../contexts/AuthContext';
+import { Toast } from "../utils/utils";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -24,12 +25,9 @@ const LoginPage = () => {
       account.trim().length === 0 ||
       password.trim().length === 0
     ) {
-      Swal.fire({
-        position: 'top',
+      Toast.fire({
         title: '請輸入帳號或密碼！',
-        timer: 1000,
         icon: 'warning',
-        showConfirmButton: false,
       });
 
       return
@@ -39,12 +37,9 @@ const LoginPage = () => {
       account.trim().length > wordCount ||
       password.trim().length > wordCount
     ) {
-      Swal.fire({
-        position: 'top',
+      Toast.fire({
         title: '字數超出上限！',
-        timer: 1000,
         icon: 'warning',
-        showConfirmButton: false,
       });
 
       return
@@ -52,7 +47,7 @@ const LoginPage = () => {
 
     // 登入
     const success = await login({ account, password });
-    
+
     if (success) {
       Swal.fire({
         title: '登入成功',
@@ -79,39 +74,46 @@ const LoginPage = () => {
 
   return (
     <div
-      className="loginPage"
+      className={styles.loginPage}
     >
-      <img src={logo} alt="title" className="logo" />
+      <img src={logo} alt="title" className={styles.logo} />
 
       <h3>登入 Alphitter</h3>
 
-      <AuthInput
-        label="帳號"
-        placeholder="請輸入帳號"
-        type="text"
-        wordCount={wordCount}
-        value={account}
-        onChange={(accountInputValue) => setAccount(accountInputValue)}
-      />
+      <div className={styles.account}>
+        <AuthInput
+          label="帳號"
+          placeholder="請輸入帳號"
+          type="text"
+          wordCount={wordCount}
+          active={false}
+          value={account}
+          onChange={(accountInputValue) => setAccount(accountInputValue)}
+        />
+      </div>
 
-      <AuthInput
-        label="密碼"
-        placeholder="請輸入密碼"
-        type="password"
-        wordCount={wordCount}
-        value={password}
-        onChange={(passwordInputValue) => setPassword(passwordInputValue)}
-      />
+      <div className={styles.password}>
+        <AuthInput
+          label="密碼"
+          placeholder="請輸入密碼"
+          type="password"
+          wordCount={wordCount}
+          active={false}
+          value={password}
+          onChange={(passwordInputValue) => setPassword(passwordInputValue)}
+        />
+      </div>
+
 
       <button
-        className="authButton"
+        className={styles.authButton}
         onClick={handleClick}
       >
         登入
       </button>
 
       <div
-        className="linkroute"
+        className={styles.linkroute}
       >
         <Link to='/signup'>
           <span>註冊</span>

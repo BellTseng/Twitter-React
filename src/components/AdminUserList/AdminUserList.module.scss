@@ -1,0 +1,44 @@
+.adminUsers {
+  position: relative;
+  margin: 50px;
+  border-left: 1px solid #E6ECF0;
+  height: 100vh;
+
+  .title {
+    border-bottom: 1px solid #E6ECF0;
+
+    h4 {
+      font-weight: 700;
+      margin: 24px 0px 24px 30px;
+    }
+  }
+
+  .usersList {
+    position: absolute;
+    top: 60px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 249px);
+    grid-gap: 16px;
+
+    padding: 16px;;
+
+
+    overflow-y: scroll
+  }
+
+  .scrollbar {
+    // 整體的樣式
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    // bar的樣式
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+}

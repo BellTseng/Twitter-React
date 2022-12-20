@@ -35,7 +35,8 @@ function App() {
               <Route path="admin/main" element={<AdminMainPage />} />
               <Route path="admin/users" element={<AdminUsersPage />} />
             </Route>
-            <Route path="*" element={<LoginPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+            <Route path="/test" element={<SettingPage />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

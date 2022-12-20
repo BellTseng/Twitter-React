@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthInput from "../components/AuthInput"
-import './../style/SignUp.scss'
+import styles from './../style/SignUp.module.scss'
 import logo from './../image/Icon@2x.jpg'
-import Swal from 'sweetalert2';
+import { Toast } from "../utils/utils";
 
 const SignUpPage = () => {
   const [account, setAccount] = useState('');
@@ -21,12 +21,9 @@ const SignUpPage = () => {
       password.trim().length === 0 ||
       passwordCheck.trim().length === 0
     ){
-      Swal.fire({
-        position: 'top',
+      Toast.fire({
         title: '請輸入帳號、名稱、Email或密碼！',
-        timer: 1000,
         icon: 'warning',
-        showConfirmButton: false,
       });
 
       return
@@ -39,12 +36,18 @@ const SignUpPage = () => {
       password.trim().length > wordCount ||
       passwordCheck.trim().length > wordCount
     ) {
-      Swal.fire({
-        position: 'top',
+      Toast.fire({
         title: '字數超出上限！',
-        timer: 1000,
         icon: 'warning',
-        showConfirmButton: false,
+      });
+
+      return
+    }
+
+    if(password !== passwordCheck){
+      Toast.fire({
+        title: '密碼與密碼確認不相符！',
+        icon: 'warning',
       });
 
       return
@@ -55,70 +58,93 @@ const SignUpPage = () => {
     console.log('email: ', email)
     console.log('password: ', password)
     console.log('passwordCheck: ', passwordCheck)
+
+    Toast.fire({
+      title: '修改成功',
+      icon: 'success',
+    })
+    
   }
 
   return (
     <div
-      className="signUpPage"
+      className={styles.signUpPage}
     >
-      <img src={logo} alt="title" className="logo" />
+      <img src={logo} alt="title" className={styles.logo} />
 
       <h3>建立你的帳號</h3>
 
-      <AuthInput
-        label="帳號"
-        placeholder="請輸入帳號"
-        type="text"
-        wordCount={wordCount}
-        value={account}
-        onChange={(accountInputValue) => setAccount(accountInputValue)}
-      />
+      <div className={styles.account}>
+        <AuthInput
+          label="帳號"
+          placeholder="請輸入帳號"
+          type="text"
+          wordCount={wordCount}
+          active={true}
+          value={account}
+          onChange={(accountInputValue) => setAccount(accountInputValue)}
+        />
+      </div>
 
-      <AuthInput
-        label="名稱"
-        placeholder="請輸入名稱"
-        type="text"
-        wordCount={wordCount}
-        value={username}
-        onChange={(nameInputValue) => setUserName(nameInputValue)}
-      />
 
-      <AuthInput
-        label="Email"
-        placeholder="請輸入 Email"
-        type="text"
-        wordCount={wordCount}
-        value={email}
-        onChange={(emailInputValue) => setEmail(emailInputValue)}
-      />
-
-      <AuthInput
-        label="密碼"
-        placeholder="請輸入密碼"
-        type="password"
-        wordCount={wordCount}
-        value={password}
-        onChange={(passwordInputValue) => setPassword(passwordInputValue)}
-      />
-
-      <AuthInput
-        label="密碼確認"
-        placeholder="請輸入帳號"
-        type="password"
-        wordCount={wordCount}
-        value={passwordCheck}
-        onChange={(passwordCheckInputValue) => setPasswordCheck(passwordCheckInputValue)}
-      />
+      <div className={styles.userName}>
+        <AuthInput
+          label="名稱"
+          placeholder="請輸入名稱"
+          type="text"
+          wordCount={wordCount}
+          active={true}
+          value={username}
+          onChange={(nameInputValue) => setUserName(nameInputValue)}
+        />
+      </div>
+      
+      <div className={styles.email}>
+        <AuthInput
+          label="Email"
+          placeholder="請輸入 Email"
+          type="text"
+          wordCount={wordCount}
+          active={true}
+          value={email}
+          onChange={(emailInputValue) => setEmail(emailInputValue)}
+        />
+      </div>
+      
+      <div className={styles.password}>
+        <AuthInput
+          label="密碼"
+          placeholder="請輸入密碼"
+          type="password"
+          wordCount={wordCount}
+          active={true}
+          value={password}
+          onChange={(passwordInputValue) => setPassword(passwordInputValue)}
+        />
+      </div>
+      
+      <div className={styles.passwordCheck}>
+        <AuthInput
+          label="密碼確認"
+          placeholder="請輸入密碼"
+          type="password"
+          wordCount={wordCount}
+          active={true}
+          value={passwordCheck}
+          onChange={(passwordCheckInputValue) => setPasswordCheck(passwordCheckInputValue)}
+        />
+      </div>
+      
 
       <button
-        className="authButton"
+        className={styles.authButton}
         onClick={handleClick}
       >
         註冊
       </button>
 
       <div
-        className="linkroute"
+        className={styles.linkroute}
       >
         <Link to='/login'>
           <span>取消</span>

@@ -1,0 +1,23 @@
+.userTab {
+  display: flex;
+
+  width: 100%;
+  margin-left: 16px;
+
+  p {
+    font-size: 15px;
+    font-weight: 700;
+    width: 130px;
+    text-align: center;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      color: #FF6600;
+      padding-bottom: 13px;
+      border-bottom: 1px solid #FF6600;
+    }
+  }
+}
