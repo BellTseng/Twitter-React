@@ -28,3 +28,14 @@ export const getUser = async (userId) => {
     return false
   }
 }
+
+// 取得個人按讚列表
+export const getUserLikes = async (userId) => {
+  try {
+    const res = await axiosInstance.get(`${baseUrl}/users/${userId}/likes`);
+    console.log('likes', 'res', res)
+    return res.data;
+  } catch (err) {
+    console.error('[Get Tweets failed]:', err);
+  }
+}

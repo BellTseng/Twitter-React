@@ -47,10 +47,20 @@ export const AuthProvider = ({ children }) => {
         return
       }
 
-      // 設定使用者
-      console.log('有User')
-      setIsAuthenticated(true)
-      setCurrentUser(result.data)
+      if (pathname.includes('admin')) {
+        // 設定使用者後台
+        if (result.data.role === 'admin') {
+          setIsAuthenticated(true)
+          setCurrentUser(result.data)
+        }
+      } else {
+        // 設定使用者前台
+        console.log('有User')
+        setIsAuthenticated(true)
+        setCurrentUser(result.data)
+      }
+
+
     }
     checkTockenIsValid()
   }, [pathname])
