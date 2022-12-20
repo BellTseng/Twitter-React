@@ -18,7 +18,7 @@ const UserModal = ({ user, isOpen, onShowModal }) => {
   let userNameWordCount = 50
   let userIntroductionWordCount = 160
 
-  function handleClosed(){
+  function handleClosed() {
     setUserName(user.userName)
     setIntroduction(user.introduction)
     setUserBackground(user.background)
@@ -27,8 +27,8 @@ const UserModal = ({ user, isOpen, onShowModal }) => {
     onShowModal?.(false)
   }
 
-  function handleSave(id){
-    if(userName.trim().length === 0){
+  function handleSave(id) {
+    if (userName.trim().length === 0) {
       Toast.fire({
         title: '使用者名稱不可空白！',
         icon: 'warning',
@@ -72,23 +72,23 @@ const UserModal = ({ user, isOpen, onShowModal }) => {
   }
 
 
-  return(
+  return (
     <div
-      id="modal" 
+      id="modal"
       className={`${styles.userModalOutside} ${isOpen ? styles.show : ''}`}
       onClick={(e) => {
-        if(e.target.id === 'modal'){
+        if (e.target.id === 'modal') {
           handleClosed()
         }
       }}
     >
       <div className={styles.userModal}>
         <div className={styles.title}>
-          <img 
+          <img
             className={styles.closed}
-            src={closed} 
+            src={closed}
             alt="closed"
-            onClick={handleClosed} 
+            onClick={handleClosed}
           />
           <h5>編輯個人資料</h5>
           <button
