@@ -78,6 +78,7 @@ export const AuthProvider = ({ children }) => {
       currentUser: currentUser,
       updatedAt: updatedAt,
       update: () => {
+        console.log('更新了updatedAt')
         setUpdatedAt(new Date())
       },
       // 登入

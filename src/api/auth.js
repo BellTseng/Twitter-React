@@ -1,11 +1,17 @@
 import axios from 'axios';
 import * as jwt from 'jsonwebtoken';
 
-const authUrl = 'https://rocky-citadel-44413.herokuapp.com/api/users';
+// const authUrl = 'https://rocky-citadel-44413.herokuapp.com/api/users';
+const authUrl = 'https://6c6b-1-162-7-92.jp.ngrok.io/api/users';
+
+const axiosInstance = axios.create({
+  headers: { 'ngrok-skip-browser-warning': 'any' }
+});
+
 
 export const login = async ({ account, password }) => {
   try {
-    const res = await axios.post(`${authUrl}/signin`, {
+    const res = await axiosInstance.post(`${authUrl}/signin`, {
       account,
       password
     });
@@ -22,7 +28,7 @@ export const login = async ({ account, password }) => {
 }
 
 export const register = async ({ username, email, password }) => {
-  const { data } = await axios.post(`${authUrl}`, {
+  const { data } = await axiosInstance.post(`${authUrl}`, {
     username,
     email,
     password,

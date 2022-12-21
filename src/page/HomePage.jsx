@@ -109,17 +109,19 @@ const HomePage = () => {
 
 
   useEffect(() => {
-    const getTweetsAsync = async () => {
-      try {
-        const tweets = await getTweets()
-        console.log('tweets', tweets)
-        setTweets(tweets);
-      } catch (err) {
-        console.log(err)
+    if (isAuthenticated) {
+      const getTweetsAsync = async () => {
+        try {
+          const tweets = await getTweets()
+          console.log('tweets', tweets)
+          setTweets(tweets);
+        } catch (err) {
+          console.log(err)
+        }
       }
+      getTweetsAsync();
     }
-    getTweetsAsync();
-  }, [update]);
+  }, [update, isAuthenticated]);
 
 
   return (

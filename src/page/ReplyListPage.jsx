@@ -90,14 +90,14 @@ const ReplyListPage = () => {
     const getTweetAsync = async () => {
       try {
         const dbTweet = await getTweet(id);
-        // console.log('tweet', tweet);
+        console.log('dbTweet', dbTweet);
         setTweet({ ...dbTweet });
       } catch (err) {
         console.log(err)
       }
     }
     getTweetAsync();
-  }, [tweet]);
+  }, []);
 
 
   useEffect(() => {
@@ -112,7 +112,7 @@ const ReplyListPage = () => {
   return (
     <>
       <Header title="推文" type="tweet" />
-      {tweet && <SingleTweet
+      {/* {tweet && <SingleTweet
         tweet={tweet}
         onClickReply={handleOpenReply}
         onClickLike={handleClickLike}
@@ -133,7 +133,7 @@ const ReplyListPage = () => {
             />
           </>
         }
-      </Modal>
+      </Modal> */}
     </>
   )
 }

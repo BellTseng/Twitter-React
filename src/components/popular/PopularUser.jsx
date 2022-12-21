@@ -5,7 +5,7 @@ import { getTopUser, addFollowing, removeFollowing } from "./../../api/followshi
 
 
 const PopularUser = () => {
-  const { currentUser, update, isAuthenticated } = useAuth();
+  const { currentUser, isAuthenticated } = useAuth();
   const [popularList, setPopularList] = useState([]);
 
   const handleClick = async (followingId, isFollowed) => {
@@ -43,7 +43,7 @@ const PopularUser = () => {
       }
       getRepliesAsync();
     }
-  }, [update]);
+  }, [isAuthenticated]);
 
   return (
     <section className={style.popular}>
