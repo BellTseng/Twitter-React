@@ -95,8 +95,8 @@ const SettingPage = () => {
     // console.log('email: ', email)
     // console.log('password: ', password)
     // console.log('passwordCheck: ', passwordCheck)
-
     
+    navigate('/home')
   }
 
   useEffect(() => {

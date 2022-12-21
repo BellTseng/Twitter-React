@@ -5,29 +5,30 @@ import closed from './../../image/icons/close.svg'
 import AuthInput from './../AuthInput'
 import UserModalIntroduction from './UserModalIntroduction'
 import InputFile from '../UserPage/InputFile'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Toast } from '../../utils/utils'
+import { useAuth } from '../../contexts/AuthContext'
+import { getUser, putUser } from '../../api/user'
 
-const UserModal = ({ user, isOpen, onShowModal }) => {
-  const [userName, setUserName] = useState(user.userName)
-  const [introduction, setIntroduction] = useState(user.introduction)
-  const [userBackground, setUserBackground] = useState(user.background)
-  const [userAvatar, setUserAvatar] = useState(user.avatar)
+const UserModal = ({ isOpen, onShowModal }) => {
+  const [userName, setUserName] = useState('')
+  const [userIntroduction, setUserIntroduction] = useState('')
+  const [userBackground, setUserBackground] = useState('')
+  const [userAvatar, setUserAvatar] = useState('')
   const inputBackgroundFileCurrent = useRef(null)
   const inputAvatarFileCurrent = useRef(null)
+  const { currentUser } = useAuth()
   let userNameWordCount = 50
   let userIntroductionWordCount = 160
 
+  
+
   function handleClosed() {
-    setUserName(user.userName)
-    setIntroduction(user.introduction)
-    setUserBackground(user.background)
-    setUserAvatar(user.avatar)
 
     onShowModal?.(false)
   }
 
-  function handleSave(id) {
+  async function handleSave() {
     if (userName.trim().length === 0) {
       Toast.fire({
         title: '使用者名稱不可空白！',
@@ -39,7 +40,7 @@ const UserModal = ({ user, isOpen, onShowModal }) => {
 
     if (
       userName.trim().length > userNameWordCount ||
-      introduction.trim().length > userIntroductionWordCount
+      userIntroduction.trim().length > userIntroductionWordCount
     ) {
       Toast.fire({
         title: '字數超出上限！',
@@ -49,13 +50,26 @@ const UserModal = ({ user, isOpen, onShowModal }) => {
       return
     }
 
-    console.log('userName', userName)
-    console.log('introduction', introduction)
-
-    Toast.fire({
-      title: '上傳成功',
-      icon: 'success',
+    const response = await putUser({
+      id: currentUser?.id,
+      name: userName.trim(),
+      avatar: userAvatar,
+      cover: userBackground,
+      introduction: userIntroduction
     })
+
+    console.log(response)
+    if (response.status === 'success') {
+      Toast.fire({
+        title: '修改成功',
+        icon: 'success',
+      })
+    } 
+
+    console.log('userName', userName)
+    console.log('introduction', userIntroduction)
+    console.log('avatar', userAvatar)
+    console.log('cover', userBackground)
 
     onShowModal?.(false)
   }
@@ -70,6 +84,22 @@ const UserModal = ({ user, isOpen, onShowModal }) => {
   function handleOnClickUpload(value) {
     value.current.click();
   }
+
+  useEffect(() => {
+    async function getUserAsync() {
+      const { data } = await getUser(currentUser?.id)
+
+      console.log('data', data)
+
+      setUserName(data.name)
+      setUserIntroduction(data.introduction ? data.introduction : '')
+      setUserBackground(data.cover) 
+      setUserAvatar(data.avatar)
+    }
+    
+    getUserAsync()
+    
+  }, [currentUser])
 
 
   return (
@@ -108,7 +138,7 @@ const UserModal = ({ user, isOpen, onShowModal }) => {
 
           <div className={styles.add}>
             <InputFile
-              onChange={(event) => setUserBackground(window.URL.createObjectURL(event.target.files[0]))}
+              onChange={(event) => setUserBackground(event.target.files[0])}
               inputRef={inputBackgroundFileCurrent}
             >
               <img
@@ -143,7 +173,7 @@ const UserModal = ({ user, isOpen, onShowModal }) => {
 
           <div className={styles.addAvatar}>
             <InputFile
-              onChange={(event) => setUserAvatar(window.URL.createObjectURL(event.target.files[0]))}
+              onChange={(event) => setUserAvatar(event.target.files[0])}
               inputRef={inputAvatarFileCurrent}
               keyId={'addAvatar'}
             >
@@ -174,8 +204,8 @@ const UserModal = ({ user, isOpen, onShowModal }) => {
             placeholder="請輸入自介"
             wordCount={userIntroductionWordCount}
             active={true}
-            value={introduction}
-            onChange={(introductionInputValue) => setIntroduction(introductionInputValue)}
+            value={userIntroduction}
+            onChange={(introductionInputValue) => setUserIntroduction(introductionInputValue)}
           />
         </div>
 

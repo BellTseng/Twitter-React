@@ -5,7 +5,7 @@ const AuthInput = ({ type, label, value, placeholder, onChange, wordCount, activ
     <div className={styles.authInputContainer}>
       <label>{label}</label>
       <input
-        className={`${styles.inputName} ${(value.trim().length > wordCount) && styles.wrong}`}
+        className={`${styles.inputName} ${(value.trim().length > wordCount) ? (styles.wrong) : ('')}`}
         type={type || "text"}
         placeholder={placeholder}
         value={value}

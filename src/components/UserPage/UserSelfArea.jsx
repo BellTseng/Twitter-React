@@ -21,8 +21,8 @@ const UserSelfArea = ({
           <img src={Arrow} alt="arrow" />
         </Link>
         <div className={styles.userTag}>
-          <h5 className={styles.userName}>{user.userName}</h5>
-          <p className={styles.tweetCount}>25 推文</p>
+          <h5 className={styles.userName}>{user.name}</h5>
+          <p className={styles.tweetCount}>{user.tweetCount} 推文</p>
         </div>
       </div>
       

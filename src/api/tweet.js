@@ -1,15 +1,17 @@
 import axios from "axios";
 
 const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
+const testUrl = 'https://3ce8-118-150-219-108.jp.ngrok.io/api'
 
 const axiosInstance = axios.create({
-  baseURL: baseUrl,
+  baseURL: testUrl,
 });
 
 axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem('authToken');
   if (token) {
     config.headers['Authorization'] = `Bearer ${token}`
+    config.headers['ngrok-skip-browser-warning'] = 'any'
   }
   return config;
 }, (error) => {
@@ -20,7 +22,7 @@ axiosInstance.interceptors.request.use((config) => {
 // 取得_所有推文
 export const getTweets = async () => {
   try {
-    const res = await axiosInstance.get(`${baseUrl}/tweets`);
+    const res = await axiosInstance.get(`${testUrl}/tweets`);
     // 這裡一直被反覆執行?
     console.log('res', res)
     return res.data;
@@ -32,7 +34,7 @@ export const getTweets = async () => {
 // 取得_一筆推文
 export const getTweet = async (tweetId) => {
   try {
-    const res = await axiosInstance.get(`${baseUrl}/tweets/${tweetId}`);
+    const res = await axiosInstance.get(`${testUrl}/tweets/${tweetId}`);
     console.log('getTweet', 'res', res)
     return res.data;
   } catch (err) {
@@ -44,7 +46,7 @@ export const getTweet = async (tweetId) => {
 export const createTweet = async (payload) => {
   try {
     const { UserId, description } = payload;
-    const res = await axiosInstance.post(`${baseUrl}/tweets`, {
+    const res = await axiosInstance.post(`${testUrl}/tweets`, {
       UserId,
       description
     });
@@ -61,7 +63,7 @@ export const createTweet = async (payload) => {
 // 取得_所有回覆
 export const getReplies = async (tweetId) => {
   try {
-    const res = await axiosInstance.get(`${baseUrl}/tweets/${tweetId}/replies`);
+    const res = await axiosInstance.get(`${testUrl}/tweets/${tweetId}/replies`);
     // 這裡一直被反覆執行?
     console.log('getReplies', 'res', res)
     return res.data;
@@ -75,7 +77,7 @@ export const getReplies = async (tweetId) => {
 export const createReply = async (payload) => {
   try {
     const { tweetId, UserId, comment } = payload
-    const res = await axiosInstance.post(`${baseUrl}/tweets/${tweetId}/replies`, {
+    const res = await axiosInstance.post(`${testUrl}/tweets/${tweetId}/replies`, {
       UserId,
       comment
     });
@@ -89,7 +91,7 @@ export const createReply = async (payload) => {
 // 按讚
 export const addLike = async (tweetId) => {
   try {
-    const res = await axiosInstance.post(`${baseUrl}/tweets/${tweetId}/like`);
+    const res = await axiosInstance.post(`${testUrl}/tweets/${tweetId}/like`);
     console.log('res', res)
     return res.data.data // Like
   } catch (err) {
@@ -100,7 +102,7 @@ export const addLike = async (tweetId) => {
 // 移除讚
 export const removeLike = async (tweetId) => {
   try {
-    const res = await axiosInstance.post(`${baseUrl}/tweets/${tweetId}/unlike`);
+    const res = await axiosInstance.post(`${testUrl}/tweets/${tweetId}/unlike`);
     console.log('res', res)
     return res.data.data // unLike
   } catch (err) {

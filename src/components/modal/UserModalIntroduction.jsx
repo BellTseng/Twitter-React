@@ -6,7 +6,7 @@ const UserModalIntroduction = ({ label, value, placeholder, onChange, wordCount,
       <div className={styles.area}>
         <label>{label}</label>
         <textarea
-          className={`${styles.inputName} ${(value.trim().length > wordCount) && styles.wrong}`}
+          className={`${styles.inputName} ${(value.trim().length > wordCount) ? (styles.wrong) : ('')}`}
           placeholder={placeholder}
           value={value}
           onChange={(event) => onChange?.(event.target.value)}
