@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Toast } from "../utils/utils";
 
 const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
 
@@ -59,5 +60,20 @@ export const putUser = async (payload) => {
   } 
   catch (error) {
     console.error('[Put User failed]:', error);
+
+    const errorResponse = error.response
+
+    if (errorResponse.status === 401){
+      Toast.fire({
+        title: `${errorResponse.message}`,
+        icon: 'error'
+      })
+    }
+    else if (errorResponse.status === 404) {
+      Toast.fire({
+        title: `${errorResponse.message}`,
+        icon: 'error'
+      })
+    }
   }
 }

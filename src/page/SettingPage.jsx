@@ -80,24 +80,30 @@ const SettingPage = () => {
       account: account.trim(),
     })
 
-    console.log('settingPage', response)
+    if (response.status === 'success'){
+      Toast.fire({
+        title: '修改成功',
+        icon: 'success',
+      })
+      navigate('/home')
+    }
 
-    console.log('account: ', account)
-    console.log('username: ', username)
-    console.log('email: ', email)
-    console.log('password: ', password)
-    console.log('passwordCheck: ', passwordCheck)
+    // console.log('settingPage', response)
 
-    Toast.fire({
-      title: '修改成功',
-      icon: 'success',
-    })
-    navigate('/setting')
+    // console.log('account: ', account)
+    // console.log('username: ', username)
+    // console.log('email: ', email)
+    // console.log('password: ', password)
+    // console.log('passwordCheck: ', passwordCheck)
+
+    
   }
 
   useEffect(() => {
     async function getUserAsync() {
       const { data } = await getUser(currentUser?.id)
+
+      // console.log('data', data)
 
       setAccount(data.account)
       setEmail(data.email)
