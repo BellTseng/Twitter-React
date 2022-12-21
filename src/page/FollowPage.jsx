@@ -10,10 +10,10 @@ import { useAuth } from "../contexts/AuthContext";
 const FollowPage = () => {
   let { id } = useParams();
   console.log('id', id);
-  const { currentUser, update } = useAuth();
+  const { currentUser, update, isAuthenticated } = useAuth();
   const [followers, setFollowers] = useState([])
   const [followings, setFollowings] = useState([])
-  const [tabId, setUserTabId] = useState(1)
+  const [tabId, setUserTabId] = useState(0)
 
   // 切換tab
   // 依index顯示不同的資料
@@ -23,8 +23,7 @@ const FollowPage = () => {
   }
 
   // 切換跟隨者的人狀態
-  const handleFollowerClick = async (item, isFollowed = true) => {
-    console.log(item.followerId, item.followingId, isFollowed)
+  const handleClick = async (user, type) => {
     // 1.切換跟隨者狀態
     // 2.也同時要從被跟隨者列表移除/加入
     // 3. 進行update，因為有可能影響到popular
@@ -32,100 +31,79 @@ const FollowPage = () => {
     let newFollowers = [];
     let newFollowings = [];
 
-    newFollowers = followers.map(o => {
-      if (o.followerId === item.followerId) {
-        return { ...o, isFollowed: !isFollowed }
-      }
-    })
-
-    try {
-      // 取消跟隨
-      if (isFollowed) {
-        newFollowings = followings.filter(o => o.followingId === item.followerId);
-        await removeFollowing(item.followerId, currentUser.id)
-      }
-
-      // 新增跟隨
-      if (!isFollowed) {
-        newFollowings = [{
-          "followerId": currentUser.id,
-          "followingId": item.followerId,
-          "createdAt": "幾秒鐘前",
-          "FollowingUser": { ...item.FollowerUser },
-          "isFollowed": true
-        }].concat(followings)
-        await addFollowing(item.followerId)
-      }
-      setFollowers(newFollowers)
-      setFollowings(newFollowings)
-
-    } catch (error) {
-      console.error('error', error)
-    }
-
-  }
-
-  // 切換被跟隨者的狀態
-  const handleFollowingClick = async (item, isFollowed = true) => {
-    console.log(item.followerId, item.followingId, isFollowed)
-    // 取消跟隨
-    // 1. 移出被跟隨者陣列
-    // 2. 判斷如果有再跟隨者列表中的話，要切換狀態
-    // 3. 進行update，因為有可能影響到popular
-
-    try {
-
-      let newFollowers = [];
-      let newFollowings = [];
-
+    if (type === 'followers') {
+      // 切換跟隨者
       newFollowers = followers.map(o => {
-        if (o.followerId === item.followingId) {
-          return { ...o, isFollowed: !isFollowed }
+        if (o.id === user.id) {
+          return { ...o, isFollowed: !o.isFollowed }
+        } else {
+          return { o }
         }
       })
 
-      newFollowings = followings.filter(o => o.followingId === item.followingId);
-      await removeFollowing(item.followerId, currentUser.id)
-
-      setFollowers(newFollowers)
-      setFollowings(newFollowings)
-
-    } catch (error) {
-      console.log(error)
+      // 判斷配跟隨者
+      if (followings.map(o => o.id).includes(user.id)) {
+        newFollowings = followings.filter(o => o.id !== user.id)
+        await removeFollowing(user.id, currentUser.id)
+      } else {
+        newFollowings = [{ ...user }].concat(followings);
+        await addFollowing(user.id)
+      }
     }
 
-
+    if (type === 'following') {
+      newFollowings = followings.filter(o => o.id !== user.id)
+      newFollowers = followers.map(o => o.id === user.id ? { ...o, isFollowed: !o.isFollowed } : o)
+      await removeFollowing(user.id, currentUser.id)
+    }
+    setFollowers(newFollowers)
+    setFollowings(newFollowings)
   }
-
 
   // useEffect取得資料
   // 取得_某追隨使用者的人
   useEffect(() => {
-    const getUserFollowersAsync = async () => {
-      try {
-        const dbTweet = await getUserFollowers(id);
-        console.log('dbTweet', dbTweet);
-        setFollowers({ ...dbTweet });
-      } catch (err) {
-        console.log(err)
+    if (id) {
+      const getUserFollowersAsync = async () => {
+        try {
+          const dbFollower = await getUserFollowers(id) || [];
+          console.log('dbFollower', dbFollower);
+          const users = dbFollower.map(o => ({
+            ...o.FollowerUser,
+            isFollowed: o.isFollowed,
+            createAt: o.createAt
+          }));
+          setFollowers(users);
+        } catch (err) {
+          console.log(err)
+        }
       }
+      getUserFollowersAsync();
     }
-    getUserFollowersAsync();
-  }, []);
+  }, [id]);
 
   // 取得_某使用者追隨中的人
   useEffect(() => {
-    const getUserFollowingsAsync = async () => {
-      try {
-        const dbTweet = await getUserFollowings(id);
-        console.log('dbTweet', dbTweet);
-        setFollowings({ ...dbTweet });
-      } catch (err) {
-        console.log(err)
+    if (isAuthenticated) {
+      console.log('使用者id', currentUser.id, '頁面id', id)
+      console.log('是否是同一人', currentUser.id === id)
+      const getUserFollowingsAsync = async () => {
+        try {
+          const dbFollowing = await getUserFollowings(id);
+          console.log('dbFollowing', dbFollowing);
+          const users = dbFollowing.map(o => ({
+            ...o.FollowingUser,
+            isFollowed: true,
+            createAt: o.createAt
+          }));
+          setFollowings(users);
+        } catch (err) {
+          console.log(err)
+        }
       }
+      getUserFollowingsAsync();
     }
-    getUserFollowingsAsync();
-  }, []);
+  }, [isAuthenticated]);
 
 
 
@@ -138,16 +116,18 @@ const FollowPage = () => {
         onChangeTab={handleChangeTab}
       />
       <FollowList
-        show={tabId === 1}
+        show={tabId === 0}
+        type='followers'
         follows={followers}
-        onClick={handleFollowerClick}
-        disbled={id !== currentUser.id}
+        onClick={handleClick}
+        disabled={currentUser?.id !== id}
       />
       <FollowList
         show={tabId === 1}
+        type='followings'
         follows={followings}
-        onClick={handleFollowingClick}
-        disbled={id !== currentUser.id}
+        onClick={handleClick}
+        disbled={currentUser?.id !== id}
       />
 
     </>

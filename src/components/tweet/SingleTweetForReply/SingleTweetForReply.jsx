@@ -17,7 +17,11 @@ const SingleTweetForReply = ({ tweet }) => {
         </div>
         <div className={style.description}> {tweet.description}
         </div>
-        <div>回覆給  <span className={style.account}>@{tweet.User.account}</span></div>
+        <div className={style.replyAccount}>回覆給
+          <span className={style.account}>
+            @{tweet.User.account}
+          </span>
+        </div>
       </div>
 
 

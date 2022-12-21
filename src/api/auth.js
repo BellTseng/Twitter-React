@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as jwt from 'jsonwebtoken';
 
 // const authUrl = 'https://rocky-citadel-44413.herokuapp.com/api/users';
-const authUrl = 'https://6c6b-1-162-7-92.jp.ngrok.io/api/users';
+const authUrl = 'https://3ce8-118-150-219-108.jp.ngrok.io/api/users';
 
 const axiosInstance = axios.create({
   headers: { 'ngrok-skip-browser-warning': 'any' }

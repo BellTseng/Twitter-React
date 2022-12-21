@@ -19,8 +19,9 @@
   font-weight: 500;
   margin-bottom: 5px;
 
-  span {
-    color: #FF6600;
+  span,
+  .account {
+    color: #FF6600 !important;
     margin-left: 5px;
   }
 }

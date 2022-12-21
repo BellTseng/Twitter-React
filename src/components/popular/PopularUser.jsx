@@ -65,7 +65,10 @@ const PopularUser = () => {
               </div>
             </div>
             <button
-              className={style.btn + ' ' + (user.isFollowed ? style.active : '')}
+              className={style.btn + ' '
+                + (user.isFollowed ? style.active : '') + ' ' +
+                (currentUser.id === user.id ? style.none : '')
+              }
               onClick={() => {
                 handleClick?.(user.id, user.isFollowed)
               }}>

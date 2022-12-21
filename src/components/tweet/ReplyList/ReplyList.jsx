@@ -1,7 +1,7 @@
 
 import style from './../TweetList/TweetList.module.scss';
 
-const ReplyList = ({ replys }) => {
+const ReplyList = ({ replys, userAccount }) => {
   console.log('replys:', replys)
   return (
     <div className="tweetList">
@@ -15,10 +15,10 @@ const ReplyList = ({ replys }) => {
               <div className={style.top}>
                 <div className={style.name}>{tweet.User.name}</div>
                 <div className={style.account}>@{tweet.User.account}</div>
-                <div className={style.time}>{tweet.time}</div>
+                <div className={style.time}>{tweet.createdAt}</div>
               </div>
               <div className={style.replyAccount}>回覆
-                <span>@{tweet.User.account}</span>
+                <span>@{userAccount}</span>
               </div>
               <div className={style.commend}>
                 {tweet.comment}

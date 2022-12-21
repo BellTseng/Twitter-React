@@ -87,38 +87,42 @@ const ReplyListPage = () => {
   }, [id, isAuthenticated]);
 
   useEffect(() => {
-    const getTweetAsync = async () => {
-      try {
-        const dbTweet = await getTweet(id);
-        console.log('dbTweet', dbTweet);
-        setTweet({ ...dbTweet });
-      } catch (err) {
-        console.log(err)
+    if (id) {
+      const getTweetAsync = async () => {
+        try {
+          const dbTweet = await getTweet(id);
+          console.log('dbTweet', dbTweet);
+          setTweet({ ...dbTweet });
+        } catch (err) {
+          console.log(err)
+        }
       }
+      getTweetAsync();
     }
-    getTweetAsync();
-  }, []);
+  }, [id]);
 
 
   useEffect(() => {
-    const getRepliesAsync = async () => {
-      const replies = await getReplies(id);
-      console.log('replies', replies);
-      setReplys(replies);
+    if (id) {
+      const getRepliesAsync = async () => {
+        const replies = await getReplies(id);
+        console.log('replies', replies);
+        setReplys(replies);
+      }
+      getRepliesAsync();
     }
-    getRepliesAsync();
   }, []);
 
   return (
     <>
-      <Header title="推文" type="tweet" />
-      {/* {tweet && <SingleTweet
+      <Header title="推文" type="tweet" url={'/home'} />
+      {tweet && <SingleTweet
         tweet={tweet}
         onClickReply={handleOpenReply}
         onClickLike={handleClickLike}
       />}
 
-      <ReplyList replys={replys} />
+      <ReplyList replys={replys} userAccount={tweet?.User?.account || ''} />
 
       <Modal isOpen={modalOpen} closeModal={handleCloseModal}>
         {modalOpen &&
@@ -133,7 +137,7 @@ const ReplyListPage = () => {
             />
           </>
         }
-      </Modal> */}
+      </Modal>
     </>
   )
 }

@@ -20,10 +20,12 @@ const HomePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
 
+  // 關閉回覆Modal
   const handleCloseModal = () => {
     setModalOpen(false);
   }
 
+  // 新增推文
   const handleCreateTweet = async (value) => {
     // 頁面資料處理
     try {
@@ -46,6 +48,7 @@ const HomePage = () => {
     }
   }
 
+  // 新增回覆
   const handleCreateReply = async (value) => {
     setModalOpen(false);
     try {
@@ -68,11 +71,14 @@ const HomePage = () => {
     }
   }
 
+  // 開啟回覆Modal
   const handleOpenReply = (chosedTweet) => {
+    console.log('chosedTweet', chosedTweet);
     setTweet({ ...chosedTweet });
     setModalOpen(true);
   }
 
+  // 按讚狀態狀態切換
   const handleClickLike = async (chosedTweet) => {
     console.log('tweet:', chosedTweet);
     const tweet = { ...chosedTweet }
@@ -142,10 +148,7 @@ const HomePage = () => {
         {modalOpen &&
           <>
             <SingleTweetForReply
-              id={tweet.id}
-              User={tweet.User}
-              time={tweet.time}
-              description={tweet.description}
+              tweet={tweet}
             />
             <TweetEdit
               name='回覆'
