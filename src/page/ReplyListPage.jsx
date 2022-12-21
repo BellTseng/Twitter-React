@@ -63,7 +63,8 @@ const ReplyListPage = () => {
     try {
       setTweet({
         ...tweet,
-        isLiked: !tweet.isLiked
+        isLiked: !tweet.isLiked,
+        likeCount: tweet.likeCount + (!!tweet.isLiked ? -1 : 1)
       });
       // 按讚
       if (!tweet.isLiked) {
@@ -79,7 +80,7 @@ const ReplyListPage = () => {
   }
 
   useEffect(() => {
-    if (!isAuthenticated && !isLoading) {
+    if ((!isAuthenticated || currentUser.role !== 'user') && !isLoading) {
       navigate('/login')
       return
     }
@@ -91,14 +92,12 @@ const ReplyListPage = () => {
         const dbTweet = await getTweet(id);
         // console.log('tweet', tweet);
         setTweet({ ...dbTweet });
-        const dbLikeList = await getUserLikes(currentUser.id);
-        console.log('dbLikeList =>', dbLikeList)
       } catch (err) {
         console.log(err)
       }
     }
     getTweetAsync();
-  }, [id]);
+  }, [tweet]);
 
 
   useEffect(() => {
@@ -108,7 +107,7 @@ const ReplyListPage = () => {
       setReplys(replies);
     }
     getRepliesAsync();
-  }, [id]);
+  }, []);
 
   return (
     <>

@@ -15,8 +15,8 @@ const AppLayout = () => {
 
       {pathname !== '/setting'
         && (<Main>
-          <Outlet />
-          <PopularUser />
+          {/* <Outlet /> */}
+          {/* <PopularUser /> */}
         </Main>)}
 
       {pathname === '/setting' && (

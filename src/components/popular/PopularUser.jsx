@@ -1,40 +1,50 @@
 import style from './PopularUser.module.scss';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "./../../contexts/AuthContext";
+import { getTopUser, addFollowing, removeFollowing } from "./../../api/followship";
 
 
 const PopularUser = () => {
-  const defaultPopularlist = [{
-    "id": 1,
-    "account": "user1",
-    "name": "User1",
-    "avatar": "https://loremflickr.com/320/240/logo/?lock=1"
-  }, {
-    "id": 2,
-    "account": "user1",
-    "name": "User1",
-    "avatar": "https://loremflickr.com/320/240/logo/?lock=1"
-  }, {
-    "id": 3,
-    "account": "user1",
-    "name": "User1",
-    "avatar": "https://loremflickr.com/320/240/logo/?lock=1"
-  }, {
-    "id": 4,
-    "account": "user1",
-    "name": "User1",
-    "avatar": "https://loremflickr.com/320/240/logo/?lock=1"
-  }
-  ];
-  const [popularList, setPopularList] = useState(defaultPopularlist);
-  const [followList, setFollowList] = useState([1]);
+  const { currentUser, update, isAuthenticated } = useAuth();
+  const [popularList, setPopularList] = useState([]);
 
-  const handleClick = (id) => {
-    if (followList.includes(id)) {
-      setFollowList(followList.filter(followId => followId !== id));
-    } else {
-      setFollowList(followList.concat(id));
+  const handleClick = async (followingId, isFollowed) => {
+    console.log('followingId', followingId, 'isFollowed', isFollowed)
+
+    setPopularList(popularList.map(p => {
+      if (p.id === followingId) {
+        return { ...p, isFollowed: !isFollowed }
+      } else {
+        return p
+      }
+    }))
+
+    try {
+      if (isFollowed) {
+        // 取消追蹤
+        await removeFollowing(followingId, currentUser.id)
+      }
+      if (!isFollowed) {
+        // 追蹤
+        await addFollowing(followingId)
+      }
+    } catch (error) {
+      console.log(error)
     }
+
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const getRepliesAsync = async () => {
+        const topUsers = await getTopUser();
+        console.log('topUsers', topUsers);
+        setPopularList(topUsers);
+      }
+      getRepliesAsync();
+    }
+  }, [update]);
+
   return (
     <section className={style.popular}>
       <h2 className={style.h2}>推薦跟隨</h2>
@@ -42,7 +52,8 @@ const PopularUser = () => {
         {popularList.map(user =>
           <li key={user.id}>
             <div className={style.info}>
-              <div className={style.avatar}><img src={user.avatar} alt="" />
+              <div className={style.avatar}>
+                <img src={user.avatar} alt="" />
               </div>
               <div>
                 <div className={style.name}>
@@ -54,11 +65,11 @@ const PopularUser = () => {
               </div>
             </div>
             <button
-              className={style.btn + ' ' + (followList.includes(user.id) ? style.active : '')}
+              className={style.btn + ' ' + (user.isFollowed ? style.active : '')}
               onClick={() => {
-                handleClick?.(user.id)
+                handleClick?.(user.id, user.isFollowed)
               }}>
-              {followList.includes(user.id) ? '正在跟隨' : '跟隨'}
+              {user.isFollowed ? '正在跟隨' : '跟隨'}
             </button>
           </li>
         )}

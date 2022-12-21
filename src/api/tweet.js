@@ -51,7 +51,7 @@ export const createTweet = async (payload) => {
 
     console.log('res', res)
 
-    return res.data.data
+    return res.data.postedTweet
   } catch (err) {
     console.error('[Create Tweet failed]:', err);
   }

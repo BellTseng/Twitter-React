@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, currentUser, update } = useAuth();
+  const { isAuthenticated, currentUser, update, isLoading } = useAuth();
   const [tweet, setTweet] = useState(null)
   const [tweets, setTweets] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -100,22 +100,20 @@ const HomePage = () => {
       console.log(error)
     }
   }
-
   useEffect(() => {
-    if (!isAuthenticated || currentUser.role !== 'user') {
+    if ((!isAuthenticated || currentUser.role !== 'user') && !isLoading) {
       navigate('/login')
       return
     }
+  }, [currentUser, isAuthenticated])
+
+
+  useEffect(() => {
     const getTweetsAsync = async () => {
       try {
         const tweets = await getTweets()
-        const dbLikeList = await getUserLikes(currentUser.id)
-        const tweetsWidthLiked = tweets.map(tweet => ({
-          ...tweet,
-          isEdit: false,
-          isLiked: dbLikeList.map(o => o.TweetId).includes(tweet.id)
-        }))
-        setTweets(tweetsWidthLiked);
+        console.log('tweets', tweets)
+        setTweets(tweets);
       } catch (err) {
         console.log(err)
       }
