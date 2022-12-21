@@ -2,7 +2,7 @@ import { createContext, useState, useEffect, useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import * as jwt from 'jsonwebtoken'
 import { getUser } from './../api/user'
-import { login } from './../api/auth'
+import { login, adminLogin, register, adminCheckPermission } from './../api/auth'
 
 
 const defaultAuthContext = {
@@ -36,7 +36,22 @@ export const AuthProvider = ({ children }) => {
         return
       }
 
-      // "message": "Unauthorized"
+      if (pathname.includes('admin')) {
+        // 設定使用者後台
+        const response = await adminCheckPermission(authToken)
+
+        if (response) {
+          setIsAuthenticated(true)
+          setCurrentUser(response)
+        } else {
+          setIsAuthenticated(false)
+          setCurrentUser(null)
+        }
+        
+        return
+      }
+
+      console.log('test')
       const tempUser = jwt.decode(authToken)
       console.log('tempUser', tempUser)
       const result = await getUser(tempUser.id)
@@ -49,21 +64,12 @@ export const AuthProvider = ({ children }) => {
         return
       }
 
-      if (pathname.includes('admin')) {
-        // 設定使用者後台
-        if (result.data.role === 'admin') {
-          setIsAuthenticated(true)
-          setCurrentUser(result.data)
-        } else {
-          setIsAuthenticated(false)
-          setCurrentUser(null)
-        }
-      } else {
-        // 設定使用者前台
-        console.log('有User')
-        setIsAuthenticated(true)
-        setCurrentUser(result.data)
-      }
+
+      // 設定使用者前台
+      console.log('有User')
+      setIsAuthenticated(true)
+      setCurrentUser(result.data)
+
 
       setIsLoading(false)
     }
@@ -90,6 +96,7 @@ export const AuthProvider = ({ children }) => {
 
         if (!!result) {
           setCurrentUser({ ...result.data.user }); // 設定使用者資料
+          console.log(result.data.user)
           setIsAuthenticated(true);
           console.log('authToken', result.data.token)
           localStorage.setItem('authToken', result.data.token) // 設定新的token到return 
@@ -101,12 +108,56 @@ export const AuthProvider = ({ children }) => {
         return true;
 
       },
+      // 註冊
+      register: async (data) => {
+        const response = await register({
+          account: data.account,
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          checkPassword: data.checkPassword
+        })
+
+        if (response) {
+          setCurrentUser({ ...response.data.user }); // 設定使用者資料
+          setIsAuthenticated(true);
+          console.log('authToken', response.data.token)
+          localStorage.setItem('authToken', response.data.token) // 設定新的token到return 
+          return true
+        } else {
+          setCurrentUser(null); // 設定使用者資料
+          setIsAuthenticated(false);
+          return false;
+        }
+
+      },
+
       // 登出
       logout: () => {
         console.log('goto logout')
         localStorage.removeItem('authToken');
         setCurrentUser(null);
         setIsAuthenticated(false);
+      },
+
+      // 後台登入
+      adminLogin: async (data) => {
+        const response = await adminLogin({
+          account: data.account,
+          password: data.password,
+        })
+
+        if (response) {
+          setCurrentUser({ ...response.data.user })
+          setIsAuthenticated(true)
+          localStorage.setItem('authToken', response.data.token)
+          return true
+        }
+        else {
+          setCurrentUser(null)
+          setIsAuthenticated(false)
+          return false
+        }
       }
     }}
   >

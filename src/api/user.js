@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Toast } from "../utils/utils";
 
 // const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
 const baseUrl = 'https://3ce8-118-150-219-108.jp.ngrok.io/api';
@@ -39,5 +40,42 @@ export const getUserLikes = async (userId) => {
     return res.data;
   } catch (err) {
     console.error('[Get Tweets failed]:', err);
+  }
+}
+
+// 修改個人資料
+export const putUser = async (payload) => {
+  const { id, name, email, password, checkPassword, account, avatar, cover, introduction } = payload
+  try {
+    const { data } = await axiosInstance.put(`${baseUrl}/users/${id}`, {
+      name, 
+      email, 
+      password, 
+      checkPassword, 
+      account, 
+      avatar, 
+      cover, 
+      introduction
+    })
+
+    return data
+  } 
+  catch (error) {
+    console.error('[Put User failed]:', error);
+
+    const errorResponse = error.response
+
+    if (errorResponse.status === 401){
+      Toast.fire({
+        title: `${errorResponse.message}`,
+        icon: 'error'
+      })
+    }
+    else if (errorResponse.status === 404) {
+      Toast.fire({
+        title: `${errorResponse.message}`,
+        icon: 'error'
+      })
+    }
   }
 }
