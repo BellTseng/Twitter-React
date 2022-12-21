@@ -2,13 +2,13 @@ import { Outlet } from "react-router-dom";
 import AdminSideBar from '../sidebar/AdminSideBar';
 
 
-const AppLayout = () => {
+const AdminLayout = () => {
   return (
-    <>
+    <div>
       <AdminSideBar />
       <Outlet />
-    </>
+    </div>
   )
 }
 
-export default AppLayout
+export default AdminLayout

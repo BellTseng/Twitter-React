@@ -1,8 +1,10 @@
 import styles from './../style/SettingPage.module.scss'
 import AuthInput from '../components/AuthInput'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Toast } from '../utils/utils';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { getUser, putUser } from '../api/user';
 
 const userPro = {
   id: 1,
@@ -25,10 +27,11 @@ const SettingPage = () => {
   const [email, setEmail] = useState(userPro.email)
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('')
+  const { isAuthenticated, currentUser } = useAuth()
   const navigate = useNavigate()
   let wordCount = 50
 
-  function handleClick() {
+  async function handleClick() {
     if (
       account.trim().length === 0 ||
       username.trim().length === 0 ||
@@ -59,7 +62,7 @@ const SettingPage = () => {
       return
     }
 
-    if (password !== passwordCheck) {
+    if (password.trim() !== passwordCheck.trim()) {
       Toast.fire({
         title: '密碼與密碼確認不相符！',
         icon: 'warning',
@@ -68,18 +71,53 @@ const SettingPage = () => {
       return
     }
 
-    console.log('account: ', account)
-    console.log('username: ', username)
-    console.log('email: ', email)
-    console.log('password: ', password)
-    console.log('passwordCheck: ', passwordCheck)
-
-    Toast.fire({
-      title: '修改成功',
-      icon: 'success',
+    const response = await putUser({
+      id: currentUser?.id,
+      name: username.trim(),
+      email: email.trim(),
+      password: password.trim(),
+      checkPassword: passwordCheck.trim(),
+      account: account.trim(),
     })
-    navigate('/home')
+
+    if (response.status === 'success'){
+      Toast.fire({
+        title: '修改成功',
+        icon: 'success',
+      })
+      navigate('/home')
+    }
+
+    // console.log('settingPage', response)
+
+    // console.log('account: ', account)
+    // console.log('username: ', username)
+    // console.log('email: ', email)
+    // console.log('password: ', password)
+    // console.log('passwordCheck: ', passwordCheck)
+
+    
   }
+
+  useEffect(() => {
+    async function getUserAsync() {
+      const { data } = await getUser(currentUser?.id)
+
+      // console.log('data', data)
+
+      setAccount(data.account)
+      setEmail(data.email)
+      setUserName(data.name)
+    }
+
+    if(!isAuthenticated){
+      navigate('/login')
+      return
+    }
+    else{
+      getUserAsync()
+    }
+  }, [isAuthenticated, navigate, currentUser])
 
 
   return(

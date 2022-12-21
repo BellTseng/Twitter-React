@@ -4,15 +4,15 @@ import crossed from './../../image/VectorCrossed@2x.jpg'
 
 const AdminTweetItem = ({ tweet, onDelete}) => {
   return (
-    <div className={styles.tweetItem}>
-      <img src={tweet.user.avatar ? tweet.user.avatar : logo} alt="avatar" className={styles.avatar}/>
+    <div className={styles.tweetItem} id={tweet.id}>
+      <img src={tweet.User.avatar ? tweet.User.avatar : logo} alt="avatar" className={styles.avatar}/>
 
       <div className={styles.userTag}>
-        <span className={styles.userName}>{tweet.user.userName ? tweet.user.userName : 'Apple'}</span>
-        <span className={styles.userAccount}>@{tweet.user.account ? tweet.user.account : 'apple'}・{tweet.date ? tweet.date : 3} 小時</span>
+        <span className={styles.userName}>{tweet.User.name ? tweet.User.name : 'Apple'}</span>
+        <span className={styles.userAccount}>@{tweet.User.account ? tweet.User.account : 'apple'}・{tweet.createdAt ? tweet.createdAt : '3小時'} </span>
       </div>
       
-      <p>{tweet.text ? tweet.text : 'test test test! Myname is gg easy now'}
+      <p>{tweet.description ? ((tweet.description.length < 50) ? tweet.description : `${tweet.description}...`) : 'test test test! Myname is gg easy now'}
       </p>
 
       <button
