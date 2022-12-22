@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import { getUserFollowers, getUserFollowings, addFollowing, removeFollowing } from '../api/followship';
 import { useAuth } from "../contexts/AuthContext";
+import { getUser } from "./../api/user";
 
 const FollowPage = () => {
   let { id } = useParams();
@@ -14,6 +15,7 @@ const FollowPage = () => {
   const [followers, setFollowers] = useState([])
   const [followings, setFollowings] = useState([])
   const [tabId, setUserTabId] = useState(0)
+  const [user, setUser] = useState(null);
 
   // 切換tab
   // 依index顯示不同的資料
@@ -23,7 +25,9 @@ const FollowPage = () => {
   }
 
   // 切換跟隨者的人狀態
-  const handleClick = async (user, type) => {
+  const handleClick = async (followUser, type) => {
+    console.log('followUser', followUser)
+    console.log('type', type)
     // 1.切換跟隨者狀態
     // 2.也同時要從被跟隨者列表移除/加入
     // 3. 進行update，因為有可能影響到popular
@@ -34,33 +38,76 @@ const FollowPage = () => {
     if (type === 'followers') {
       // 切換跟隨者
       newFollowers = followers.map(o => {
-        if (o.id === user.id) {
+        if (o.id === followUser.id) {
           return { ...o, isFollowed: !o.isFollowed }
         } else {
           return { o }
         }
       })
 
-      // 判斷配跟隨者
-      if (followings.map(o => o.id).includes(user.id)) {
-        newFollowings = followings.filter(o => o.id !== user.id)
-        await removeFollowing(user.id, currentUser.id)
+      // 判斷被跟隨者(使用者本人)
+      if (followings.map(o => o.id).includes(followUser.id)) {
+        id === currentUser.id ?
+          newFollowings = followings.filter(o => o.id !== followUser.id) :
+          newFollowings = followings.map(o => o.id === followUser.id ? { ...o, isFollowed: !o.isFollowed } : o)
+        await removeFollowing(followUser.id, currentUser.id)
+        console.log('newFollowers', newFollowers)
+        console.log('newFollowings', newFollowings)
+        setFollowers(newFollowers)
+        setFollowings(newFollowings)
       } else {
-        newFollowings = [{ ...user }].concat(followings);
-        await addFollowing(user.id)
+        console.log('id', id, 'currentUser.id', currentUser.id)
+        Number(id) === currentUser.id ?
+          newFollowings = [{ ...followUser }].concat(followings) :
+          newFollowings = followings.map(o => o.id === followUser.id ? { ...o, isFollowed: !o.isFollowed } : o)
+        await addFollowing(followUser.id)
+        console.log('newFollowers', newFollowers)
+        console.log('newFollowings', newFollowings)
+        setFollowers(newFollowers)
+        setFollowings(newFollowings)
+        update()
       }
     }
 
-    if (type === 'following') {
-      newFollowings = followings.filter(o => o.id !== user.id)
-      newFollowers = followers.map(o => o.id === user.id ? { ...o, isFollowed: !o.isFollowed } : o)
-      await removeFollowing(user.id, currentUser.id)
+    if (type === 'followings') {
+      console.log('following')
+      //  切換跟隨者
+      newFollowers = followers.map(o => o.id === followUser.id ? { ...o, isFollowed: !o.isFollowed } : o)
+      console.log('id', id, 'currentUser.id', currentUser.id, id === currentUser.id)
+      Number(id) === currentUser.id ?
+        newFollowings = followings.filter(o => o.id !== followUser.id) :
+        newFollowings = followings.map(o => o.id === followUser.id ? { ...o, isFollowed: !o.isFollowed } : o)
+      await removeFollowing(followUser.id, currentUser.id)
+      console.log('newFollowers', newFollowers)
+      console.log('newFollowings', newFollowings)
+      setFollowers(newFollowers)
+      setFollowings(newFollowings)
+      update()
     }
-    setFollowers(newFollowers)
-    setFollowings(newFollowings)
   }
 
+
+
+
   // useEffect取得資料
+  // 取得頁面User的資料
+  useEffect(() => {
+    const getUserAsync = async () => {
+      try {
+        if (id && id !== currentUser?.id) {
+          const res = await getUser(id)
+          console.log('user =>', res.data)
+          setUser({ ...res.data });
+        } else {
+          setUser({ ...currentUser });
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    getUserAsync();
+  }, [id, isAuthenticated])
+
   // 取得_某追隨使用者的人
   useEffect(() => {
     if (id) {
@@ -80,7 +127,7 @@ const FollowPage = () => {
       }
       getUserFollowersAsync();
     }
-  }, [id]);
+  }, [id, update]);
 
   // 取得_某使用者追隨中的人
   useEffect(() => {
@@ -103,13 +150,13 @@ const FollowPage = () => {
       }
       getUserFollowingsAsync();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, update]);
 
 
 
   return (
     <>
-      <Header title="UserName" subTitle="25推文" type="user" url="" />
+      <Header title={user?.name} subTitle={(user?.tweetCount || 0) + '推文'} type="user" url={"/userself/" + id} />
       <Tab
         titles={['跟隨者', '正在跟隨']}
         tabId={tabId}
@@ -120,14 +167,14 @@ const FollowPage = () => {
         type='followers'
         follows={followers}
         onClick={handleClick}
-        disabled={currentUser?.id !== id}
+        currentUserId={currentUser?.id}
       />
       <FollowList
         show={tabId === 1}
         type='followings'
         follows={followings}
         onClick={handleClick}
-        disbled={currentUser?.id !== id}
+        currentUserId={currentUser?.id}
       />
 
     </>

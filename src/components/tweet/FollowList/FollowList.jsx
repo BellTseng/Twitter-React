@@ -2,13 +2,13 @@ import { useState } from "react";
 import style from "./../TweetList/TweetList.module.scss";
 import { Link } from "react-router-dom";
 
-const FollowList = ({ follows, type, onClick, disabled }) => {
+const FollowList = ({ follows, type, onClick, currentUserId, show }) => {
   console.log('type', type)
   console.log('followsssss:', follows)
 
 
   return (
-    <div className="userList">
+    <div className={style.userList + ' ' + (show ? style.show : '')}>
       {
         follows.map(user =>
           <div className={style.follow} key={user.id}>
@@ -21,9 +21,8 @@ const FollowList = ({ follows, type, onClick, disabled }) => {
                   {user.name || ''}
                 </div>
                 <button
-                  disabled={disabled}
                   className={style.btn + ' ' +
-                    (user.isFollowed ? style.active : '' + (disabled ? style.disabled : ''))}
+                    (user.isFollowed ? style.active : '' + (currentUserId === user?.id ? style.disabled : ''))}
                   onClick={() => { onClick?.({ ...user }, type) }}
                 >
                   {user.isFollowed ? '正在跟隨' : '跟隨'}

@@ -32,10 +32,10 @@ const SideBar = ({ type }) => {
       description: value,
     });
 
-
-
-    if (result && pathname === '/home') {
+    if (result && (pathname === '/home' || pathname.includes('userSelf'))) {
       update()
+      setModalOpen(false);
+    } else if (result) {
       setModalOpen(false);
     } else {
       Swal.fire({
@@ -45,7 +45,6 @@ const SideBar = ({ type }) => {
         icon: 'error',
         showConfirmButton: false,
       });
-
     }
 
   }
