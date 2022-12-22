@@ -159,7 +159,7 @@ const UserModal = ({ isOpen, onShowModal }) => {
             <div className={styles.add}>
               <InputFile
                 iuputName={'cover'}
-                onChange={(event) => setUserBackground(event.target.files[0])}
+                onChange={(event) => setUserBackground(window.URL.createObjectURL(event.target.files[0]))}
                 inputRef={inputBackgroundFileCurrent}
               >
                 <img
@@ -195,7 +195,7 @@ const UserModal = ({ isOpen, onShowModal }) => {
             <div className={styles.addAvatar}>
               <InputFile
                 iuputName={'avatar'}
-                onChange={(event) => setUserAvatar(event.target.files[0])}
+                onChange={(event) => setUserAvatar(window.URL.createObjectURL(event.target.files[0]))}
                 inputRef={inputAvatarFileCurrent}
                 keyId={'addAvatar'}
               >
