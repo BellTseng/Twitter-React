@@ -2,6 +2,7 @@ import styles from './UserInfo.module.scss'
 import email from './../../image/VectorEmail@2x.jpg'
 import subscription from './../../image/VectorSubscription@2x.jpg'
 import UserModal from '../modal/UserModal'
+import { useAuth } from '../../contexts/AuthContext'
 
 const UserInfo = ({ 
   isOpen,
@@ -12,6 +13,7 @@ const UserInfo = ({
   onCancelFollow,
   onShowModal 
 }) => {
+  const { currentUser } = useAuth()
 
   return(
     <div className={styles.userInfo}>
@@ -46,16 +48,16 @@ const UserInfo = ({
               <img src={subscription} alt="subscription" />
             </button>
             <div className={styles.followed}>
-              {(user.isFollow) && 
+              {(user.isFollowed) && 
                 <button 
                   className={styles.active} 
-                  onClick={() => onCancelFollow?.(user.id)}
+                  onClick={() => onCancelFollow?.(user.id, currentUser.id)}
                 >
                   正在跟隨
                 </button>
               }
 
-              {(!user.isFollow) && 
+              {(!user.isFollowed) && 
                 <button
                   onClick={() => onAddFollow?.(user.id)}
                 >

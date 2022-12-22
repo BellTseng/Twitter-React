@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Toast } from '../utils/utils';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { getUser, putUser } from '../api/user';
+import { getUser, putUserSetting } from '../api/user';
 
 const userPro = {
   id: 1,
@@ -71,7 +71,7 @@ const SettingPage = () => {
       return
     }
 
-    const response = await putUser({
+    const response = await putUserSetting({
       id: currentUser?.id,
       name: username.trim(),
       email: email.trim(),

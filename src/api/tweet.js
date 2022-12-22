@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
-const baseUrl = 'https://3ce8-118-150-219-108.jp.ngrok.io/api'
+const baseUrl = 'https://1e3b-2001-b011-2006-3845-d52-7bb7-c036-170d.jp.ngrok.io/api'
 
 const axiosInstance = axios.create({
   baseURL: baseUrl,
@@ -112,3 +112,38 @@ export const removeLike = async (tweetId) => {
 
 /* 個人頁面 */
 
+// 取得該使用者的所有推文
+export const getUserTweets = async (id) => {
+  try {
+    const { data } = await axiosInstance.get(`${baseUrl}/users/${id}/tweets`)
+
+    return data
+  } 
+  catch (error) {
+    console.log('[Get UserTweets failed]:', error)  
+  }
+}
+
+// 取得該使用者的回覆過的推文
+export const getUserReplyTweets = async (id) => {
+  try {
+    const { data } = await axiosInstance.get(`${baseUrl}/users/${id}/replied_tweets`)
+
+    return data
+  }
+  catch (error) {
+    console.log('[Get UserReplyTweets failed]:', error)
+  }
+}
+
+// 取得該使用者的回覆過的推文
+export const getUserLikeTweets = async (id) => {
+  try {
+    const { data } = await axiosInstance.get(`${baseUrl}/users/${id}/likes`)
+
+    return data
+  }
+  catch (error) {
+    console.log('[Get UserLikeTweets failed]:', error)
+  }
+}

@@ -2,7 +2,7 @@ import axios from "axios";
 import { Toast } from "../utils/utils";
 
 // const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
-const baseUrl = 'https://3ce8-118-150-219-108.jp.ngrok.io/api'
+const baseUrl = 'https://1e3b-2001-b011-2006-3845-d52-7bb7-c036-170d.jp.ngrok.io/api'
 
 const axiosInstance = axios.create({
   baseURL: baseUrl,
@@ -43,19 +43,39 @@ export const getUserLikes = async (userId) => {
   }
 }
 
-// 修改個人資料
-export const putUser = async (payload) => {
-  const { id, name, email, password, checkPassword, account, avatar, cover, introduction } = payload
+// 修改個人資料setting
+export const putUserSetting = async (payload) => {
+  const { id, name, email, password, checkPassword, account } = payload
   try {
-    const { data } = await axiosInstance.put(`${baseUrl}/users/${id}`, {
+    const { data } = await axiosInstance.put(`${baseUrl}/users/${id}/setting`, {
       name,
       email,
       password,
       checkPassword,
       account,
-      avatar,
-      cover,
-      introduction
+    })
+
+    return data
+  }
+  catch (error) {
+    console.error('[Put User failed]:', error);
+
+    const errorResponse = error.response.data
+
+    Toast.fire({
+      title: `${errorResponse.message}`,
+      icon: 'error'
+    })
+
+  }
+}
+
+// UserModal編輯個人資料
+export const putUser = async (payload) => {
+  const { id, formData} = payload
+  try {
+    const { data } = await axiosInstance.put(`${baseUrl}/users/${id}`, {
+      formData
     })
 
     return data
@@ -74,27 +94,27 @@ export const putUser = async (payload) => {
 }
 
 // 追隨他人
-export const addFollow = (id) => {
-  try {
-    const { data } = axiosInstance.post(`${baseUrl}/followships`, {
-      id
-    })
+// export const addFollow = (id) => {
+//   try {
+//     const { data } = axiosInstance.post(`${baseUrl}/followships`, {
+//       id
+//     })
 
-    return data
-  }
-  catch (error) {
-    console.log('[Follow User failed]:', error)
-  }
-}
+//     return data
+//   }
+//   catch (error) {
+//     console.log('[Follow User failed]:', error)
+//   }
+// }
 
-// 取消追隨
-export const cancelFollow = (id) => {
-  try {
-    const { data } = axiosInstance.delete(`${baseUrl}/followships/${id}`)
+// // 取消追隨
+// export const cancelFollow = (id) => {
+//   try {
+//     const { data } = axiosInstance.delete(`${baseUrl}/followships/${id}`)
 
-    return data
-  }
-  catch (error) {
-    console.log('[Follow User failed]:', error)
-  }
-}
+//     return data
+//   }
+//   catch (error) {
+//     console.log('[Follow User failed]:', error)
+//   }
+// }

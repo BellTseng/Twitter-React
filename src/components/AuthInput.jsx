@@ -1,12 +1,13 @@
 import styles from './../style/AuthInput.module.scss'
 
-const AuthInput = ({ type, label, value, placeholder, onChange, wordCount, active }) => {
+const AuthInput = ({ type, label, value, placeholder, onChange, wordCount, active, iuputName }) => {
   return (
     <div className={styles.authInputContainer}>
       <label>{label}</label>
       <input
         className={`${styles.inputName} ${(value.trim().length > wordCount) ? (styles.wrong) : ('')}`}
         type={type || "text"}
+        name={iuputName}
         placeholder={placeholder}
         value={value}
         onChange={(event) => onChange?.(event.target.value)}
