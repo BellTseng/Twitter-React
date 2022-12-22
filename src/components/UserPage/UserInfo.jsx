@@ -3,6 +3,7 @@ import email from './../../image/VectorEmail@2x.jpg'
 import subscription from './../../image/VectorSubscription@2x.jpg'
 import UserModal from '../modal/UserModal'
 import { useAuth } from '../../contexts/AuthContext'
+import { Link } from 'react-router-dom'
 
 const UserInfo = ({ 
   isOpen,
@@ -80,8 +81,13 @@ const UserInfo = ({
 
 
       <div className={styles.userPopular}>
-        <p className={styles.following}>{user.followingCount ? user.followingCount : '59'}個<span>跟隨中</span></p>
-        <p className={styles.follower}>{user.followerCount ? user.followerCount : '230'}位<span>跟隨者</span></p>
+        <Link to={`/follow/${user.id}?tab=0`}>
+          <p className={styles.following}>{user.followingCount ? user.followingCount : '59'}個<span>跟隨中</span></p>
+        </Link>
+        <Link to={`/follow/${user.id}?tab=1`}>
+          <p className={styles.follower}>{user.followerCount ? user.followerCount : '230'}位<span>跟隨者</span></p>
+        </Link>
+        
       </div>
 
       

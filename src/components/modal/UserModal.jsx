@@ -34,16 +34,16 @@ const UserModal = ({ isOpen, onShowModal }) => {
 
     const testForm = event.target
     const formData = new FormData(testForm)
-    formData.append('file-to-upload', event.target.form[0].files[0])
-    axios.post('/api/v1/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-      .then((data) => {
-        console.log(data)
-      })
-      .catch(error => console.log(error));
+    // formData.append('file-to-upload', event.target.form[0].files[0])
+    // axios.post('/api/v1/upload', formData, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // })
+    //   .then((data) => {
+    //     console.log(data)
+    //   })
+    //   .catch(error => console.log(error));
 
     for (let [name, value] of formData.entries()) {
       console.log(`${name} : ${value}`)
