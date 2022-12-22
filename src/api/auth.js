@@ -1,11 +1,17 @@
 import axios from 'axios';
 import { Toast } from '../utils/utils';
 
-const authUrl = 'https://rocky-citadel-44413.herokuapp.com';
+// const authUrl = 'https://rocky-citadel-44413.herokuapp.com/api/users';
+const authUrl = 'https://3ce8-118-150-219-108.jp.ngrok.io/api/users';
+
+const axiosInstance = axios.create({
+  headers: { 'ngrok-skip-browser-warning': 'any' }
+});
+
 
 export const login = async ({ account, password }) => {
   try {
-    const res = await axios.post(`${authUrl}/api/users/signin`, {
+    const res = await axiosInstance.post(`${authUrl}/signin`, {
       account,
       password
     });
@@ -22,8 +28,8 @@ export const login = async ({ account, password }) => {
 }
 
 export const register = async ({ account, name, email, password, checkPassword }) => {
-  try{
-    const { data } = await axios.post(`${authUrl}/api/users`, {
+  try {
+    const { data } = await axiosInstance.post(`${authUrl}/api/users`, {
       account,
       name,
       email,
@@ -32,23 +38,23 @@ export const register = async ({ account, name, email, password, checkPassword }
     });
 
     console.log(data)
-    if (data.status === 'success'){
-      return {...data}
+    if (data.status === 'success') {
+      return { ...data }
     }
 
     return data
   }
-  catch(error){
+  catch (error) {
     console.error('[Register Failed]: ', error);
     const message = error.response.data.message
 
-    if (message.account && message.email){
+    if (message.account && message.email) {
       Toast.fire({
         title: '帳號和信箱重複註冊',
         icon: 'error'
       })
     }
-    else if (message.account){
+    else if (message.account) {
       Toast.fire({
         title: `${message.account}`,
         icon: 'error'
@@ -90,7 +96,7 @@ export const adminCheckPermission = async (authToken) => {
     })
 
     return data
-  } 
+  }
   catch (error) {
     console.error('[Failed]: ', error.message)
   }

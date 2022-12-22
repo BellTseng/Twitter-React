@@ -30,6 +30,9 @@ section.popular {
 ul.popularList {
   margin: 0;
   padding: 0;
+  height: calc(100vh - 120px);
+  overflow: scroll;
+  border-radius: 0 0 14px 14px;
 
   li {
     display: flex;
@@ -81,4 +84,8 @@ button {
     color: #FFF;
     background: #FF6600;
   }
+}
+
+.none {
+  display: none;
 }

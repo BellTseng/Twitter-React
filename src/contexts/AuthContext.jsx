@@ -22,10 +22,12 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
   const [updatedAt, setUpdatedAt] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
   const { pathname } = useLocation()
 
   useEffect(() => {
     const checkTockenIsValid = async () => {
+      setIsLoading(true)
       const authToken = localStorage.getItem('authToken')
       if (!authToken) {
         console.log('沒有token')
@@ -69,7 +71,7 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(result.data)
 
 
-
+      setIsLoading(false)
     }
     checkTockenIsValid()
   }, [pathname])
@@ -77,10 +79,12 @@ export const AuthProvider = ({ children }) => {
 
   return (<AuthContext.Provider
     value={{
+      isLoading: isLoading,
       isAuthenticated: isAuthenticated,
       currentUser: currentUser,
       updatedAt: updatedAt,
       update: () => {
+        console.log('更新了updatedAt')
         setUpdatedAt(new Date())
       },
       // 登入

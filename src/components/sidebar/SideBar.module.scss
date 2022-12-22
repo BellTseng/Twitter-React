@@ -23,7 +23,7 @@
 .sidebarWrap {
   // width: 13vw;
   // padding: 0 0 0 9vw;
-  width: 187px;
+  width: 178px;
   padding: 0 0 0 130px;
   position: relative;
   height: 100vh;
@@ -43,22 +43,61 @@
   color: #1C1C1C;
 
 
-  &:nth-child(1) .navLink::before {
-    background-image: url('../../image/icons/home.svg');
+  &:nth-child(1) {
+    .navLink {
+      &::before {
+        background-image: url('../../image/icons/home.svg');
+      }
+
+      &:hover,
+      &.active {
+        &::before {
+          background-image: url('../../image/icons/home_active.svg');
+        }
+      }
+    }
   }
 
-  &:nth-child(2) .navLink::before {
-    background-image: url('../../image/icons/user.svg');
+  &:nth-child(2) {
+    .navLink {
+      &::before {
+        background-image: url('../../image/icons/user.svg');
+      }
+
+      &:hover,
+      &.active {
+        &::before {
+          background-image: url('../../image/icons/user_active.svg');
+        }
+      }
+    }
   }
 
-  &:nth-child(3) .navLink::before {
-    background-image: url('../../image/icons/setting.svg');
+  &:nth-child(3) {
+    .navLink {
+      &::before {
+        background-image: url('../../image/icons/setting.svg');
+      }
+
+      &:hover,
+      &.active {
+        &::before {
+          background-image: url('../../image/icons/setting_active.svg');
+        }
+      }
+    }
   }
 
-  &:nth-child(4) .navLink::before {
-    background-image: url('../../image/icons/logout.svg');
-  }
+  &:nth-child(4) {
+    .navLink {
+      &::before {
+        background-image: url('../../image/icons/logout.svg');
+      }
 
+      &:hover,
+      &.active {}
+    }
+  }
 }
 
 .navLink {
@@ -67,14 +106,9 @@
   &.active {
     opacity: 0.8;
     color: #FF6600;
-
-    &::before {
-      filter: contrast(100%) brightness(100%);
-    }
   }
 
   &::before {
-    filter: contrast(200%) brightness(-150%);
     content: '';
     display: inline-block;
     width: 22px;

@@ -28,8 +28,21 @@
   color: #657786;
 }
 
+.time {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+  color: #6C757D;
+  border-bottom: 1px solid #E6ECF0;
+}
+
 .tweet {
   padding: 15px;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
 }
 
 .top {
@@ -44,7 +57,7 @@
   font-size: 23px;
   line-height: 34px;
   text-decoration: none;
-  border-bottom: 1px solid #E6ECF0;
+  // border-bottom: 1px solid #E6ECF0;
 }
 
 .count {

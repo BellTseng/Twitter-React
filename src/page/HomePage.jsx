@@ -14,16 +14,18 @@ import Swal from 'sweetalert2';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, currentUser, update } = useAuth();
+  const { isAuthenticated, currentUser, update, isLoading } = useAuth();
   const [tweet, setTweet] = useState(null)
   const [tweets, setTweets] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
 
+  // 關閉回覆Modal
   const handleCloseModal = () => {
     setModalOpen(false);
   }
 
+  // 新增推文
   const handleCreateTweet = async (value) => {
     // 頁面資料處理
     try {
@@ -46,6 +48,7 @@ const HomePage = () => {
     }
   }
 
+  // 新增回覆
   const handleCreateReply = async (value) => {
     setModalOpen(false);
     try {
@@ -68,11 +71,14 @@ const HomePage = () => {
     }
   }
 
+  // 開啟回覆Modal
   const handleOpenReply = (chosedTweet) => {
+    console.log('chosedTweet', chosedTweet);
     setTweet({ ...chosedTweet });
     setModalOpen(true);
   }
 
+  // 按讚狀態狀態切換
   const handleClickLike = async (chosedTweet) => {
     console.log('tweet:', chosedTweet);
     const tweet = { ...chosedTweet }
@@ -100,27 +106,28 @@ const HomePage = () => {
       console.log(error)
     }
   }
-
   useEffect(() => {
-    if (!isAuthenticated || currentUser.role !== 'user') {
+    if ((!isAuthenticated || currentUser.role !== 'user') && !isLoading) {
       navigate('/login')
       return
     }
-    const getTweetsAsync = async () => {
-      try {
-        const tweets = await getTweets()
-        const dbLikeList = await getUserLikes(currentUser.id)
-        setTweets(tweets.map(tweet => ({
-          ...tweet,
-          isEdit: false,
-          isLiked: dbLikeList.map(o => o.TweetId).includes(tweet.id)
-        })));
-      } catch (err) {
-        console.log(err)
+  }, [currentUser, isAuthenticated])
+
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const getTweetsAsync = async () => {
+        try {
+          const tweets = await getTweets()
+          console.log('tweets', tweets)
+          setTweets(tweets);
+        } catch (err) {
+          console.log(err)
+        }
       }
+      getTweetsAsync();
     }
-    getTweetsAsync();
-  }, [currentUser, isAuthenticated, navigate, update]);
+  }, [update, isAuthenticated]);
 
 
   return (
@@ -141,10 +148,7 @@ const HomePage = () => {
         {modalOpen &&
           <>
             <SingleTweetForReply
-              id={tweet.id}
-              User={tweet.User}
-              time={tweet.time}
-              description={tweet.description}
+              tweet={tweet}
             />
             <TweetEdit
               name='回覆'

@@ -14,9 +14,8 @@ import { createTweet } from './../../api/tweet';
 const SideBar = ({ type }) => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
-  const { currentUser } = useAuth();
+  const { currentUser, update, logout } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
-  const { logout, update } = useAuth();
 
   console.log('pathname', pathname, pathname === '/home')
 

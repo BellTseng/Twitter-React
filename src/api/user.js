@@ -1,7 +1,8 @@
 import axios from "axios";
 import { Toast } from "../utils/utils";
 
-const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
+// const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
+const baseUrl = 'https://3ce8-118-150-219-108.jp.ngrok.io/api';
 
 const axiosInstance = axios.create({
   baseURL: baseUrl,
@@ -11,6 +12,7 @@ axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem('authToken');
   if (token) {
     config.headers['Authorization'] = `Bearer ${token}`
+    config.headers['ngrok-skip-browser-warning'] = 'any'
   }
   return config;
 }, (error) => {
