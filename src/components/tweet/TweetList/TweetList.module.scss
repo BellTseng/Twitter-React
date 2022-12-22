@@ -19,8 +19,9 @@
   font-weight: 500;
   margin-bottom: 5px;
 
-  span {
-    color: #FF6600;
+  span,
+  .account {
+    color: #FF6600 !important;
     margin-left: 5px;
   }
 }
@@ -62,17 +63,27 @@
 .replyTweet {
   position: relative;
   display: flex;
+  padding: 16px;
 
   &::after {
     content: '';
     display: block;
     position: absolute;
     width: 2px;
-    height: calc(100% - 60px);
+    height: calc(100% - 85px);
     background-color: #B5B5BE;
-    top: 60px;
-    left: 35px;
+    top: 81px;
+    left: 49px;
   }
+
+  .account {
+    margin-left: 8px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #6C757D;
+  }
+
 }
 
 .top {

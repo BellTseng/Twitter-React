@@ -1,8 +1,49 @@
-// 選單
-nav ul li a.active {
-  color: #ff6600;
+ // 選單
+ nav ul li {
+   a.active {
+     color: #FF6600;
 
-  &::before {
-    filter: contrast(100%) brightness(100%);
-  }
-}
+     &::before {
+       filter: contrast(100%) brightness(100%);
+     }
+   }
+
+   &:nth-child(1) {
+     a {
+       &.active {
+         &::before {
+           background-image: url('../../image/icons/home_active.svg') !important;
+         }
+       }
+     }
+   }
+
+   &:nth-child(2) {
+     a {
+       &.active {
+         &::before {
+           background-image: url('../../image/icons/user_active.svg') !important;
+         }
+       }
+     }
+   }
+
+   &:nth-child(3) {
+     a {
+       &.active {
+         &::before {
+           background-image: url('../../image/icons/setting_active.svg') !important;
+         }
+       }
+     }
+   }
+
+   &:nth-child(4) {
+     a {
+       &::before {
+         background-image: url('../../image/icons/logout.svg');
+       }
+
+     }
+   }
+ }

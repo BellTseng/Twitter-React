@@ -45,23 +45,23 @@ export const register = async ({ account, name, email, password, checkPassword }
     });
 
     console.log(data)
-    if (data.status === 'success'){
-      return {...data}
+    if (data.status === 'success') {
+      return { ...data }
     }
 
     return data
   }
-  catch(error){
+  catch (error) {
     console.error('[Register Failed]: ', error);
     const message = error.response.data.message
 
-    if (message.account && message.email){
+    if (message.account && message.email) {
       Toast.fire({
         title: '帳號和信箱重複註冊',
         icon: 'error'
       })
     }
-    else if (message.account){
+    else if (message.account) {
       Toast.fire({
         title: `${message.account}`,
         icon: 'error'
@@ -104,7 +104,7 @@ export const adminCheckPermission = async (authToken) => {
     })
 
     return data
-  } 
+  }
   catch (error) {
     console.error('[Failed]: ', error.message)
   }

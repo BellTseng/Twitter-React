@@ -20,7 +20,7 @@ const ReplyListPage = () => {
   const [tweet, setTweet] = useState(null);
   const [replys, setReplys] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const { isAuthenticated, currentUser } = useAuth();
+  const { isAuthenticated, currentUser, isLoading } = useAuth();
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -43,9 +43,17 @@ const ReplyListPage = () => {
           User: { ...currentUser }
         }, ...prevPeplies]
       })
+      setTweet({
+        ...tweet,
+        replyCount: tweet.replyCount + 1
+      })
     } catch (err) {
       console.error(err);
     }
+  }
+
+  const handleOpenReply = () => {
+    setModalOpen(true);
   }
 
 
@@ -55,7 +63,8 @@ const ReplyListPage = () => {
     try {
       setTweet({
         ...tweet,
-        isLiked: !tweet.isLiked
+        isLiked: !tweet.isLiked,
+        likeCount: tweet.likeCount + (!!tweet.isLiked ? -1 : 1)
       });
       // 按讚
       if (!tweet.isLiked) {
@@ -70,59 +79,56 @@ const ReplyListPage = () => {
     }
   }
 
-
-
   useEffect(() => {
-    if (!isAuthenticated) {
+    if ((!isAuthenticated || currentUser.role !== 'user') && !isLoading) {
       navigate('/login')
       return
     }
-    const getTweetAndRepliesAsync = async () => {
-      try {
-        const tweet = await getTweet(id);
-        console.log('tweet', tweet);
-        setTweet(tweet);
+  }, [id, isAuthenticated]);
+
+  useEffect(() => {
+    if (id) {
+      const getTweetAsync = async () => {
+        try {
+          const dbTweet = await getTweet(id);
+          console.log('dbTweet', dbTweet);
+          setTweet({ ...dbTweet });
+        } catch (err) {
+          console.log(err)
+        }
+      }
+      getTweetAsync();
+    }
+  }, [id]);
+
+
+  useEffect(() => {
+    if (id) {
+      const getRepliesAsync = async () => {
         const replies = await getReplies(id);
         console.log('replies', replies);
         setReplys(replies);
-        const dbLikeList = await getUserLikes(currentUser.id);
-        console.log('dbLikeList =>', dbLikeList)
-        // if (dbLikeList.map(o => o.TweetId).includes(id)) {
-        //   setTweet({ ...tweet, isLiked: true });
-        // }
-      } catch (err) {
-        console.log(err)
       }
+      getRepliesAsync();
     }
-    getTweetAndRepliesAsync();
-
-  }, [id, tweet, navigate, currentUser, isAuthenticated]);
+  }, []);
 
   return (
     <>
-      <Header title="推文" type="tweet" />
-      {/* <SingleTweet
-        id={id}
-        User={tweet?.User || ''}
-        time={tweet?.time || ''}
-        description={tweet?.description || ''}
-        replyCount={tweet?.replyCount || ''}
-        likeCount={tweet?.likeCount || ''}
-        isLiked={tweet?.isLiked}
-        onClickReply={setModalOpen(true)}
+      <Header title="推文" type="tweet" url={'/home'} />
+      {tweet && <SingleTweet
+        tweet={tweet}
+        onClickReply={handleOpenReply}
         onClickLike={handleClickLike}
-      /> */}
+      />}
 
-      {/* <ReplyList replys={replys} /> */}
+      <ReplyList replys={replys} userAccount={tweet?.User?.account || ''} />
 
       <Modal isOpen={modalOpen} closeModal={handleCloseModal}>
-        {/* {modalOpen &&
+        {modalOpen &&
           <>
             <SingleTweetForReply
-              id={tweet?.id || ''}
-              User={tweet?.User || ''}
-              time={tweet?.time || ''}
-              description={tweet?.description || ''}
+              tweet={tweet}
             />
             <TweetEdit
               name='回覆'
@@ -130,7 +136,7 @@ const ReplyListPage = () => {
               onClick={handleCreateReply}
             />
           </>
-        } */}
+        }
       </Modal>
     </>
   )
