@@ -1,6 +1,6 @@
 # Alphitter with React
 
-![image](https://github.com/21Jasper12/Todolist-React/blob/main/public/image/todolist.jpg)
+![image](https://github.com/21Jasper12/Twitter-React/blob/main/public/image/todolist.jpg)
 
 ---
 #  功能
