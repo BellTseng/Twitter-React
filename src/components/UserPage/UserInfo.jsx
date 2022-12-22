@@ -8,7 +8,8 @@ const UserInfo = ({
   user, 
   userId, 
   paramsId, 
-  onToggleFollow,
+  onAddFollow,
+  onCancelFollow,
   onShowModal 
 }) => {
 
@@ -48,7 +49,7 @@ const UserInfo = ({
               {(user.isFollow) && 
                 <button 
                   className={styles.active} 
-                  onClick={() => onToggleFollow?.(user.id)}
+                  onClick={() => onCancelFollow?.(user.id)}
                 >
                   正在跟隨
                 </button>
@@ -56,7 +57,7 @@ const UserInfo = ({
 
               {(!user.isFollow) && 
                 <button
-                  onClick={() => onToggleFollow?.(user.id)}
+                  onClick={() => onAddFollow?.(user.id)}
                 >
                   跟隨
                 </button>

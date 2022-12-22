@@ -10,7 +10,8 @@ const UserSelfArea = ({
   userId, 
   paramsId,
   tabId, 
-  onToggleFollow,
+  onAddFollow,
+  onCancelFollow,
   onChangeTab,
   onShowModal,
 }) => {
@@ -31,7 +32,8 @@ const UserSelfArea = ({
         user={user}
         userId={userId}
         paramsId={paramsId}
-        onToggleFollow={(id) => onToggleFollow?.(id)}
+        onAddFollow={(id) => onAddFollow?.(id)}
+        onCancelFollow={(id) => onCancelFollow?.(id)}
         onShowModal={(value) => onShowModal?.(value)}
       />
 

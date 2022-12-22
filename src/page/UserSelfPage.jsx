@@ -2,7 +2,8 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import UserSelfArea from "../components/UserPage/UserSelfArea"
 import { useAuth } from "../contexts/AuthContext"
-import { getUser } from "../api/user"
+import { getUser, addFollow, cancelFollow } from "../api/user"
+import { Toast } from "../utils/utils"
 
 // const userPro = {
 //   id: 1,
@@ -28,14 +29,46 @@ const UserSelfPage = () => {
   const { id } = useParams()
 
 
-  function handleToggleFollow(id) {
-    setUserInfo((prevUser) => {
-      return{
-        ...prevUser,
-        isFollow: !prevUser.isFollow
-      }
-    })
+  async function handleAddFollow(id) {
+    const response = await addFollow(id)
+
+    if (response.status === "success"){
+      setUserInfo((prevUser) => {
+        return {
+          ...prevUser,
+          isFollow: !prevUser.isFollow
+        }
+      })
+
+      Toast.fire({
+        title: '取消追隨',
+        icon: 'success'
+      })
+    }
+    
   }
+
+  async function handleCancelFollow(id) {
+    const response = await cancelFollow(id)
+
+    if(response.status === 'success'){
+      setUserInfo((prevUser) => {
+        return {
+          ...prevUser,
+          isFollow: !prevUser.isFollow
+        }
+      })
+
+      Toast.fire({
+        title: `${response.message}`,
+        icon: 'success'
+      })
+    }
+
+    
+  }
+
+
 
   function handleChangeTab(value) {
     setUserTabId(value)
@@ -70,7 +103,8 @@ const UserSelfPage = () => {
       userId={currentUser?.id}
       tabId={userTabId}
       paramsId={Number(id)}
-      onToggleFollow={handleToggleFollow}
+      onAddFollow={handleAddFollow}
+      onCancelFollow={handleCancelFollow}
       onChangeTab={handleChangeTab}
       onShowModal={changeModalStatus}
     />
