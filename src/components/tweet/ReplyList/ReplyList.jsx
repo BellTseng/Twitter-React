@@ -25,7 +25,7 @@ const ReplyList = ({ replys, userAccount }) => {
                 <div className={style.time}>{tweet.createdAt}</div>
               </div>
               <div className={style.replyAccount}>回覆
-                <span>@{userAccount}</span>
+                <span>@{userAccount ? userAccount : 'test'}</span>
               </div>
               <div className={style.commend}>
                 {tweet.comment}

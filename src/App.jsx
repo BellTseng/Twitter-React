@@ -36,7 +36,7 @@ function App() {
               <Route path="admin/users" element={<AdminUsersPage />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
-            <Route path="/test" element={<AdminUsersPage />} />
+            {/* <Route path="/test" element={<AdminUsersPage />} /> */}
           </Routes>
         </AuthProvider>
       </BrowserRouter>

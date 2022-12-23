@@ -1,12 +1,13 @@
 import styles from './UserModalIntroduction.module.scss'
 
-const UserModalIntroduction = ({ label, value, placeholder, onChange, wordCount, active }) => {
+const UserModalIntroduction = ({ label, value, placeholder, onChange, wordCount, active, iuputName }) => {
   return (
     <div className={styles.userModalIntroduction}>
       <div className={styles.area}>
         <label>{label}</label>
         <textarea
-          className={`${styles.inputName} ${(value.trim().length > wordCount) && styles.wrong}`}
+          className={`${styles.inputName} ${(value.trim().length > wordCount) ? (styles.wrong) : ('')}`}
+          name={iuputName}
           placeholder={placeholder}
           value={value}
           onChange={(event) => onChange?.(event.target.value)}
