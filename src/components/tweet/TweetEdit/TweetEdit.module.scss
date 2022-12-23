@@ -3,7 +3,7 @@
 }
 
 .tweet {
-  padding: 10px 15px;
+  padding: 16px 15px;
 }
 
 .tweetBox {
@@ -41,7 +41,7 @@
 
 .btn {
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   color: #FFF;
@@ -50,5 +50,10 @@
   padding: 8px 16px;
   align-self: center;
   background: #FF6600;
-  margin: 15px 0;
+  margin: 15px 0 0;
+}
+
+.grayLine {
+  height: 10px;
+  background-color: #E6ECF0;
 }

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Toast } from '../utils/utils';
 
-// const authUrl = 'https://rocky-citadel-44413.herokuapp.com';
-const authUrl = 'https://3c71-118-150-219-108.jp.ngrok.io'
+const authUrl = 'https://rocky-citadel-44413.herokuapp.com';
+// const authUrl = 'https://3c71-118-150-219-108.jp.ngrok.io/'
 
 const axiosInstance = axios.create({
   headers: { 'ngrok-skip-browser-warning': 'any' }
@@ -31,10 +31,18 @@ export const login = async ({ account, password }) => {
     console.error('[Login Failed]:', error);
     const message = error.response.data.message
     console.log('message', message)
-    Toast.fire({
-      title: message,
-      icon: 'error'
-    })
+    if (message.includes('帳號不存在')) {
+      Toast.fire({
+        title: '帳號不存在！',
+        icon: 'error'
+      })
+    }
+    if (message.includes('帳號或密碼')) {
+      Toast.fire({
+        title: '帳號或密碼錯誤錯誤！',
+        icon: 'error'
+      })
+    }
   }
 }
 

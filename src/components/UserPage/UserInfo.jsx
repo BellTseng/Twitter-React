@@ -5,18 +5,18 @@ import UserModal from '../modal/UserModal'
 import { useAuth } from '../../contexts/AuthContext'
 import { Link } from 'react-router-dom'
 
-const UserInfo = ({ 
+const UserInfo = ({
   isOpen,
-  user, 
-  userId, 
-  paramsId, 
+  user,
+  userId,
+  paramsId,
   onAddFollow,
   onCancelFollow,
-  onShowModal 
+  onShowModal
 }) => {
   const { currentUser } = useAuth()
 
-  return(
+  return (
     <div className={styles.userInfo}>
       <img
         className={styles.background}
@@ -49,16 +49,16 @@ const UserInfo = ({
               <img src={subscription} alt="subscription" />
             </button>
             <div className={styles.followed}>
-              {(user.isFollowed  === 1) && 
-                <button 
-                  className={styles.active} 
+              {(user.isFollowed === 1) &&
+                <button
+                  className={styles.active}
                   onClick={() => onCancelFollow?.(user.id, currentUser.id)}
                 >
                   正在跟隨
                 </button>
               }
 
-              {(!user.isFollowed) && 
+              {(!user.isFollowed) &&
                 <button
                   onClick={() => onAddFollow?.(user.id)}
                 >
@@ -82,20 +82,20 @@ const UserInfo = ({
 
       <div className={styles.userPopular}>
         <Link to={`/follow/${user.id}?tab=0`}>
-          <p className={styles.following}>{user.followingCount ? user.followingCount : '59'}個<span>跟隨中</span></p>
+          <p className={styles.following}>{user.followingCount ? user.followingCount : 0}個<span>跟隨中</span></p>
         </Link>
         <Link to={`/follow/${user.id}?tab=1`}>
-          <p className={styles.follower}>{user.followerCount ? user.followerCount : '230'}位<span>跟隨者</span></p>
+          <p className={styles.follower}>{user.followerCount ? user.followerCount : 0}位<span>跟隨者</span></p>
         </Link>
-        
+
       </div>
 
-      
+
       <UserModal
         isOpen={isOpen}
         onShowModal={(value) => onShowModal?.(value)}
       />
-      
+
     </div>
   )
 }
