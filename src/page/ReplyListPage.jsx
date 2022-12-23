@@ -9,6 +9,7 @@ import SingleTweetForReply from '../components/tweet/SingleTweetForReply/SingleT
 import Modal from '../components/modal/Modal';
 import { getTweet, getReplies, createReply, addLike, removeLike } from './../api/tweet';
 import { getUserLikes } from '../api/user';
+import { Toast } from '../utils/utils';
 
 
 
@@ -49,6 +50,10 @@ const ReplyListPage = () => {
       })
     } catch (err) {
       console.error(err);
+      Toast.fire({
+        title: err.message,
+        icon: 'error'
+      })
     }
   }
 

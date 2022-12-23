@@ -18,7 +18,6 @@ export const login = async ({ account, password }) => {
     });
     console.log('res', res) // 還是這裡被反覆執行？
     const token = res.data.token;
-
     if (token) {
       return { ...res.data };
     }

@@ -3,7 +3,7 @@ import Header from "../components/layoutItems/Header";
 import Tab from "../components/layoutItems/Tab"
 import { defaultFollows } from "../data/tweets.js";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { getUserFollowers, getUserFollowings, addFollowing, removeFollowing } from '../api/followship';
 import { useAuth } from "../contexts/AuthContext";
 import { getUser } from "./../api/user";
@@ -11,11 +11,14 @@ import { getUser } from "./../api/user";
 const FollowPage = () => {
   let { id } = useParams();
   console.log('id', id);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initTab = searchParams.get("tab") || 0;
   const { currentUser, update, isAuthenticated } = useAuth();
   const [followers, setFollowers] = useState([])
   const [followings, setFollowings] = useState([])
-  const [tabId, setUserTabId] = useState(0)
+  const [tabId, setUserTabId] = useState(initTab)
   const [user, setUser] = useState(null);
+
 
   // 切換tab
   // 依index顯示不同的資料
@@ -140,7 +143,7 @@ const FollowPage = () => {
           console.log('dbFollowing', dbFollowing);
           const users = dbFollowing.map(o => ({
             ...o.FollowingUser,
-            isFollowed: true,
+            isFollowed: o.isFollowed,
             createAt: o.createAt
           }));
           setFollowings(users);

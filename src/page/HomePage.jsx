@@ -134,6 +134,7 @@ const HomePage = () => {
     <>
       <Header title="首頁" type="main" />
       <TweetEdit key={tweets.length}
+        home={true}
         name='推文'
         placeholder='有什麼新鮮事？'
         onClick={handleCreateTweet}
