@@ -72,9 +72,9 @@ export const putUserSetting = async (payload) => {
 
 // UserModal編輯個人資料
 export const putUser = async (payload) => {
-  const { id, formData} = payload
+  const { id, formData } = payload
   try {
-    const { data } = await axiosInstance.put(`${baseUrl}/users/${id}`, formData,{
+    const { data } = await axiosInstance.put(`${baseUrl}/users/${id}`, formData, {
       processData: true,
       contentType: true,
     })

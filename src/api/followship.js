@@ -45,9 +45,9 @@ export const addFollowing = async (followingId) => {
 }
 
 // 刪除_追蹤的使用者
-export const removeFollowing = async (followingId, userId) => {
+export const removeFollowing = async (followingId) => {
   try {
-    const res = await axiosInstance.delete(`${baseUrl}/followships/${followingId}`, { id: userId });
+    const res = await axiosInstance.delete(`${baseUrl}/followships/${followingId}`);
     console.log('removeFollowing', 'res', res)
     return res.status === 'status'
   } catch (err) {

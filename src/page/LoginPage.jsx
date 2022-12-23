@@ -29,7 +29,6 @@ const LoginPage = () => {
         title: '請輸入帳號或密碼！',
         icon: 'warning',
       });
-
       return
     }
 
@@ -41,7 +40,6 @@ const LoginPage = () => {
         title: '字數超出上限！',
         icon: 'warning',
       });
-
       return
     }
 
@@ -49,23 +47,12 @@ const LoginPage = () => {
     const success = await login({ account, password });
 
     if (success) {
-      Swal.fire({
+      Toast.fire({
         title: '登入成功',
         icon: 'success',
-        showCancelButton: false,
-        timer: 1000,
-        position: 'top'
       });
-      // navigate('/home');
       return;
     }
-    Swal.fire({
-      title: '登入失敗',
-      icon: 'error',
-      showCancelButton: false,
-      timer: 1000,
-      position: 'top'
-    });
   }
 
   return (
