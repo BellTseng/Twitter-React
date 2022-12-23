@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import style from './UserOwnTweetList.module.scss'
 
 
-const UserOwnTweetList = ({ tweets }) => {
+const UserOwnTweetList = ({ tweets, onClickReply, onClickLike }) => {
   return (
     <div className="tweetList">
       {
@@ -22,12 +22,14 @@ const UserOwnTweetList = ({ tweets }) => {
               </Link>
               <div className={style.toolbar}>
                 <button
+                  onClick={() => onClickReply?.({ ...tweet.Tweet })}
                   className={style.toolButton + ' ' + style.replyCount}
                 >
                   {tweet.Tweet.replyCount}
                 </button>
                 <button
-                  className={style.toolButton + ' ' + style.likeCount + ' ' + style.active}
+                  onClick={() => onClickLike?.({ ...tweet.Tweet })}
+                  className={style.toolButton + ' ' + style.likeCount + ' ' + (!!tweet.Tweet.isLiked ? style.active : '')}
                 >
                   {tweet.Tweet.likeCount}
                 </button>

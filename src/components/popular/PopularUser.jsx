@@ -7,6 +7,7 @@ import { getTopUser, addFollowing, removeFollowing } from "./../../api/followshi
 const PopularUser = () => {
   const { currentUser, isAuthenticated } = useAuth();
   const [popularList, setPopularList] = useState([]);
+  const { update } = useAuth()
 
   const handleClick = async (followingId, isFollowed) => {
     console.log('followingId', followingId, 'isFollowed', isFollowed)
@@ -23,10 +24,12 @@ const PopularUser = () => {
       if (isFollowed) {
         // 取消追蹤
         await removeFollowing(followingId, currentUser.id)
+        update()
       }
       if (!isFollowed) {
         // 追蹤
         await addFollowing(followingId)
+        update()
       }
     } catch (error) {
       console.log(error)
@@ -43,7 +46,7 @@ const PopularUser = () => {
       }
       getRepliesAsync();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, update]);
 
   return (
     <section className={style.popular}>

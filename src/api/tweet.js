@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
-const baseUrl = 'https://f8f2-118-150-219-108.jp.ngrok.io/api'
+const baseUrl = 'https://3c71-118-150-219-108.jp.ngrok.io/api'
 
 const axiosInstance = axios.create({
   baseURL: baseUrl,
