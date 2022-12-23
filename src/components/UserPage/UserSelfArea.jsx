@@ -5,8 +5,10 @@ import UserTab from './UserTab'
 import { Link } from 'react-router-dom'
 import UserOwnTweetList from './UserOwnTweetList'
 import UserLikeTweets from './UserLikeTweets'
-import ReplyList from '../tweet/ReplyList/ReplyList'
 import UserReplyTweets from './UserReplyTweets'
+import Modal from '../modal/Modal'
+import SingleTweetForReply from '../tweet/SingleTweetForReply/SingleTweetForReply'
+import TweetEdit from '../tweet/TweetEdit/TweetEdit'
 
 const UserSelfArea = ({
   tweets,
@@ -17,10 +19,16 @@ const UserSelfArea = ({
   userId, 
   paramsId,
   tabId, 
+  replyModalStatus,
+  chooseTweet,
   onAddFollow,
   onCancelFollow,
   onChangeTab,
   onShowModal,
+  onClickReply,
+  onClickLike,
+  onClickCreateReply,
+  onClickCloseReplyModal
 }) => {
   return(
     <div className={styles.userSelfArea}>
@@ -52,6 +60,8 @@ const UserSelfArea = ({
       {(tabId === 1 && tweets) ?
         <UserOwnTweetList 
           tweets={tweets ? tweets : ''}
+          onClickReply={(tweet) => onClickReply?.(tweet)}
+          onClickLike={(tweet) => onClickLike?.(tweet)}
         />
         :
         ''
@@ -60,8 +70,27 @@ const UserSelfArea = ({
         <UserReplyTweets replys={replies ? replies : ''} /> : ''
       }
       {(tabId === 3 && likes) ?
-        <UserLikeTweets tweets={likes ? likes : ''} /> :''
+        <UserLikeTweets 
+          tweets={likes ? likes : ''}
+          onClickReply={(tweet) => onClickReply?.(tweet)}
+          onClickLike={(tweet) => onClickLike?.(tweet)} 
+        /> :''
       }
+
+      <Modal isOpen={replyModalStatus} closeModal={() => onClickCloseReplyModal?.()}>
+        {replyModalStatus &&
+          <>
+            <SingleTweetForReply
+              tweet={chooseTweet}
+            />
+            <TweetEdit
+              name='回覆'
+              placeholder='推你的回覆'
+              onClick={(value) => onClickCreateReply?.(value)}
+            />
+          </>
+        }
+      </Modal>
     </div>
   )
 }

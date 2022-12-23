@@ -18,7 +18,7 @@ const UserModal = ({ isOpen, onShowModal }) => {
   const [userAvatar, setUserAvatar] = useState('')
   const inputBackgroundFileCurrent = useRef(null)
   const inputAvatarFileCurrent = useRef(null)
-  const { currentUser } = useAuth()
+  const { currentUser, update } = useAuth()
   let userNameWordCount = 50
   let userIntroductionWordCount = 160
 
@@ -86,7 +86,7 @@ const UserModal = ({ isOpen, onShowModal }) => {
     // console.log('introduction', userIntroduction)
     // console.log('avatar', userAvatar)
     // console.log('cover', userBackground)
-
+    update()
     onShowModal?.(false)
   }
 
@@ -99,6 +99,7 @@ const UserModal = ({ isOpen, onShowModal }) => {
 
   function handleOnClickUpload(value) {
     value.current.click();
+    update()
   }
 
   useEffect(() => {
@@ -115,7 +116,7 @@ const UserModal = ({ isOpen, onShowModal }) => {
 
     getUserAsync()
 
-  }, [currentUser])
+  }, [currentUser, update])
 
 
   return (
