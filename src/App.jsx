@@ -15,10 +15,12 @@ import AdminUsersPage from './page/AdminUsersPage'
 import NotFoundPage from './page/NotFoundPage'
 import { AuthProvider } from './contexts/AuthContext';
 
+const basename = process.env.PUBLIC_URL;
+
 function App() {
   return (
     <div className="app">
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <AuthProvider>
           <Routes>
             <Route path="login" element={<LoginPage />} />
