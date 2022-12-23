@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import style from './SideBar.module.scss';
 import Modal from '../modal/Modal';
 import TweetEdit from './../tweet/TweetEdit/TweetEdit';

@@ -29,26 +29,29 @@ const TweetEdit = ({ placeholder, onClick, name, home }) => {
   }
 
   return (
-    <div className={style.tweet}>
-      <div className={style.tweetBox}>
-        <div className={style.avatar}>
-          <img src={"https://loremflickr.com/320/240/logo/?lock=1"} alt="" />
+    <>
+      <div className={style.tweet}>
+        <div className={style.tweetBox}>
+          <div className={style.avatar}>
+            <img src={"https://loremflickr.com/320/240/logo/?lock=1"} alt="" />
+          </div>
+          <textarea
+            className={style.textarea + ' ' + (!!home ? style.home : '')}
+            placeholder={placeholder}
+            ref={textArea}
+          >
+          </textarea>
         </div>
-        <textarea
-          className={style.textarea + ' ' + (!!home ? style.home : '')}
-          placeholder={placeholder}
-          ref={textArea}
-        >
-        </textarea>
+        <div className={style.btnBar}>
+          <button
+            className={style.btn}
+            onClick={handleClick}>
+            {name}
+          </button>
+        </div>
       </div>
-      <div className={style.btnBar}>
-        <button
-          className={style.btn}
-          onClick={handleClick}>
-          {name}
-        </button>
-      </div>
-    </div>
+      {!!home && <div className={style.grayLine}></div>}
+    </>
   )
 }
 
