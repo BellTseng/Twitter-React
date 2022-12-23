@@ -49,7 +49,7 @@ const UserInfo = ({
               <img src={subscription} alt="subscription" />
             </button>
             <div className={styles.followed}>
-              {(user.isFollowed) && 
+              {(user.isFollowed  === 1) && 
                 <button 
                   className={styles.active} 
                   onClick={() => onCancelFollow?.(user.id, currentUser.id)}

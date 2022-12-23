@@ -3,7 +3,14 @@ import { useNavigate, useParams } from "react-router-dom"
 import UserSelfArea from "../components/UserPage/UserSelfArea"
 import { useAuth } from "../contexts/AuthContext"
 import { getUser } from "../api/user"
-import { getUserTweets, getUserReplyTweets, getUserLikeTweets } from './../api/tweet'
+import { 
+  getUserTweets, 
+  getUserReplyTweets, 
+  getUserLikeTweets, 
+  createReply, 
+  addLike, 
+  removeLike 
+} from './../api/tweet'
 import { Toast } from "../utils/utils"
 import { testAddFollowing, testRemoveFollowing } from './../api/followship'
 
@@ -28,7 +35,9 @@ const UserSelfPage = () => {
   const [userLikes, setUserLikes] = useState([]) // userLikeTweets
   const [userTabId, setUserTabId] = useState(1)
   const [isOpen, setIsOpen] = useState(false) //Modal show useState
-  const { currentUser, isAuthenticated } = useAuth()
+  const [chooseTweet, setChooseTweet] = useState(null)
+  const [replyModalIsOpen, setReplyModalIsOpen] = useState(false)
+  const { currentUser, isAuthenticated, update } = useAuth()
   const navigate = useNavigate()
   // const userId = 1
   const { id } = useParams()
@@ -51,8 +60,11 @@ const UserSelfPage = () => {
         title: '追隨成功',
         icon: 'success'
       })
+
+      
     }
     
+    update()
   }
 
   async function handleCancelFollow(id) {
@@ -72,19 +84,138 @@ const UserSelfPage = () => {
         title: `${response.message}`,
         icon: 'success'
       })
+
+      
     }
 
-    
+
   }
+
+  // 按讚狀態狀態切換
+  const handleClickLike = async (chosedTweet) => {
+    console.log('tweet:', chosedTweet);
+    const tweet = { ...chosedTweet }
+    // 新增Tweet這邊會在使用ChangeLikePOSTAPI
+    try {
+      setUserTweets(userTweets.map(t => {
+        if (t.id === tweet.id) {
+          return {
+            ...tweet,
+            isLiked: !tweet.isLiked,
+            likeCount: tweet.likeCount + (!!tweet.isLiked ? -1 : 1)
+          }
+        }
+        return t;
+      }));
+      setUserLikes(userLikes.map(t => {
+        if (t.TweetId === tweet.id) {
+          return {
+            ...t,
+            Tweet: {
+              ...t.Tweet,
+              isLiked: !tweet.isLiked,
+              likeCount: tweet.likeCount + (!!tweet.isLiked ? -1 : 1)
+            }
+          }
+        }
+        return t;
+      }))
+
+      if (currentUser.id === Number(id)){
+        console.log('params', id)
+        console.log('currentUserId', currentUser.id)
+        setUserLikes((prevLikes) => {
+          return prevLikes.filter((like) => like.Tweet.isLiked !== false)
+        })
+          
+      }
+      // 按讚
+      if (!tweet.isLiked) {
+        await addLike(tweet.id);
+      }
+      // 取消讚
+      if (!!tweet.isLiked) {
+        await removeLike(tweet.id);
+      }
+
+      update()
+
+    } catch (error) {
+      console.log(error)
+      update()
+    }
+  }
+
+  // 開啟回覆Modal
+  const handleOpenReply = (chosedTweet) => {
+    console.log('chosedTweet', chosedTweet);
+    setChooseTweet({ ...chosedTweet });
+    setReplyModalIsOpen(true);
+    update()
+  }
+
+  // 關閉回覆Modal
+  const handleCloseModal = () => {
+    console.log('close')
+    setReplyModalIsOpen(false);
+    update()
+  }
+
+  // 新增回覆
+  const handleCreateReply = async (value) => {
+    setReplyModalIsOpen(false);
+    try {
+      const result = await createReply({
+        tweetId: chooseTweet.id,
+        UserId: currentUser.id,
+        comment: value,
+      });
+      setUserTweets(userTweets.map(t => {
+        if (t.id === chooseTweet.id) {
+          return {
+            ...chooseTweet,
+            replyCount: chooseTweet.replyCount + 1
+          }
+        }
+        return t;
+      }));
+
+      setUserLikes(userLikes.map(t => {
+        if (t.TweetId === chooseTweet.id) {
+          return {
+            ...t,
+            Tweet: {
+              ...t.Tweet,
+              replyCount: chooseTweet.replyCount + 1
+            }
+          }
+        }
+        return t;
+      }));
+
+
+      update()
+    } catch (err) {
+      console.error(err);
+      update()
+    }
+  }
+
+  
+
+
 
 
 
   function handleChangeTab(value) {
     setUserTabId(value)
+    update()
   }
 
+  // 開啟UserModal編輯功能
   function changeModalStatus(value) {
     setIsOpen(value)
+    update()
   }
 
   useEffect(() => {
@@ -118,8 +249,9 @@ const UserSelfPage = () => {
     }
     else {
       getUserAsync()
+      
     }
-  }, [isAuthenticated, navigate, id])
+  }, [isAuthenticated, navigate, id, update])
 
   return (
     <UserSelfArea
@@ -131,10 +263,16 @@ const UserSelfPage = () => {
       userId={currentUser?.id}
       tabId={userTabId}
       paramsId={Number(id)}
+      replyModalStatus={replyModalIsOpen}
+      chooseTweet={chooseTweet}
       onAddFollow={handleAddFollow}
       onCancelFollow={handleCancelFollow}
       onChangeTab={handleChangeTab}
       onShowModal={changeModalStatus}
+      onClickReply={handleOpenReply}
+      onClickLike={handleClickLike}
+      onClickCreateReply={handleCreateReply}
+      onClickCloseReplyModal={handleCloseModal}
     />
   )
 }
