@@ -193,3 +193,15 @@ button {
     background: #FF6600;
   }
 }
+
+.userList {
+  display: none;
+
+  .disabled {
+    display: none;
+  }
+
+  &.show {
+    display: block;
+  }
+}

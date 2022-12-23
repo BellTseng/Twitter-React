@@ -2,8 +2,7 @@ import axios from "axios";
 import { Toast } from "../utils/utils";
 
 // const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
-const baseUrl = 'https://f8f2-118-150-219-108.jp.ngrok.io/api'
-
+const baseUrl = 'https://4749-2001-b011-2006-576a-35ce-87f2-5020-4d66.jp.ngrok.io/api'
 const axiosInstance = axios.create({
   baseURL: baseUrl,
 });
@@ -72,9 +71,9 @@ export const putUserSetting = async (payload) => {
 
 // UserModal編輯個人資料
 export const putUser = async (payload) => {
-  const { id, formData} = payload
+  const { id, formData } = payload
   try {
-    const { data } = await axiosInstance.put(`${baseUrl}/users/${id}`, formData,{
+    const { data } = await axiosInstance.put(`${baseUrl}/users/${id}`, formData, {
       processData: true,
       contentType: true,
     })

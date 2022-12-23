@@ -1,8 +1,9 @@
 import { useRef } from 'react';
 import style from './TweetEdit.module.scss';
+import { Toast } from '../../../utils/utils';
 
 
-const TweetEdit = ({ placeholder, onClick, name }) => {
+const TweetEdit = ({ placeholder, onClick, name, home }) => {
   const textArea = useRef(null);
 
   const handleClick = () => {
@@ -10,12 +11,18 @@ const TweetEdit = ({ placeholder, onClick, name }) => {
     const value = textArea.current.value.trim();
     console.log('value', value);
     if (value.length > 140) {
-      alert('內容不得大於140字');
+      Toast.fire({
+        title: '內容不得大於140字',
+        icon: 'error'
+      })
       return;
     } else if (!!value.length) {
       onClick?.(textArea.current.value);
     } else {
-      alert('內容不得為空白');
+      Toast.fire({
+        title: '內容不得為空白',
+        icon: 'error'
+      })
       return;
     }
 
@@ -28,7 +35,7 @@ const TweetEdit = ({ placeholder, onClick, name }) => {
           <img src={"https://loremflickr.com/320/240/logo/?lock=1"} alt="" />
         </div>
         <textarea
-          className={style.textarea}
+          className={style.textarea + ' ' + (!!home ? style.home : '')}
           placeholder={placeholder}
           ref={textArea}
         >

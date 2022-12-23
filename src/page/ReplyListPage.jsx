@@ -9,6 +9,7 @@ import SingleTweetForReply from '../components/tweet/SingleTweetForReply/SingleT
 import Modal from '../components/modal/Modal';
 import { getTweet, getReplies, createReply, addLike, removeLike } from './../api/tweet';
 import { getUserLikes } from '../api/user';
+import { Toast } from '../utils/utils';
 
 
 
@@ -49,6 +50,10 @@ const ReplyListPage = () => {
       })
     } catch (err) {
       console.error(err);
+      Toast.fire({
+        title: err.message,
+        icon: 'error'
+      })
     }
   }
 
@@ -80,11 +85,11 @@ const ReplyListPage = () => {
   }
 
   useEffect(() => {
-    if ((!isAuthenticated || currentUser.role !== 'user') && !isLoading) {
+    if (!isAuthenticated || currentUser.role !== 'user') {
       navigate('/login')
       return
     }
-  }, [id, isAuthenticated]);
+  }, [currentUser, isAuthenticated])
 
   useEffect(() => {
     if (id) {
