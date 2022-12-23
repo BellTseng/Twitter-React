@@ -9,10 +9,12 @@ import { useAuth } from "../contexts/AuthContext";
 import { getUser } from "./../api/user";
 
 const FollowPage = () => {
+  const navigate = useNavigate();
   let { id } = useParams();
   console.log('id', id);
   const [searchParams, setSearchParams] = useSearchParams();
-  const initTab = searchParams.get("tab") || 0;
+  const initTab = Number(searchParams.get("tab")) || 0;
+  console.log('initTab', initTab)
   const { currentUser, update, isAuthenticated } = useAuth();
   const [followers, setFollowers] = useState([])
   const [followings, setFollowings] = useState([])
@@ -42,9 +44,9 @@ const FollowPage = () => {
       // 切換跟隨者
       newFollowers = followers.map(o => {
         if (o.id === followUser.id) {
-          return { ...o, isFollowed: !o.isFollowed }
+          return { ...o, isFollowed: (o.isFollowed === 1 ? 0 : 1) }
         } else {
-          return { o }
+          return { ...o }
         }
       })
 
@@ -52,17 +54,32 @@ const FollowPage = () => {
       if (followings.map(o => o.id).includes(followUser.id)) {
         id === currentUser.id ?
           newFollowings = followings.filter(o => o.id !== followUser.id) :
-          newFollowings = followings.map(o => o.id === followUser.id ? { ...o, isFollowed: !o.isFollowed } : o)
+          newFollowings = followings.map(o => {
+            if (o.id === followUser.id) {
+              return {
+                ...o,
+                isFollowed: (o.isFollowed === 1 ? 0 : 1)
+              }
+            } return { ...o }
+          })
         await removeFollowing(followUser.id, currentUser.id)
         console.log('newFollowers', newFollowers)
         console.log('newFollowings', newFollowings)
         setFollowers(newFollowers)
         setFollowings(newFollowings)
+        update()
       } else {
         console.log('id', id, 'currentUser.id', currentUser.id)
         Number(id) === currentUser.id ?
           newFollowings = [{ ...followUser }].concat(followings) :
-          newFollowings = followings.map(o => o.id === followUser.id ? { ...o, isFollowed: !o.isFollowed } : o)
+          newFollowings = followings.map(o => {
+            if (o.id === followUser.id) {
+              return {
+                ...o,
+                isFollowed: (o.isFollowed === 1 ? 0 : 1)
+              }
+            } return { ...o }
+          })
         await addFollowing(followUser.id)
         console.log('newFollowers', newFollowers)
         console.log('newFollowings', newFollowings)
@@ -75,11 +92,25 @@ const FollowPage = () => {
     if (type === 'followings') {
       console.log('following')
       //  切換跟隨者
-      newFollowers = followers.map(o => o.id === followUser.id ? { ...o, isFollowed: !o.isFollowed } : o)
+      newFollowers = followers.map(o => {
+        if (o.id === followUser.id) {
+          return {
+            ...o,
+            isFollowed: (o.isFollowed === 1 ? 0 : 1)
+          }
+        } return { ...o }
+      })
       console.log('id', id, 'currentUser.id', currentUser.id, id === currentUser.id)
       Number(id) === currentUser.id ?
         newFollowings = followings.filter(o => o.id !== followUser.id) :
-        newFollowings = followings.map(o => o.id === followUser.id ? { ...o, isFollowed: !o.isFollowed } : o)
+        newFollowings = followings.map(o => {
+          if (o.id === followUser.id) {
+            return {
+              ...o,
+              isFollowed: (o.isFollowed === 1 ? 0 : 1)
+            }
+          } return { ...o }
+        })
       await removeFollowing(followUser.id, currentUser.id)
       console.log('newFollowers', newFollowers)
       console.log('newFollowings', newFollowings)
@@ -90,39 +121,47 @@ const FollowPage = () => {
   }
 
 
-
+  // 沒有權限登出
+  // useEffect(() => {
+  //   if (!isAuthenticated || currentUser.role !== 'user') {
+  //     navigate('/login')
+  //     return
+  //   }
+  // }, [currentUser, isAuthenticated])
 
   // useEffect取得資料
   // 取得頁面User的資料
   useEffect(() => {
-    const getUserAsync = async () => {
-      try {
-        if (id && id !== currentUser?.id) {
-          const res = await getUser(id)
-          console.log('user =>', res.data)
-          setUser({ ...res.data });
-        } else {
-          setUser({ ...currentUser });
+    if (id) {
+      const getUserAsync = async () => {
+        try {
+          if (id && id !== currentUser?.id) {
+            const res = await getUser(id)
+            console.log('user =>', res.data)
+            setUser({ ...res.data });
+          } else {
+            setUser({ ...currentUser });
+          }
+        } catch (error) {
+          console.error(error)
         }
-      } catch (error) {
-        console.error(error)
       }
+      getUserAsync();
     }
-    getUserAsync();
-  }, [id, isAuthenticated])
+  }, [id])
 
   // 取得_某追隨使用者的人
   useEffect(() => {
-    if (id) {
+    if (id && isAuthenticated) {
       const getUserFollowersAsync = async () => {
         try {
           const dbFollower = await getUserFollowers(id) || [];
           console.log('dbFollower', dbFollower);
           const users = dbFollower.map(o => ({
             ...o.FollowerUser,
-            isFollowed: o.isFollowed,
             createAt: o.createAt
           }));
+          console.log('setFollowers', users)
           setFollowers(users);
         } catch (err) {
           console.log(err)
@@ -130,11 +169,11 @@ const FollowPage = () => {
       }
       getUserFollowersAsync();
     }
-  }, [id, update]);
+  }, [id, isAuthenticated, update]);
 
   // 取得_某使用者追隨中的人
   useEffect(() => {
-    if (isAuthenticated) {
+    if (id && isAuthenticated) {
       console.log('使用者id', currentUser.id, '頁面id', id)
       console.log('是否是同一人', currentUser.id === id)
       const getUserFollowingsAsync = async () => {
@@ -143,9 +182,9 @@ const FollowPage = () => {
           console.log('dbFollowing', dbFollowing);
           const users = dbFollowing.map(o => ({
             ...o.FollowingUser,
-            isFollowed: o.isFollowed,
             createAt: o.createAt
           }));
+          console.log('setFollowings', users)
           setFollowings(users);
         } catch (err) {
           console.log(err)
@@ -153,7 +192,7 @@ const FollowPage = () => {
       }
       getUserFollowingsAsync();
     }
-  }, [isAuthenticated, update]);
+  }, [id, isAuthenticated, update]);
 
 
 
@@ -165,20 +204,21 @@ const FollowPage = () => {
         tabId={tabId}
         onChangeTab={handleChangeTab}
       />
-      <FollowList
+      {followers && <FollowList
         show={tabId === 0}
         type='followers'
         follows={followers}
         onClick={handleClick}
         currentUserId={currentUser?.id}
-      />
-      <FollowList
-        show={tabId === 1}
-        type='followings'
-        follows={followings}
-        onClick={handleClick}
-        currentUserId={currentUser?.id}
-      />
+      />}
+      {followings &&
+        <FollowList
+          show={tabId === 1}
+          type='followings'
+          follows={followings}
+          onClick={handleClick}
+          currentUserId={currentUser?.id}
+        />}
 
     </>
   )

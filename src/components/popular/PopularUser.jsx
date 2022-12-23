@@ -1,4 +1,5 @@
 import style from './PopularUser.module.scss';
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "./../../contexts/AuthContext";
 import { getTopUser, addFollowing, removeFollowing } from "./../../api/followship";
@@ -54,17 +55,22 @@ const PopularUser = () => {
         {popularList.map(user =>
           <li key={user.id}>
             <div className={style.info}>
-              <div className={style.avatar}>
-                <img src={user.avatar} alt="" />
-              </div>
-              <div>
-                <div className={style.name}>
-                  {user.name}
+              <Link className={style.name} to={'/userSelf/' + user.id} >
+                <div className={style.avatar}>
+                  <img src={user.avatar} alt="" />
                 </div>
-                <div className={style.account}>
-                  @{user.account}
+              </Link>
+
+              <Link className={style.name} to={'/userSelf/' + user.id} >
+                <div>
+                  <div className={style.name}>
+                    {user.name}
+                  </div>
+                  <div className={style.account}>
+                    @{user.account}
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
             <button
               className={style.btn + ' '

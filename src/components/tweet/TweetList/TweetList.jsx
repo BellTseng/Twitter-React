@@ -8,12 +8,15 @@ const TweetList = ({ tweets, onClickReply, onClickLike }) => {
       {
         tweets.map(tweet =>
           <div className={style.tweet} key={tweet.id}>
-            <div className={style.avatar}>
-              <img src={tweet.User.avatar} alt="" />
-            </div>
+            <Link className={style.name} to={'/userSelf/' + tweet.User.id} >
+              <div className={style.avatar}>
+                <img src={tweet.User.avatar} alt="" />
+              </div>
+            </Link>
             <div className={style.info}>
               <div className={style.top}>
-                <Link className={style.name} to={'/userSelf/' + tweet.User.id} > {tweet.User.name}</Link>
+                <Link className={style.name} to={'/userSelf/' + tweet.User.id} > {tweet.User.name}
+                </Link>
                 <Link className={style.account} to={'/userSelf/' + tweet.User.id}>@{tweet.User.account}
                 </Link>
                 <div className={style.time}>{tweet.createdAt}</div>

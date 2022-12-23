@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
-const baseUrl = 'https://f8f2-118-150-219-108.jp.ngrok.io/api';
+const baseUrl = 'https://4749-2001-b011-2006-576a-35ce-87f2-5020-4d66.jp.ngrok.io/api';
 
 const axiosInstance = axios.create({
   baseURL: baseUrl,
@@ -45,9 +45,9 @@ export const addFollowing = async (followingId) => {
 }
 
 // 刪除_追蹤的使用者
-export const removeFollowing = async (followingId, userId) => {
+export const removeFollowing = async (followingId) => {
   try {
-    const res = await axiosInstance.delete(`${baseUrl}/followships/${followingId}`, { id: userId });
+    const res = await axiosInstance.delete(`${baseUrl}/followships/${followingId}`);
     console.log('removeFollowing', 'res', res)
     return res.status === 'status'
   } catch (err) {

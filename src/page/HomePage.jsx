@@ -8,7 +8,7 @@ import Header from "../components/layoutItems/Header";
 import Modal from '../components/modal/Modal';
 import { getTweets, createTweet, createReply, addLike, removeLike } from '../api/tweet';
 import { getUserLikes } from './../api/user';
-import Swal from 'sweetalert2';
+import { Toast } from '../utils/utils';
 
 
 
@@ -107,7 +107,7 @@ const HomePage = () => {
     }
   }
   useEffect(() => {
-    if ((!isAuthenticated || currentUser.role !== 'user') && !isLoading) {
+    if (!isAuthenticated || currentUser.role !== 'user') {
       navigate('/login')
       return
     }

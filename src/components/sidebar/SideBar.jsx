@@ -7,7 +7,7 @@ import TweetEdit from './../tweet/TweetEdit/TweetEdit';
 import './navActive.scss';
 import { useAuth } from './../../contexts/AuthContext';
 import { createTweet } from './../../api/tweet';
-
+import { Toast } from '../../utils/utils';
 
 
 
@@ -38,12 +38,9 @@ const SideBar = ({ type }) => {
     } else if (result) {
       setModalOpen(false);
     } else {
-      Swal.fire({
-        position: 'top',
+      Toast.fire({
         title: '新增推文失敗，請再試一次！',
-        timer: 2000,
         icon: 'error',
-        showConfirmButton: false,
       });
     }
 

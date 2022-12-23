@@ -85,11 +85,11 @@ const ReplyListPage = () => {
   }
 
   useEffect(() => {
-    if ((!isAuthenticated || currentUser.role !== 'user') && !isLoading) {
+    if (!isAuthenticated || currentUser.role !== 'user') {
       navigate('/login')
       return
     }
-  }, [id, isAuthenticated]);
+  }, [currentUser, isAuthenticated])
 
   useEffect(() => {
     if (id) {

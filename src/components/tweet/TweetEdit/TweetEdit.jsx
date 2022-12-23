@@ -38,7 +38,6 @@ const TweetEdit = ({ placeholder, onClick, name, home }) => {
           className={style.textarea + ' ' + (!!home ? style.home : '')}
           placeholder={placeholder}
           ref={textArea}
-          if
         >
         </textarea>
       </div>
