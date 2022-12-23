@@ -116,7 +116,7 @@ const SignUpPage = () => {
         <AuthInput
           label="Email"
           placeholder="請輸入 Email"
-          type="text"
+          type="email"
           wordCount={wordCount}
           active={true}
           value={email}
