@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
-const baseUrl = 'https://3ce8-118-150-219-108.jp.ngrok.io/api';
+const baseUrl = 'https://f8f2-118-150-219-108.jp.ngrok.io/api';
 
 const axiosInstance = axios.create({
   baseURL: baseUrl,
@@ -79,5 +79,29 @@ export const getUserFollowings = async (userId) => {
     return res.data;
   } catch (err) {
     console.error('[Get Followings failed]:', err);
+  }
+}
+
+// Test
+export const testAddFollowing = async (followingId) => {
+  try {
+    const res = await axiosInstance.post(`${baseUrl}/followships`, {
+      id: followingId
+    });
+    console.log('res', res)
+    return res.data
+  } catch (err) {
+    console.error('[Add Following failed]:', err);
+  }
+}
+
+// 刪除_追蹤的使用者
+export const testRemoveFollowing = async (followingId, userId) => {
+  try {
+    const res = await axiosInstance.delete(`${baseUrl}/followships/${followingId}`, { id: userId });
+    console.log('removeFollowing', 'res', res)
+    return res.data
+  } catch (err) {
+    console.error('[Remove Following failed]:', err);
   }
 }

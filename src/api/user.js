@@ -2,7 +2,7 @@ import axios from "axios";
 import { Toast } from "../utils/utils";
 
 // const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
-const baseUrl = 'https://3ce8-118-150-219-108.jp.ngrok.io/api';
+const baseUrl = 'https://f8f2-118-150-219-108.jp.ngrok.io/api'
 
 const axiosInstance = axios.create({
   baseURL: baseUrl,
@@ -43,39 +43,79 @@ export const getUserLikes = async (userId) => {
   }
 }
 
-// 修改個人資料
-export const putUser = async (payload) => {
-  const { id, name, email, password, checkPassword, account, avatar, cover, introduction } = payload
+// 修改個人資料setting
+export const putUserSetting = async (payload) => {
+  const { id, name, email, password, checkPassword, account } = payload
   try {
-    const { data } = await axiosInstance.put(`${baseUrl}/users/${id}`, {
-      name, 
-      email, 
-      password, 
-      checkPassword, 
-      account, 
-      avatar, 
-      cover, 
-      introduction
+    const { data } = await axiosInstance.put(`${baseUrl}/users/${id}/setting`, {
+      name,
+      email,
+      password,
+      checkPassword,
+      account,
     })
 
     return data
-  } 
+  }
   catch (error) {
     console.error('[Put User failed]:', error);
 
-    const errorResponse = error.response
+    const errorResponse = error.response.data
 
-    if (errorResponse.status === 401){
-      Toast.fire({
-        title: `${errorResponse.message}`,
-        icon: 'error'
-      })
-    }
-    else if (errorResponse.status === 404) {
-      Toast.fire({
-        title: `${errorResponse.message}`,
-        icon: 'error'
-      })
-    }
+    Toast.fire({
+      title: `${errorResponse.message}`,
+      icon: 'error'
+    })
+
   }
 }
+
+// UserModal編輯個人資料
+export const putUser = async (payload) => {
+  const { id, formData} = payload
+  try {
+    const { data } = await axiosInstance.put(`${baseUrl}/users/${id}`, formData,{
+      processData: true,
+      contentType: true,
+    })
+
+    return data
+  }
+  catch (error) {
+    console.error('[Put User failed]:', error);
+
+    const errorResponse = error.response.data
+
+    Toast.fire({
+      title: `${errorResponse.message}`,
+      icon: 'error'
+    })
+
+  }
+}
+
+// 追隨他人
+// export const addFollow = (id) => {
+//   try {
+//     const { data } = axiosInstance.post(`${baseUrl}/followships`, {
+//       id
+//     })
+
+//     return data
+//   }
+//   catch (error) {
+//     console.log('[Follow User failed]:', error)
+//   }
+// }
+
+// // 取消追隨
+// export const cancelFollow = (id) => {
+//   try {
+//     const { data } = axiosInstance.delete(`${baseUrl}/followships/${id}`)
+
+//     return data
+//   }
+//   catch (error) {
+//     console.log('[Follow User failed]:', error)
+//   }
+// }

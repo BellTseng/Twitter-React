@@ -67,7 +67,7 @@ const SideBar = ({ type }) => {
               <NavLink className={style.navLink} to="/home"> 首頁</NavLink>
             </li>
             <li>
-              <NavLink className={style.navLink} to="/userSelf/user">個人資料</NavLink>
+              <NavLink className={style.navLink} to={`/userSelf/${currentUser?.id}`}>個人資料</NavLink>
             </li>
             <li>
               <NavLink className={style.navLink} to="/setting">設定</NavLink>

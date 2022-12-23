@@ -3,14 +3,22 @@ import Arrow from './../../image/VectorArrow@2x.jpg'
 import UserInfo from './UserInfo'
 import UserTab from './UserTab'
 import { Link } from 'react-router-dom'
+import UserOwnTweetList from './UserOwnTweetList'
+import UserLikeTweets from './UserLikeTweets'
+import ReplyList from '../tweet/ReplyList/ReplyList'
+import UserReplyTweets from './UserReplyTweets'
 
-const UserSelfArea = ({ 
+const UserSelfArea = ({
+  tweets,
+  replies,
+  likes, 
   isOpen,
   user, 
   userId, 
   paramsId,
   tabId, 
-  onToggleFollow,
+  onAddFollow,
+  onCancelFollow,
   onChangeTab,
   onShowModal,
 }) => {
@@ -21,8 +29,8 @@ const UserSelfArea = ({
           <img src={Arrow} alt="arrow" />
         </Link>
         <div className={styles.userTag}>
-          <h5 className={styles.userName}>{user.userName}</h5>
-          <p className={styles.tweetCount}>25 推文</p>
+          <h5 className={styles.userName}>{user.name}</h5>
+          <p className={styles.tweetCount}>{user.tweetCount} 推文</p>
         </div>
       </div>
       
@@ -31,7 +39,8 @@ const UserSelfArea = ({
         user={user}
         userId={userId}
         paramsId={paramsId}
-        onToggleFollow={(id) => onToggleFollow?.(id)}
+        onAddFollow={(id) => onAddFollow?.(id)}
+        onCancelFollow={(id, currentUserId) => onCancelFollow?.(id, currentUserId)}
         onShowModal={(value) => onShowModal?.(value)}
       />
 
@@ -39,6 +48,20 @@ const UserSelfArea = ({
         tabId={tabId}
         onChangeTab={(value) => onChangeTab?.(value)}
       />
+
+      {(tabId === 1 && tweets) ?
+        <UserOwnTweetList 
+          tweets={tweets ? tweets : ''}
+        />
+        :
+        ''
+      }
+      {(tabId === 2 && replies) ?
+        <UserReplyTweets replys={replies ? replies : ''} /> : ''
+      }
+      {(tabId === 3 && likes) ?
+        <UserLikeTweets tweets={likes ? likes : ''} /> :''
+      }
     </div>
   )
 }
