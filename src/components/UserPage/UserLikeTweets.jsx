@@ -9,12 +9,14 @@ const UserOwnTweetList = ({ tweets, onClickReply, onClickLike }) => {
         tweets.map(tweet =>
           <div className={style.tweet} key={tweet.id}>
             <div className={style.avatar}>
-              <img src={tweet.Tweet.User.avatar} alt="" />
+              <Link to={`/userSelf/${tweet.Tweet.User.id}`}>
+                <img src={tweet.Tweet.User.avatar} alt="" />
+              </Link>
             </div>
             <div className={style.info}>
               <div className={style.top}>
-                <p className={style.name}> {tweet.Tweet.User.name}</p>
-                <p className={style.account}>@{tweet.Tweet.User.account}</p>
+                <Link className={style.name} to={`/userSelf/${tweet.Tweet.User.id}`}> {tweet.Tweet.User.name}</Link>
+                <Link className={style.account} to={`/userSelf/${tweet.Tweet.User.id}`}>@{tweet.Tweet.User.account}</Link>
                 <div className={style.time}>{tweet.createdAt}</div>
               </div>
               <Link to={'/replylist/' + tweet.Tweet.id} className={style.description}>

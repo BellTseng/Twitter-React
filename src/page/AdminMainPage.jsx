@@ -42,7 +42,7 @@ const AdminMainPage = () => {
       showCancelButton: true,
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6',
-      confirmButtonText: '刪除!',
+      confirmButtonText: '刪除',
       cancelButtonText: '取消'
     }).then(async (result) => {
       if (result.isConfirmed) {

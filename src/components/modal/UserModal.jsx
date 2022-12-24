@@ -18,7 +18,7 @@ const UserModal = ({ isOpen, onShowModal }) => {
   const [blank, setBlank] = useState(false)
   const inputBackgroundFileCurrent = useRef(null)
   const inputAvatarFileCurrent = useRef(null)
-  const { currentUser } = useAuth()
+  const { currentUser, update } = useAuth()
   let userNameWordCount = 50
   let userIntroductionWordCount = 160
 
@@ -108,7 +108,7 @@ const UserModal = ({ isOpen, onShowModal }) => {
 
     getUserAsync()
 
-  }, [currentUser])
+  }, [currentUser, update])
 
 
   return (

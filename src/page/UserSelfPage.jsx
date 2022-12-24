@@ -142,7 +142,6 @@ const UserSelfPage = () => {
 
     } catch (error) {
       console.log(error)
-      update()
     }
   }
 
@@ -151,14 +150,12 @@ const UserSelfPage = () => {
     console.log('chosedTweet', chosedTweet);
     setChooseTweet({ ...chosedTweet });
     setReplyModalIsOpen(true);
-    update()
   }
 
   // 關閉回覆Modal
   const handleCloseModal = () => {
     console.log('close')
     setReplyModalIsOpen(false);
-    update()
   }
 
   // 新增回覆
@@ -197,7 +194,6 @@ const UserSelfPage = () => {
       update()
     } catch (err) {
       console.error(err);
-      update()
     }
   }
 
@@ -209,13 +205,11 @@ const UserSelfPage = () => {
 
   function handleChangeTab(value) {
     setUserTabId(value)
-    update()
   }
 
   // 開啟UserModal編輯功能
   function changeModalStatus(value) {
     setIsOpen(value)
-    update()
   }
 
   useEffect(() => {
