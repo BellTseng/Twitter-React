@@ -56,12 +56,6 @@ const UserSelfPage = () => {
         }
       })
 
-      Toast.fire({
-        title: '追隨成功',
-        icon: 'success'
-      })
-
-      
     }
     
     update()
@@ -80,12 +74,6 @@ const UserSelfPage = () => {
         }
       })
 
-      Toast.fire({
-        title: `${response.message}`,
-        icon: 'success'
-      })
-
-      
     }
     update()
 
@@ -167,6 +155,12 @@ const UserSelfPage = () => {
         UserId: currentUser.id,
         comment: value,
       });
+
+      Toast.fire({
+        title: '發送回覆成功！',
+        icon: 'success'
+      })
+
       setUserTweets(userTweets.map(t => {
         if (t.id === chooseTweet.id) {
           return {

@@ -25,7 +25,7 @@ const UserModal = ({ isOpen, onShowModal }) => {
 
 
   function handleClosed() {
-
+    update()
     onShowModal?.(false)
   }
 
