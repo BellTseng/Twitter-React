@@ -57,6 +57,10 @@ const HomePage = () => {
         UserId: currentUser.id,
         comment: value,
       });
+      Toast.fire({
+        title: '發送推文成功！',
+        icon: 'success'
+      })
       setTweets(tweets.map(t => {
         if (t.id === tweet.id) {
           return {
