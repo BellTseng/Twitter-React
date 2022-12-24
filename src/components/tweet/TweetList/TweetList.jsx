@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
 import style from "./TweetList.module.scss";
 
+const TweetList = ({ tweets, onClickReply, onClickLike, onClickLink }) => {
 
-const TweetList = ({ tweets, onClickReply, onClickLike }) => {
   return (
     <div className="tweetList">
       {
         tweets.map(tweet =>
-
-          <div className={style.tweet} key={tweet.id}>
+          <div className={style.tweet + ' ' + style.pointer} key={tweet.id} onClick={() => onClickLink?.(tweet.id)}>
             <Link className={style.name} to={'/userSelf/' + tweet.User.id} >
               <div className={style.avatar}>
                 <img src={tweet.User.avatar} alt="" />
@@ -27,13 +26,13 @@ const TweetList = ({ tweets, onClickReply, onClickLike }) => {
               </Link>
               <div className={style.toolbar}>
                 <button
-                  onClick={(e) => e.preventDefault() & onClickReply?.({ ...tweet })}
+                  onClick={(e) => e.stopPropagation() & onClickReply?.({ ...tweet })}
                   className={style.toolButton + ' ' + style.replyCount}
                 >
                   {tweet.replyCount}
                 </button>
                 <button
-                  onClick={(e) => e.preventDefault() & onClickLike?.({ ...tweet })}
+                  onClick={(e) => e.stopPropagation() & onClickLike?.({ ...tweet })}
                   className={style.toolButton + ' ' + style.likeCount + ' ' + (!!tweet.isLiked ? style.active : '')}
                 >
                   {tweet.likeCount}

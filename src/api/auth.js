@@ -29,7 +29,7 @@ export const login = async ({ account, password }) => {
     return data;
   } catch (error) {
     console.error('[Login Failed]:', error);
-    const message = error.response.data.message
+    const message = error?.response?.data?.message
     console.log('message', message)
     if (message.includes('帳號不存在')) {
       Toast.fire({

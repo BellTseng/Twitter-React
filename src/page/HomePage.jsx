@@ -7,7 +7,6 @@ import SingleTweetForReply from '../components/tweet/SingleTweetForReply/SingleT
 import Header from "../components/layoutItems/Header";
 import Modal from '../components/modal/Modal';
 import { getTweets, createTweet, createReply, addLike, removeLike } from '../api/tweet';
-import { getUserLikes } from './../api/user';
 import { Toast } from '../utils/utils';
 
 
@@ -33,6 +32,10 @@ const HomePage = () => {
         UserId: currentUser.id,
         description: value,
       });
+      Toast.fire({
+        title: '發送推文推文成功！',
+        icon: 'success'
+      })
       setTweets((prevTweets) => {
         return [{
           ...result,
@@ -58,7 +61,7 @@ const HomePage = () => {
         comment: value,
       });
       Toast.fire({
-        title: '發送推文成功！',
+        title: '發送回覆成功！',
         icon: 'success'
       })
       setTweets(tweets.map(t => {
@@ -110,6 +113,13 @@ const HomePage = () => {
       console.log(error)
     }
   }
+
+  // 點擊外框可切換
+  const handleClickLink = (tweetId) => {
+    console.log('click')
+    navigate('/replylist/' + tweetId)
+  }
+
   useEffect(() => {
     if (!isAuthenticated || currentUser.role !== 'user') {
       navigate('/login')
@@ -134,6 +144,7 @@ const HomePage = () => {
   }, [update, isAuthenticated]);
 
 
+  console.log('currentUser', currentUser)
   return (
     <>
       <Header title="首頁" type="main" />
@@ -147,6 +158,7 @@ const HomePage = () => {
         tweets={tweets}
         onClickReply={handleOpenReply}
         onClickLike={handleClickLike}
+        onClickLick={handleClickLink}
       />
 
       <Modal isOpen={modalOpen} closeModal={handleCloseModal}>
