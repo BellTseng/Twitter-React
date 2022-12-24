@@ -203,6 +203,7 @@ const UserSelfPage = () => {
   // 開啟UserModal編輯功能
   function changeModalStatus(value) {
     setIsOpen(value)
+    update()
   }
 
   useEffect(() => {
