@@ -9,10 +9,10 @@ const AdminTweetItem = ({ tweet, onDelete}) => {
 
       <div className={styles.userTag}>
         <span className={styles.userName}>{tweet.User.name ? tweet.User.name : 'Apple'}</span>
-        <span className={styles.userAccount}>@{tweet.User.account ? tweet.User.account : 'apple'}・{tweet.createdAt ? tweet.createdAt : '3小時'} </span>
+        <span className={styles.userAccount}>@{tweet.User.account ? tweet.User.account : 'apple'}・{tweet.createdAt ? tweet.createdAt : ''} </span>
       </div>
       
-      <p>{tweet.description ? ((tweet.description.length < 50) ? tweet.description : `${tweet.description}...`) : 'test test test! Myname is gg easy now'}
+      <p>{tweet.description ? ((tweet.description.length < 50) ? tweet.description : `${tweet.description}...`) : ''}
       </p>
 
       <button

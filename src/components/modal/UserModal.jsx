@@ -9,16 +9,16 @@ import { useEffect, useRef, useState } from 'react'
 import { Toast } from '../../utils/utils'
 import { useAuth } from '../../contexts/AuthContext'
 import { getUser, putUser } from '../../api/user'
-import axios from 'axios'
 
 const UserModal = ({ isOpen, onShowModal }) => {
   const [userName, setUserName] = useState('')
   const [userIntroduction, setUserIntroduction] = useState('')
   const [userBackground, setUserBackground] = useState('')
   const [userAvatar, setUserAvatar] = useState('')
+  const [blank, setBlank] = useState(false)
   const inputBackgroundFileCurrent = useRef(null)
   const inputAvatarFileCurrent = useRef(null)
-  const { currentUser, update } = useAuth()
+  const { currentUser } = useAuth()
   let userNameWordCount = 50
   let userIntroductionWordCount = 160
 
@@ -34,21 +34,13 @@ const UserModal = ({ isOpen, onShowModal }) => {
 
     const testForm = event.target
     const formData = new FormData(testForm)
-    // formData.append('file-to-upload', event.target.form[0].files[0])
-    // axios.post('/api/v1/upload', formData, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // })
-    //   .then((data) => {
-    //     console.log(data)
-    //   })
-    //   .catch(error => console.log(error));
 
     for (let [name, value] of formData.entries()) {
       console.log(`${name} : ${value}`)
     }
     if (userName.trim().length === 0) {
+      setBlank(true)
+
       Toast.fire({
         title: '使用者名稱不可空白！',
         icon: 'warning',
@@ -76,6 +68,8 @@ const UserModal = ({ isOpen, onShowModal }) => {
 
     console.log(response)
     if (response.status === 'success') {
+      setBlank(false)
+
       Toast.fire({
         title: '修改成功',
         icon: 'success',
@@ -216,6 +210,7 @@ const UserModal = ({ isOpen, onShowModal }) => {
               wordCount={userNameWordCount}
               active={true}
               value={userName}
+              blankStatus={blank}
               onChange={(userNameInputValue) => setUserName(userNameInputValue)}
             />
           </div>

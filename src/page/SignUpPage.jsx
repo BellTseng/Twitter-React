@@ -12,6 +12,7 @@ const SignUpPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('')
+  const [blank, setBlank] = useState(false)
   const navigate = useNavigate();
   const { register, isAuthenticated } = useAuth()
 
@@ -25,6 +26,8 @@ const SignUpPage = () => {
       password.trim().length === 0 ||
       passwordCheck.trim().length === 0
     ){
+      setBlank(true)
+
       Toast.fire({
         title: '請輸入帳號、名稱、Email或密碼！',
         icon: 'warning',
@@ -66,6 +69,8 @@ const SignUpPage = () => {
     })
 
     if(response){
+      setBlank(false)
+
       Toast.fire({
         title: '註冊成功',
         icon: 'success',
@@ -95,6 +100,7 @@ const SignUpPage = () => {
           wordCount={wordCount}
           active={true}
           value={account}
+          blankStatus={blank}
           onChange={(accountInputValue) => setAccount(accountInputValue)}
         />
       </div>
@@ -108,6 +114,7 @@ const SignUpPage = () => {
           wordCount={wordCount}
           active={true}
           value={username}
+          blankStatus={blank}
           onChange={(nameInputValue) => setUserName(nameInputValue)}
         />
       </div>
@@ -120,6 +127,7 @@ const SignUpPage = () => {
           wordCount={wordCount}
           active={true}
           value={email}
+          blankStatus={blank}
           onChange={(emailInputValue) => setEmail(emailInputValue)}
         />
       </div>
@@ -132,6 +140,7 @@ const SignUpPage = () => {
           wordCount={wordCount}
           active={true}
           value={password}
+          blankStatus={blank}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
         />
       </div>
@@ -144,6 +153,7 @@ const SignUpPage = () => {
           wordCount={wordCount}
           active={true}
           value={passwordCheck}
+          blankStatus={blank}
           onChange={(passwordCheckInputValue) => setPasswordCheck(passwordCheckInputValue)}
         />
       </div>

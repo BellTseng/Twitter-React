@@ -27,6 +27,7 @@ const SettingPage = () => {
   const [email, setEmail] = useState(userPro.email)
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('')
+  const [blank, setBlank] = useState(false)
   const { isAuthenticated, currentUser } = useAuth()
   const navigate = useNavigate()
   let wordCount = 50
@@ -39,6 +40,8 @@ const SettingPage = () => {
       password.trim().length === 0 ||
       passwordCheck.trim().length === 0
     ) {
+      setBlank(true)
+
       Toast.fire({
         title: '請輸入帳號、名稱、Email或密碼！',
         icon: 'warning',
@@ -81,6 +84,8 @@ const SettingPage = () => {
     })
 
     if (response.status === 'success'){
+      setBlank(false)
+
       Toast.fire({
         title: '修改成功',
         icon: 'success',
@@ -134,6 +139,7 @@ const SettingPage = () => {
           wordCount={wordCount}
           active={false}
           value={account}
+          blankStatus={blank}
           onChange={(accountInputValue) => setAccount(accountInputValue)}
         />
       </div>
@@ -147,6 +153,7 @@ const SettingPage = () => {
           wordCount={wordCount}
           active={false}
           value={username}
+          blankStatus={blank}
           onChange={(nameInputValue) => setUserName(nameInputValue)}
         />
       </div>
@@ -159,6 +166,7 @@ const SettingPage = () => {
           wordCount={wordCount}
           active={false}
           value={email}
+          blankStatus={blank}
           onChange={(emailInputValue) => setEmail(emailInputValue)}
         />
       </div>
@@ -171,6 +179,7 @@ const SettingPage = () => {
           wordCount={wordCount}
           active={false}
           value={password}
+          blankStatus={blank}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
         />
       </div>
@@ -183,6 +192,7 @@ const SettingPage = () => {
           wordCount={wordCount}
           active={false}
           value={passwordCheck}
+          blankStatus={blank}
           onChange={(passwordCheckInputValue) => setPasswordCheck(passwordCheckInputValue)}
         />
       </div>

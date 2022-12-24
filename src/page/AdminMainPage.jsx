@@ -40,8 +40,8 @@ const AdminMainPage = () => {
       title: '確定是否刪除?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
       confirmButtonText: '刪除!',
       cancelButtonText: '取消'
     }).then(async (result) => {

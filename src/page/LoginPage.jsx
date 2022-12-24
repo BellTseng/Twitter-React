@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthInput from "../components/AuthInput"
 import styles from './../style/Login.module.scss'
 import logo from './../image/Icon@2x.jpg'
-import Swal from 'sweetalert2';
 import { useAuth } from './../contexts/AuthContext';
 import { Toast } from "../utils/utils";
 
@@ -11,6 +10,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
+  const [blank, setBlank] = useState(false)
   let wordCount = 50
   const { login, isAuthenticated } = useAuth();
 
@@ -18,13 +18,15 @@ const LoginPage = () => {
     if (isAuthenticated) {
       navigate('/home')
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   const handleClick = async () => {
     if (
       account.trim().length === 0 ||
       password.trim().length === 0
     ) {
+      setBlank(true)
+
       Toast.fire({
         title: '請輸入帳號或密碼！',
         icon: 'warning',
@@ -47,6 +49,8 @@ const LoginPage = () => {
     const success = await login({ account, password });
 
     if (success) {
+      setBlank(false)
+
       Toast.fire({
         title: '登入成功',
         icon: 'success',
@@ -71,6 +75,7 @@ const LoginPage = () => {
           wordCount={wordCount}
           active={false}
           value={account}
+          blankStatus={blank}
           onChange={(accountInputValue) => setAccount(accountInputValue)}
         />
       </div>
@@ -83,6 +88,7 @@ const LoginPage = () => {
           wordCount={wordCount}
           active={false}
           value={password}
+          blankStatus={blank}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
         />
       </div>

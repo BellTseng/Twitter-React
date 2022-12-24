@@ -1,6 +1,15 @@
 import styles from './../style/AuthInput.module.scss'
 
-const AuthInput = ({ type, label, value, placeholder, onChange, wordCount, active, iuputName }) => {
+const AuthInput = ({ 
+  type, 
+  label, 
+  value, 
+  placeholder, 
+  onChange, 
+  wordCount, 
+  active, 
+  iuputName, 
+  blankStatus }) => {
   return (
     <div className={styles.authInputContainer}>
       <label>{label}</label>
@@ -16,7 +25,7 @@ const AuthInput = ({ type, label, value, placeholder, onChange, wordCount, activ
       <div
         className={styles.inputFooter}
       >
-        {(value.trim().length === 0) &&
+        {((value.trim().length === 0) && blankStatus)&&
           <span
             className={styles.wrongTitle}
           >

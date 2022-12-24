@@ -9,6 +9,7 @@ import { useAuth } from "../contexts/AuthContext";
 const AdminLoginPage = () => {
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
+  const [blank, setBlank] = useState(false)
   const navigate = useNavigate();
   const { adminLogin, isAuthenticated, currentUser } = useAuth();
   let wordCount = 50
@@ -18,6 +19,8 @@ const AdminLoginPage = () => {
       account.trim().length === 0 ||
       password.trim().length === 0
     ) {
+      setBlank(true)
+
       Toast.fire({
         title: '請輸入帳號或密碼！',
         icon: 'warning',
@@ -44,6 +47,8 @@ const AdminLoginPage = () => {
     })
 
     if(success){
+      setBlank(false)
+
       Toast.fire({
         title: '登入成功',
         icon: 'success',
@@ -80,6 +85,7 @@ const AdminLoginPage = () => {
           wordCount={wordCount}
           active={false}
           value={account}
+          blankStatus={blank}
           onChange={(accountInputValue) => setAccount(accountInputValue)}
         />
       </div>
@@ -92,6 +98,7 @@ const AdminLoginPage = () => {
           wordCount={wordCount}
           active={false}
           value={password}
+          blankStatus={blank}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
         />
       </div>
