@@ -71,8 +71,8 @@ const UserInfo = ({
       </div>
 
       <div className={styles.userTag}>
-        <h5 className={styles.userName}>{user.name ? user.name : 'Jas'}</h5>
-        <p className={styles.userAccount}>@{user.account ? user.account : 'Jas'}</p>
+        <h5 className={styles.userName}>{user.name ? user.name : ''}</h5>
+        <p className={styles.userAccount}>@{user.account ? user.account : ''}</p>
       </div>
 
       <div className={styles.userIntroduction}>
