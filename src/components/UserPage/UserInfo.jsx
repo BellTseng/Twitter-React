@@ -81,10 +81,10 @@ const UserInfo = ({
 
 
       <div className={styles.userPopular}>
-        <Link to={`/follow/${user.id}?tab=0`}>
+        <Link to={`/follow/${user.id}?tab=1`}>
           <p className={styles.following}>{user.followingCount ? user.followingCount : 0}個<span>跟隨中</span></p>
         </Link>
-        <Link to={`/follow/${user.id}?tab=1`}>
+        <Link to={`/follow/${user.id}?tab=0`}>
           <p className={styles.follower}>{user.followerCount ? user.followerCount : 0}位<span>跟隨者</span></p>
         </Link>
 

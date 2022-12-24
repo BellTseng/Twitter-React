@@ -1,28 +1,28 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import style from './TweetEdit.module.scss';
-import { Toast } from '../../../utils/utils';
 
 
 const TweetEdit = ({ placeholder, onClick, name, home }) => {
   const textArea = useRef(null);
+  const [error, setError] = useState('');
 
   const handleClick = () => {
     console.log('click');
     const value = textArea.current.value.trim();
     console.log('value', value);
     if (value.length > 140) {
-      Toast.fire({
-        title: '內容不得大於140字',
-        icon: 'error'
-      })
+      setError('內容不得大於140字');
+      setTimeout(() => {
+        setError('');
+      }, 5000)
       return;
     } else if (!!value.length) {
       onClick?.(textArea.current.value);
     } else {
-      Toast.fire({
-        title: '內容不得為空白',
-        icon: 'error'
-      })
+      setError('內容不得為空白');
+      setTimeout(() => {
+        setError('');
+      }, 5000)
       return;
     }
 
@@ -43,6 +43,7 @@ const TweetEdit = ({ placeholder, onClick, name, home }) => {
           </textarea>
         </div>
         <div className={style.btnBar}>
+          <span className={style.error}>{error}</span>
           <button
             className={style.btn}
             onClick={handleClick}>

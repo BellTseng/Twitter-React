@@ -1,3 +1,7 @@
+* {
+  word-break: break-all;
+}
+
 .avatar {
   padding: 0px 10px;
 }
@@ -113,6 +117,7 @@
   font-size: 15px;
   line-height: 22px;
   text-decoration: none;
+  word-break: break-all;
 }
 
 .commend {

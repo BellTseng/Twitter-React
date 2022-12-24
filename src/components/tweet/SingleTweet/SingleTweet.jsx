@@ -9,9 +9,12 @@ const SingleTweet = ({
   return (
     <div className={style.tweet}>
       <div className={style.top}>
-        <div className={style.avatar}>
-          <img src={tweet.User.avatar} alt="" />
-        </div>
+        <Link className={style.name}
+          to={'/userSelf/' + tweet.User.id} >
+          <div className={style.avatar}>
+            <img src={tweet.User.avatar} alt="" />
+          </div>
+        </Link>
         <div className={style.flexColumn}>
           <Link className={style.name}
             to={'/userSelf/' + tweet.User.id} >
