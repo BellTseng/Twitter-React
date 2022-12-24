@@ -1,8 +1,8 @@
 import axios from "axios";
 import { Toast } from '../utils/utils';
 
-const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
-// const baseUrl = 'https://4137-118-150-219-108.jp.ngrok.io/api'
+// const baseUrl = 'https://rocky-citadel-44413.herokuapp.com/api';
+const baseUrl = 'https://d330-2001-b011-2006-576a-90df-1dc-f7f9-9ce8.jp.ngrok.io/api'
 
 const axiosInstance = axios.create({
   baseURL: baseUrl,

@@ -54,7 +54,7 @@
 > npm run start
 
 4. 登入頁面
-> localhost:3000/login
+> https://21jasper12.github.io/Twitter-React/login
 
 5. 停止專案
 > Ctrl + c
