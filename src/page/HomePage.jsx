@@ -158,7 +158,7 @@ const HomePage = () => {
         tweets={tweets}
         onClickReply={handleOpenReply}
         onClickLike={handleClickLike}
-        onClickLick={handleClickLink}
+        onClickLink={handleClickLink}
       />
 
       <Modal isOpen={modalOpen} closeModal={handleCloseModal}>
