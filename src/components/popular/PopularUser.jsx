@@ -8,7 +8,6 @@ import { getTopUser, addFollowing, removeFollowing } from "./../../api/followshi
 const PopularUser = () => {
   const { currentUser, isAuthenticated, update } = useAuth();
   const [popularList, setPopularList] = useState([]);
-  const { update } = useAuth()
 
   const handleClick = async (followingId, isFollowed) => {
     console.log('followingId', followingId, 'isFollowed', isFollowed)
