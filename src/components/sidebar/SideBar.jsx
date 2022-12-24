@@ -34,8 +34,16 @@ const SideBar = ({ type }) => {
     if (result && (pathname === '/home' || pathname.includes('userSelf'))) {
       update()
       setModalOpen(false);
+      Toast.fire({
+        title: '推文發送成功！',
+        icon: 'success',
+      });
     } else if (result) {
       setModalOpen(false);
+      Toast.fire({
+        title: '推文發送成功！',
+        icon: 'success',
+      });
     } else {
       Toast.fire({
         title: '新增推文失敗，請再試一次！',
