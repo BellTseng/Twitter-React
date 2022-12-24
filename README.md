@@ -1,5 +1,9 @@
 # Alphitter with React
 
+### 【網站連結】
+> https://21jasper12.github.io/Twitter-React/
+
+
 ---
 
 ### 【登入頁面】
@@ -50,7 +54,7 @@
 > npm run start
 
 4. 登入頁面
-> localhost:3000/login
+> https://21jasper12.github.io/Twitter-React/login
 
 5. 停止專案
 > Ctrl + c
