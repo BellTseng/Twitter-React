@@ -30,9 +30,10 @@ section.popular {
 ul.popularList {
   margin: 0;
   padding: 0;
-  height: calc(100vh - 120px);
-  overflow: scroll;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
   border-radius: 0 0 14px 14px;
+  overflow-x: hidden;
 
   li {
     display: flex;

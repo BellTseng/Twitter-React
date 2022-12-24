@@ -27,13 +27,13 @@ const TweetList = ({ tweets, onClickReply, onClickLike }) => {
                 </Link>
                 <div className={style.toolbar}>
                   <button
-                    onClick={() => onClickReply?.({ ...tweet })}
+                    onClick={(e) => e.preventDefault() & onClickReply?.({ ...tweet })}
                     className={style.toolButton + ' ' + style.replyCount}
                   >
                     {tweet.replyCount}
                   </button>
                   <button
-                    onClick={() => onClickLike?.({ ...tweet })}
+                    onClick={(e) => e.preventDefault() & onClickLike?.({ ...tweet })}
                     className={style.toolButton + ' ' + style.likeCount + ' ' + (!!tweet.isLiked ? style.active : '')}
                   >
                     {tweet.likeCount}
