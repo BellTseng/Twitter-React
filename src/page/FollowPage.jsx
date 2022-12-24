@@ -50,8 +50,7 @@ const FollowPage = () => {
         }
       })
 
-      // 判斷被跟隨者(使用者本人)
-      if (followings.map(o => o.id).includes(followUser.id)) {
+      if (followUser.isFollowed === 1) {
         id === currentUser.id ?
           newFollowings = followings.filter(o => o.id !== followUser.id) :
           newFollowings = followings.map(o => {
@@ -62,14 +61,12 @@ const FollowPage = () => {
               }
             } return { ...o }
           })
-        await removeFollowing(followUser.id, currentUser.id)
-        console.log('newFollowers', newFollowers)
-        console.log('newFollowings', newFollowings)
+        await removeFollowing(followUser.id)
         setFollowers(newFollowers)
         setFollowings(newFollowings)
         update()
-      } else {
-        console.log('id', id, 'currentUser.id', currentUser.id)
+      }
+      if (followUser.isFollowed === 0) {
         Number(id) === currentUser.id ?
           newFollowings = [{ ...followUser }].concat(followings) :
           newFollowings = followings.map(o => {
@@ -81,8 +78,6 @@ const FollowPage = () => {
             } return { ...o }
           })
         await addFollowing(followUser.id)
-        console.log('newFollowers', newFollowers)
-        console.log('newFollowings', newFollowings)
         setFollowers(newFollowers)
         setFollowings(newFollowings)
         update()
@@ -111,7 +106,13 @@ const FollowPage = () => {
             }
           } return { ...o }
         })
-      await removeFollowing(followUser.id, currentUser.id)
+      if (followUser.isFollowed === 1) {
+        await removeFollowing(followUser.id)
+      }
+      if (followUser.isFollowed === 0) {
+        await addFollowing(followUser.id)
+      }
+
       console.log('newFollowers', newFollowers)
       console.log('newFollowings', newFollowings)
       setFollowers(newFollowers)
