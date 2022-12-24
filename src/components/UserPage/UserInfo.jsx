@@ -20,13 +20,13 @@ const UserInfo = ({
     <div className={styles.userInfo}>
       <img
         className={styles.background}
-        src={user.cover ? user.cover : "https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989__480.jpg"}
+        src={user.cover ? user.cover : "https://i.imgur.com/D6f1MZe.png"}
         alt="background"
       />
 
       <img
         className={styles.avatar}
-        src={user.avatar ? user.avatar : "https://yt3.googleusercontent.com/ytc/AMLnZu8DV_AUQyPkL9oVUdBIEoIpyKuut4H3VAn9H6iHEQ=s900-c-k-c0x00ffffff-no-rj"}
+        src={user.avatar ? user.avatar : "https://i.imgur.com/zC0XOiB.png"}
         alt="avatar"
       />
 

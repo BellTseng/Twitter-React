@@ -7,19 +7,19 @@ const AdminUserItem = ({ user }) => {
     <div className={styles.userItem}>
       <img 
         className={styles.background}
-        src={user.cover ? user.cover : "https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989__480.jpg"} 
+        src={user.cover ? user.cover : "https://i.imgur.com/D6f1MZe.png"} 
         alt="background" 
       />
 
       <img 
         className={styles.avatar}
-        src={user.avatar ? user.avatar : "https://yt3.googleusercontent.com/ytc/AMLnZu8DV_AUQyPkL9oVUdBIEoIpyKuut4H3VAn9H6iHEQ=s900-c-k-c0x00ffffff-no-rj" }
+        src={user.avatar ? user.avatar : "https://i.imgur.com/zC0XOiB.png" }
         alt="avatar" 
       />
 
       <div className={styles.userTag}>
-        <p className={styles.userName}>{user.name ? user.name : 'Jas'}</p>
-        <p className={styles.userAccount}>@{user.account ? user.account : 'ggg123456'}</p>
+        <p className={styles.userName}>{user.name ? user.name : ''}</p>
+        <p className={styles.userAccount}>@{user.account ? user.account : ''}</p>
       </div>
       
       <div className={styles.userTweetLike}>
@@ -28,7 +28,7 @@ const AdminUserItem = ({ user }) => {
             src={tweetCount}
             alt="tweetCount"
           />
-          <span>{user.tweetCount ? user.tweetCount : '1.5k'}</span>
+          <span>{user.tweetCount ? user.tweetCount : 0}</span>
         </div>
 
         <div className={styles.tweetLike}>
@@ -36,13 +36,13 @@ const AdminUserItem = ({ user }) => {
             src={tweetLike}
             alt="tweetLike"
           />
-          <span>{user.likeCount ? user.likeCount : '20k'}</span>
+          <span>{user.likeCount ? user.likeCount : 0}</span>
         </div>
       </div>
 
       <div className={styles.userPopular}>
-        <p className={styles.following}>{user.followingCount ? user.followingCount : '59'}個<span>跟隨中</span></p>
-        <p className={styles.follower}>{user.followerCount ? user.followerCount : '230'}位<span>跟隨者</span></p>
+        <p className={styles.following}>{user.followingCount ? user.followingCount : 0}個<span>跟隨中</span></p>
+        <p className={styles.follower}>{user.followerCount ? user.followerCount : 0}位<span>跟隨者</span></p>
       </div>
       
     </div>

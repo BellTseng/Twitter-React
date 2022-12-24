@@ -56,26 +56,34 @@ const UserSelfArea = ({
         tabId={tabId}
         onChangeTab={(value) => onChangeTab?.(value)}
       />
-
-      {(tabId === 1 && tweets) ?
-        <UserOwnTweetList 
-          tweets={tweets ? tweets : ''}
-          onClickReply={(tweet) => onClickReply?.(tweet)}
-          onClickLike={(tweet) => onClickLike?.(tweet)}
-        />
-        :
-        ''
-      }
-      {(tabId === 2 && replies) ?
-        <UserReplyTweets replys={replies ? replies : ''} /> : ''
-      }
-      {(tabId === 3 && likes) ?
-        <UserLikeTweets 
-          tweets={likes ? likes : ''}
-          onClickReply={(tweet) => onClickReply?.(tweet)}
-          onClickLike={(tweet) => onClickLike?.(tweet)} 
-        /> :''
-      }
+      <div className={styles.tabArea}>
+        {(tabId === 1 && tweets) ?
+          <UserOwnTweetList
+            tweets={tweets ? tweets : ''}
+            onClickReply={(tweet) => onClickReply?.(tweet)}
+            onClickLike={(tweet) => onClickLike?.(tweet)}
+          />
+          :
+          ''
+        }
+      </div>
+      
+      <div className={styles.tabArea}>
+        {(tabId === 2 && replies) ?
+          <UserReplyTweets replys={replies ? replies : ''} /> : ''
+        }
+      </div>
+      
+      <div className={styles.tabArea}>
+        {(tabId === 3 && likes) ?
+          <UserLikeTweets
+            tweets={likes ? likes : ''}
+            onClickReply={(tweet) => onClickReply?.(tweet)}
+            onClickLike={(tweet) => onClickLike?.(tweet)}
+          /> : ''
+        }
+      </div>
+      
 
       <Modal isOpen={replyModalStatus} closeModal={() => onClickCloseReplyModal?.()}>
         {replyModalStatus &&

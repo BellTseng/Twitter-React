@@ -16,6 +16,12 @@ const AuthInput = ({ type, label, value, placeholder, onChange, wordCount, activ
       <div
         className={styles.inputFooter}
       >
+        {(value.trim().length === 0) &&
+          <span
+            className={styles.wrongTitle}
+          >
+            不得空白！
+          </span>}
         {(value.trim().length > wordCount) &&
           <span
             className={styles.wrongTitle}

@@ -87,7 +87,7 @@ const UserSelfPage = () => {
 
       
     }
-
+    update()
 
   }
 
