@@ -2,9 +2,9 @@ name: Deploy to GitHub pages
 
 on:
   push:
-    branches: [feature/AdminApi]
+    branches: [main]
   pull_request:
-    branches: [feature/AdminApi]
+    branches: [main]
 
 jobs:
   build:
