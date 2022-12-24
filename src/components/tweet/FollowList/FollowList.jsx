@@ -6,35 +6,37 @@ const FollowList = ({ follows, type, onClick, currentUserId, show }) => {
   console.log('type', type)
   console.log('followsssss:', follows)
   return (
-    <div className={style.userList + ' ' + (show ? style.show : '')}>
-      {
-        follows.map((user, index) =>
-          <div className={style.follow} key={user.id}>
-            <Link className={style.name} to={'/userSelf/' + user.id} >
-              <div className={style.avatar}>
-                <img src={user.avatar} alt="" />
-              </div>
-            </Link>
-            <div className={style.info}>
-              <div className={style.top}>
-                <div className={style.name}>
-                  {user.name || ''}
+    <div className={style.userListBox}>
+      <div className={style.userList + ' ' + (show ? style.show : '')}>
+        {
+          follows.map((user, index) =>
+            <div className={style.follow} key={user.id}>
+              <Link className={style.name} to={'/userSelf/' + user.id} >
+                <div className={style.avatar}>
+                  <img src={user.avatar} alt="" />
                 </div>
-                <button
-                  className={style.btn + ' ' +
-                    (user.isFollowed ? style.active : '' + (currentUserId === user?.id ? style.disabled : ''))}
-                  onClick={() => { onClick?.({ ...user }, type) }}
-                >
-                  {user.isFollowed ? '正在跟隨' : '跟隨'}
-                </button>
-              </div>
-              <div className={style.introduction}>
-                {user?.introduction || ''}
+              </Link>
+              <div className={style.info}>
+                <div className={style.top}>
+                  <div className={style.name}>
+                    {user.name || ''}
+                  </div>
+                  <button
+                    className={style.btn + ' ' +
+                      (user.isFollowed ? style.active : '' + (currentUserId === user?.id ? style.disabled : ''))}
+                    onClick={() => { onClick?.({ ...user }, type) }}
+                  >
+                    {user.isFollowed ? '正在跟隨' : '跟隨'}
+                  </button>
+                </div>
+                <div className={style.introduction}>
+                  {user?.introduction || ''}
+                </div>
               </div>
             </div>
-          </div>
-        )
-      }
+          )
+        }
+      </div>
     </div>
   )
 }
