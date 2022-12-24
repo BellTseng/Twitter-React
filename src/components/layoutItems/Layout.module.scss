@@ -115,3 +115,11 @@ a {
     }
   }
 }
+
+
+@media screen and(max-width: 1400px) {
+  .container {
+    width: 50%;
+    margin-left: 25%;
+  }
+}

@@ -90,3 +90,10 @@ button {
 .none {
   display: none;
 }
+
+
+@media screen and(max-width: 1400px) {
+  section.popular {
+    right: 2vw;
+  }
+}

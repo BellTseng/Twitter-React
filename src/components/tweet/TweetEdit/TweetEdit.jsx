@@ -1,10 +1,12 @@
 import { useRef, useState } from 'react';
 import style from './TweetEdit.module.scss';
+import { useAuth } from './../../../contexts/AuthContext';
 
 
 const TweetEdit = ({ placeholder, onClick, name, home }) => {
   const textArea = useRef(null);
   const [error, setError] = useState('');
+  const { currentUser } = useAuth();
 
   const handleClick = () => {
     console.log('click');
@@ -33,7 +35,7 @@ const TweetEdit = ({ placeholder, onClick, name, home }) => {
       <div className={style.tweet}>
         <div className={style.tweetBox}>
           <div className={style.avatar}>
-            <img src={"https://loremflickr.com/320/240/logo/?lock=1"} alt="" />
+            <img src={currentUser?.avatar} alt="" />
           </div>
           <textarea
             className={style.textarea + ' ' + (!!home ? style.home : '')}
