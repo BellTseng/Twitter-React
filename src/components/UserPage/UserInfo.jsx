@@ -72,11 +72,11 @@ const UserInfo = ({
 
       <div className={styles.userTag}>
         <h5 className={styles.userName}>{user.name ? user.name : 'Jas'}</h5>
-        <p className={styles.userAccount}>@{user.account ? user.account : 'ggg123456'}</p>
+        <p className={styles.userAccount}>@{user.account ? user.account : 'Jas'}</p>
       </div>
 
       <div className={styles.userIntroduction}>
-        <p>{user.introduction ? user.introduction : 'test! test! test!'}</p>
+        <p>{user.introduction ? user.introduction : ''}</p>
       </div>
 
 

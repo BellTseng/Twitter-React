@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Toast } from '../utils/utils';
 
 const authUrl = 'https://rocky-citadel-44413.herokuapp.com'
-// const authUrl = 'https://3c71-118-150-219-108.jp.ngrok.io'
+// const authUrl = 'https://4772-118-150-219-108.jp.ngrok.io'
 
 const axiosInstance = axios.create({
   headers: { 'ngrok-skip-browser-warning': 'any' }
