@@ -61,10 +61,15 @@
 }
 
 
-.tweet,
-.follow {
+.tweet {
   display: flex;
   border-top: 1px #E6ECF0 solid;
+  padding: 15px;
+}
+
+.follow {
+  display: flex;
+  border-bottom: 1px #E6ECF0 solid;
   padding: 15px;
 }
 
@@ -202,6 +207,10 @@ button {
     color: #FFF;
     background: #FF6600;
   }
+}
+
+.userList {
+  border-top: 1px #E6ECF0 solid;
 }
 
 .userList {
