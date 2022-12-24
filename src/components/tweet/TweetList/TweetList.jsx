@@ -1,40 +1,37 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import style from "./TweetList.module.scss";
 
 const TweetList = ({ tweets, onClickReply, onClickLike, onClickLink }) => {
+  const navigate = useNavigate();
 
   return (
     <div className="tweetList">
       {
         tweets.map(tweet =>
           <div className={style.tweet + ' ' + style.pointer} key={tweet.id} onClick={() => onClickLink?.(tweet.id)}>
-            <Link className={style.name} to={'/userSelf/' + tweet.User.id} >
-              <div className={style.avatar}>
-                <img src={tweet.User.avatar} alt="" />
-              </div>
-            </Link>
+            <div className={style.avatar} onClick={(e) => e.stopPropagation() & navigate('/userSelf/' + tweet.User.id)} >
+              <img src={tweet.User.avatar} alt="" />
+            </div>
             <div className={style.info}>
               <div className={style.top}>
-                <Link className={style.name} to={'/userSelf/' + tweet.User.id} > {tweet.User.name}
-                </Link>
-                <Link className={style.account} to={'/userSelf/' + tweet.User.id}>@{tweet.User.account}
-                </Link>
+                <div className={style.name} onClick={(e) => e.stopPropagation() & navigate('/userSelf/' + tweet.User.id)} >
+                  {tweet.User.name}
+                </div>
+                <div className={style.account} onClick={(e) => e.stopPropagation() & navigate('/userSelf/' + tweet.User.id)} >
+                  @{tweet.User.account}
+                </div>
                 <div className={style.time}>{tweet.createdAt}</div>
               </div>
-              <Link to={'/replylist/' + tweet.id} className={style.description}>
+              <div className={style.description} >
                 {tweet.description}
-              </Link>
+              </div>
               <div className={style.toolbar}>
-                <button
-                  onClick={(e) => e.stopPropagation() & onClickReply?.({ ...tweet })}
-                  className={style.toolButton + ' ' + style.replyCount}
-                >
+                <button onClick={(e) => e.stopPropagation() & onClickReply?.({ ...tweet })}
+                  className={style.toolButton + ' ' + style.replyCount} >
                   {tweet.replyCount}
                 </button>
-                <button
-                  onClick={(e) => e.stopPropagation() & onClickLike?.({ ...tweet })}
-                  className={style.toolButton + ' ' + style.likeCount + ' ' + (!!tweet.isLiked ? style.active : '')}
-                >
+                <button onClick={(e) => e.stopPropagation() & onClickLike?.({ ...tweet })}
+                  className={style.toolButton + ' ' + style.likeCount + ' ' + (!!tweet.isLiked ? style.active : '')} >
                   {tweet.likeCount}
                 </button>
               </div>
