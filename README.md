@@ -1,8 +1,10 @@
 # Alphitter with React
 
-### 【網站連結】
+### 【網站連結(現在需要額外架server才能使用網址)】
 > https://21jasper12.github.io/Twitter-React/
 
+### 後端API GitHub(請依照後端文件操作架server)
+>https://github.com/jiawu777/twitter-api-2020
 
 ---
 
