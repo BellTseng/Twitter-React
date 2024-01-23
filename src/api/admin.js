@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const baseUrl = 'https://afternoon-basin-44531.herokuapp.com'
+// const baseUrl = 'https://afternoon-basin-44531.herokuapp.com'
+const baseUrl = 'http://127.0.0.1:3000/api';
 // const baseUrl = 'https://d330-2001-b011-2006-576a-90df-1dc-f7f9-9ce8.jp.ngrok.io'
 
 

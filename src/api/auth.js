@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Toast } from '../utils/utils';
 
-const authUrl = 'https://afternoon-basin-44531.herokuapp.com'
+// const authUrl = 'https://afternoon-basin-44531.herokuapp.com'
+const authUrl = 'http://127.0.0.1:3000'
 // const authUrl = 'https://d330-2001-b011-2006-576a-90df-1dc-f7f9-9ce8.jp.ngrok.io'
 
 const axiosInstance = axios.create({
